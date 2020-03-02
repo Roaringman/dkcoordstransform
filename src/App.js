@@ -94,7 +94,8 @@ function App() {
 
   async function iterateCoordinates() {
     for await (const val of asyncIterator) {
-      return val;
+      console.log(val);
+      continue;
     }
   }
 
