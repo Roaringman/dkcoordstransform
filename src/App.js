@@ -176,7 +176,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Title>Danish Coordinate Transformer</Title>
+        <Title>Danish Coordinate Transformer (Alpha)</Title>
       </header>
 
       <Map center={[54.88484306, 11.2214225]} zoom={12}>
