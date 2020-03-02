@@ -6,6 +6,7 @@ folder build
 
 @http
 get /api
+post /gettransform
 
 @tables
 data
