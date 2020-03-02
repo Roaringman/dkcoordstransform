@@ -33,7 +33,7 @@ const App = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn duuuude
         </a>
       </header>
     </div>
