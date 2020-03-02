@@ -141,23 +141,23 @@ function App() {
         // If dropped items aren't files, reject them
         if (ev.dataTransfer.items[i].kind === "file") {
           var file = ev.dataTransfer.items[i].getAsFile();
-          console.log("... file[" + i + "].name = " + file.name);
           file
             .text()
             .then(text => text.split("\r\n"))
             .then(arr => arr.map(item => item.split(",")))
             .then(items => {
               let coordsToAdd = [];
-
               items.map(coordPair => {
                 if (coordPair.length === 2) {
                   coordsToAdd.push({
                     sourceCoords: [coordPair[0], coordPair[1]],
                     id: Math.floor(Math.random() * Math.floor(9999))
                   });
-                  return coordsToAdd;
                 }
               });
+              return coordsToAdd;
+            })
+            .then(coordsToAdd => {
               setCoordinatesToTransform([
                 ...coordinatesToTransform,
                 ...coordsToAdd
@@ -165,12 +165,12 @@ function App() {
             });
         }
       }
-    } else {
+    } /*else {
       // Use DataTransfer interface to access the file(s)
       for (var i = 0; i < ev.dataTransfer.files.length; i++) {
         ev.dataTransfer.files[i].text().then(text => console.log(text));
       }
-    }
+    }*/
   }
 
   return (
