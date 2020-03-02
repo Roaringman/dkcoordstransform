@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, TileLayer } from "react-leaflet";
 import styled from "styled-components";
-import logo from "./logo.svg";
 import "./App.css";
 
 import CoordinateToTransformSelecter from "./components/CoordinateToTransformSelecter";
@@ -95,6 +94,7 @@ function App() {
 
   async function iterateCoordinates() {
     for await (const val of asyncIterator) {
+      return val;
     }
   }
 
@@ -154,6 +154,7 @@ function App() {
                     sourceCoords: [coordPair[0], coordPair[1]],
                     id: Math.floor(Math.random() * Math.floor(9999))
                   });
+                  return coordsToAdd;
                 }
               });
               setCoordinatesToTransform([
@@ -166,9 +167,6 @@ function App() {
     } else {
       // Use DataTransfer interface to access the file(s)
       for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-        console.log(
-          "... yolo file[" + i + "].name = " + ev.dataTransfer.files[i]
-        );
         ev.dataTransfer.files[i].text().then(text => console.log(text));
       }
     }
