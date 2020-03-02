@@ -149,7 +149,7 @@ function App() {
               let coordsToAdd = [];
               items.map(coordPair => {
                 if (coordPair.length === 2) {
-                  coordsToAdd.push({
+                  return coordsToAdd.push({
                     sourceCoords: [coordPair[0], coordPair[1]],
                     id: Math.floor(Math.random() * Math.floor(9999))
                   });
