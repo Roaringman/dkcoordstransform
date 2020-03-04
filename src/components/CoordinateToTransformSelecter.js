@@ -6,10 +6,10 @@ const CoordinateAddForm = styled.div`
   flex-direction: column;
 `;
 
-function CoordinateToTransformSelecter(props) {
-  let secondComponent = 0;
-  let firstComponent = 0;
+let secondComponent = 0;
+let firstComponent = 0;
 
+function CoordinateToTransformSelecter(props) {
   return (
     <CoordinateAddForm>
       <form
@@ -22,7 +22,7 @@ function CoordinateToTransformSelecter(props) {
           type="number"
           name="first"
           value={firstComponent}
-          onChange={e => (firstComponent = e.target.value)}
+          onChange={e => (firstComponent = parseFloat(e.target.value))}
         />
 
         <br />
@@ -32,7 +32,7 @@ function CoordinateToTransformSelecter(props) {
           type="number"
           name="second"
           value={secondComponent}
-          onChange={e => (secondComponent = e.target.value)}
+          onChange={e => (secondComponent = parseFloat(e.target.value))}
         />
         <br />
         <input type="submit" value="Submit" />

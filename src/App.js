@@ -46,18 +46,36 @@ function App() {
     z-index: 3;
   `;
 
-  function submitTranslateRequest(coordinateObject) {
+  function submitTranslateRequest(
+    coordinateObject,
+    from,
+    to,
+    displayOrDesination,
+    isDisplayCoord
+  ) {
+    console.log(coordinateObject);
     let first, second;
-    [first, second] = coordinateObject.sourceCoords;
+    //If the required coordinate is for displaying, use the already calculated destination coordinate to transform to EPSG:4326
+    isDisplayCoord && coordinateObject.destinationCoords
+      ? ([first, second] = coordinateObject.destinationCoords)
+      : ([first, second] = coordinateObject.sourceCoords);
     if (srs.flat().includes(source) && srs.flat().includes(destination))
       fetch(
-        `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${source}/${destination}/${first},${second}?token=8336526c09097038d0436ba18e95153b`
+        `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${from}/${to}/${parseFloat(
+          first
+        ).toFixed(8)},${parseFloat(second).toFixed(
+          8
+        )}?token=8336526c09097038d0436ba18e95153b`
       )
         .then(response => {
           return response.json();
         })
         .then(result => {
-          addTransformedCoordinates(result, coordinateObject);
+          addTransformedCoordinates(
+            result,
+            coordinateObject,
+            displayOrDesination
+          );
         });
     else {
       console.log("Select a source and destination SRS");
@@ -75,8 +93,12 @@ function App() {
     ]);
   }
 
-  function addTransformedCoordinates(result, coordinateObject) {
-    coordinateObject["destinationCoords"] = [result.v1, result.v2];
+  function addTransformedCoordinates(
+    result,
+    coordinateObject,
+    displayOrDesination
+  ) {
+    coordinateObject[displayOrDesination] = [result.v1, result.v2];
     let newState = [...coordinatesToTransform];
     const index = newState.findIndex(e => e.id === coordinateObject.id);
     newState[index] = coordinateObject;
@@ -85,8 +107,55 @@ function App() {
 
   async function* run(coords) {
     for (const coord of coords) {
-      yield submitTranslateRequest(coord);
-      await delay(100);
+      if (coord.sourceCoords) {
+        if (source === "EPSG:4326" && destination !== "EPSG:4326") {
+          yield submitTranslateRequest(
+            coord,
+            source,
+            destination,
+            "destinationCoords",
+            false
+          );
+        }
+        if (destination === "EPSG:4326" && source !== "EPSG:4326") {
+          yield submitTranslateRequest(
+            coord,
+            source,
+            destination,
+            "destinationCoords",
+            false
+          );
+        }
+        //If neither source or destination is EPSG:4326, fetch twice to get destination and said srs.
+        if (destination !== "EPSG:4326" && source !== "EPSG:4326") {
+          yield submitTranslateRequest(
+            coord,
+            source,
+            destination,
+            "destinationCoords",
+            false
+          );
+        }
+
+        await delay(100);
+      } else {
+        console.log("Cannot transform undefined coordinates");
+      }
+    }
+
+    for (const coord of coords) {
+      if (
+        coord.destinationCoords &&
+        coord.destinationCoords[0] !== "undefiend"
+      ) {
+        yield submitTranslateRequest(
+          coord,
+          source,
+          "EPSG:4326",
+          "displayCoords",
+          true
+        );
+      }
     }
   }
 
@@ -123,15 +192,11 @@ function App() {
   }, []);
 
   function dragOverHandler(ev) {
-    console.log("File(s) in drop zone");
-
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
   }
 
   function dropHandler(ev) {
-    console.log("File(s) dropped");
-
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
 
@@ -185,15 +250,22 @@ function App() {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
 
-        {coordinatesToTransform.map((markerCords, i) => (
-          <Marker
-            key={i + "s"}
-            position={[
-              markerCords.sourceCoords[0],
-              markerCords.sourceCoords[1]
-            ]}
-          />
-        ))}
+        {coordinatesToTransform.map((markerCords, i) => {
+          if (
+            markerCords.displayCoords &&
+            typeof markerCords.displayCoords[0] === "number"
+          ) {
+            return (
+              <Marker
+                key={i + "s"}
+                position={[
+                  markerCords.displayCoords[0],
+                  markerCords.displayCoords[1]
+                ]}
+              />
+            );
+          }
+        })}
       </Map>
 
       <TransformSelectContainer>
