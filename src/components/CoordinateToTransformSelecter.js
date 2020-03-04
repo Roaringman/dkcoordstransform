@@ -6,8 +6,8 @@ const CoordinateAddForm = styled.div`
   flex-direction: column;
 `;
 
-let secondComponent = 0;
-let firstComponent = 0;
+let secondComponent = null;
+let firstComponent = null;
 
 function CoordinateToTransformSelecter(props) {
   return (
