@@ -371,7 +371,9 @@ function App() {
               />
 
               <OverflowUL>
-                <li>Add coordinates to transform</li>
+                {coordinatesToTransform.length === 0 ? (
+                  <li>Add coordinates to transform</li>
+                ) : null}
                 {coordinatesToTransform.map((li, i) => {
                   if (li.destinationCoords) {
                     return (
