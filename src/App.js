@@ -1,16 +1,100 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import styled from "styled-components";
+import { useMachine } from "@xstate/react";
+import { Machine } from "xstate";
 import "./App.css";
+import initializeSRS from "./functions/fetching";
+import dragAndDropHandlers from "./functions/dragAndDropHandlers";
 
 import CoordinateToTransformSelecter from "./components/CoordinateToTransformSelecter";
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
 
 function App() {
+  const transformMachine = Machine(
+    {
+      id: "coordinateTransformMachine",
+      initial: "initial",
+      context: { srs: [], sourceSrs: "", destinationSrs: "", coords: [] },
+      states: {
+        initial: {
+          entry: ["load"],
+          on: {
+            LOADED: {
+              target: "ready"
+            },
+            FAILED: "failed"
+          }
+        },
+        ready: {
+          initial: "allinactive",
+          states: {
+            allinactive: {
+              entry: ["reset"],
+              on: {
+                READYTOTRANSFORM: { target: "active", cond: "canTransform" },
+                RESET: { target: "allinactive" }
+              }
+            },
+            active: {
+              on: {
+                TRANSFORM: { target: "transforming" },
+                RESET: { target: "allinactive" }
+              }
+            },
+            transforming: {
+              on: {
+                FAILEDTOTRANSFORM: { target: "failedtotransform" },
+                SUCCESS: { target: "transformed" }
+              }
+            },
+            transformed: { on: { RESET: { target: "allinactive" } } },
+
+            failedtotransform: {
+              on: {
+                RESET: { target: "allinactive" }
+              }
+            }
+          }
+        },
+
+        failed: {}
+      }
+    },
+    {
+      guards: {
+        canTransform: context =>
+          context.sourceSrs !== "" &&
+          context.destinationSrs !== "" &&
+          context.coords.length >= 1
+      }
+    }
+  );
+
+  const { dragOverHandler, dropHandler } = dragAndDropHandlers;
   const [srs, setSrs] = useState([]);
   const [coordinatesToTransform, setCoordinatesToTransform] = useState([]);
   const [source, setSource] = useState("--Please choose an option--");
   const [destination, setDestination] = useState("--Please choose an option--");
+  const [current, send] = useMachine(transformMachine, {
+    actions: {
+      load: () => {
+        initializeSRS(current).then(result => {
+          current.context.srs = result.allSRS;
+          setSrs(current.context.srs);
+          send(result.state);
+        });
+      },
+      reset: context => {
+        context.sourceSrs = "";
+        context.destinationSrs = "";
+        context.coords = [];
+        setCoordinatesToTransform([]);
+        setSource("--Please choose an option--");
+        setDestination("--Please choose an option--");
+      }
+    }
+  });
 
   const Title = styled.h1`
     position: relative;
@@ -32,18 +116,36 @@ function App() {
     z-index: 3;
   `;
 
-  const CoordinatesToTransform = styled.div`
+  const UIContainer = styled.div`
     display: flex;
     position: relative;
     flex-direction: column;
     align-items: start;
     min-height: 20vh;
-    max-height: 50vh;
+    height: 50vh;
     margin: 2rem;
     width: 20vw;
-    overflow: auto;
     background-color: palevioletred;
     z-index: 3;
+  `;
+
+  const ProgressItem = styled.div`
+    position: relative;
+    background-color: pink;
+    height: 25%;
+    width: 100%;
+  `;
+
+  const FlexRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  `;
+
+  const OverflowUL = styled.ul`
+    max-height: 70%;
+    overflow: auto;
+    width: calc(100% - 2.5rem);
   `;
 
   function submitTranslateRequest(
@@ -53,12 +155,12 @@ function App() {
     displayOrDesination,
     isDisplayCoord
   ) {
-    console.log(coordinateObject);
     let first, second;
     //If the required coordinate is for displaying, use the already calculated destination coordinate to transform to EPSG:4326
     isDisplayCoord && coordinateObject.destinationCoords
       ? ([first, second] = coordinateObject.destinationCoords)
       : ([first, second] = coordinateObject.sourceCoords);
+
     if (srs.flat().includes(source) && srs.flat().includes(destination))
       fetch(
         `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${from}/${to}/${parseFloat(
@@ -68,7 +170,11 @@ function App() {
         )}?token=8336526c09097038d0436ba18e95153b`
       )
         .then(response => {
-          return response.json();
+          if (!response.ok) {
+            throw response;
+          } else {
+            return response.json();
+          }
         })
         .then(result => {
           addTransformedCoordinates(
@@ -76,13 +182,22 @@ function App() {
             coordinateObject,
             displayOrDesination
           );
+        })
+        .catch(error => {
+          error.json().then(errorMessage => {
+            if (
+              errorMessage.message ===
+              "CRS's are not compatible across countries"
+            ) {
+              send("FAILEDTOTRANSFORM");
+            }
+          });
         });
-    else {
-      console.log("Select a source and destination SRS");
-    }
   }
 
   function addCoordinatesToTransform(evt, first, second) {
+    current.context.coords.push([first, second]);
+
     evt.preventDefault();
     setCoordinatesToTransform([
       ...coordinatesToTransform,
@@ -91,6 +206,10 @@ function App() {
         id: Math.floor(Math.random() * Math.floor(9999))
       }
     ]);
+
+    if (current.matches("ready.allinactive")) {
+      send("READYTOTRANSFORM");
+    }
   }
 
   function addTransformedCoordinates(
@@ -106,66 +225,74 @@ function App() {
   }
 
   async function* run(coords) {
-    for (const coord of coords) {
-      if (coord.sourceCoords) {
-        if (source === "EPSG:4326" && destination !== "EPSG:4326") {
-          yield submitTranslateRequest(
-            coord,
-            source,
-            destination,
-            "destinationCoords",
-            false
-          );
-        }
-        if (destination === "EPSG:4326" && source !== "EPSG:4326") {
-          yield submitTranslateRequest(
-            coord,
-            source,
-            destination,
-            "destinationCoords",
-            false
-          );
-        }
-        //If neither source or destination is EPSG:4326, fetch twice to get destination and said srs.
-        if (destination !== "EPSG:4326" && source !== "EPSG:4326") {
-          yield submitTranslateRequest(
-            coord,
-            source,
-            destination,
-            "destinationCoords",
-            false
-          );
-        }
+    if (!current.matches("ready.transformed")) {
+      for (const coord of coords) {
+        if (coord.sourceCoords) {
+          if (source === "EPSG:4326" && destination !== "EPSG:4326") {
+            yield submitTranslateRequest(
+              coord,
+              source,
+              destination,
+              "destinationCoords",
+              false
+            );
+          }
+          if (destination === "EPSG:4326" && source !== "EPSG:4326") {
+            coordinatesToTransform.displayCoords.push(coord.sourceCoords);
+            yield submitTranslateRequest(
+              coord,
+              source,
+              destination,
+              "destinationCoords",
+              false
+            );
+          }
+          //If neither source or destination is EPSG:4326, fetch twice to get destination and said srs.
+          if (destination !== "EPSG:4326" && source !== "EPSG:4326") {
+            yield submitTranslateRequest(
+              coord,
+              source,
+              destination,
+              "destinationCoords",
+              false
+            );
+          }
 
-        await delay(100);
-      } else {
-        console.log("Cannot transform undefined coordinates");
+          await delay(100);
+        }
       }
-    }
 
-    for (const coord of coords) {
-      if (
-        coord.destinationCoords &&
-        coord.destinationCoords[0] !== "undefiend"
-      ) {
-        yield submitTranslateRequest(
-          coord,
-          source,
-          "EPSG:4326",
-          "displayCoords",
-          true
-        );
+      for (const coord of coords) {
+        if (
+          coord.destinationCoords &&
+          coord.destinationCoords[0] !== "undefined"
+        ) {
+          yield submitTranslateRequest(
+            coord,
+            destination,
+            "EPSG:4326",
+            "displayCoords",
+            true
+          );
+        }
       }
     }
   }
 
-  const asyncIterator = run(coordinatesToTransform);
-
   async function iterateCoordinates() {
+    const asyncIterator = run(coordinatesToTransform);
+    send("TRANSFORM");
+
+    //if (current.matches("ready.active")) {
+    send("TRANSFORM");
+
     for await (const val of asyncIterator) {
       console.log(val);
       continue;
     }
+
+    send("SUCCESS");
+    // }
   }
 
   function delay(ms) {
@@ -174,141 +301,121 @@ function App() {
     });
   }
 
-  useEffect(() => {
-    const allSRS = [];
-    fetch(
-      "https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/?token=8336526c09097038d0436ba18e95153b"
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(SRSJson => {
-        for (let [key, value] of Object.entries(SRSJson)) {
-          allSRS.push(key);
-          allSRS.push(value);
-        }
-        setSrs(allSRS);
-      });
-  }, []);
-
-  function dragOverHandler(ev) {
-    // Prevent default behavior (Prevent file from being opened)
-    ev.preventDefault();
+  function reset() {
+    send("RESET");
   }
 
-  function dropHandler(ev) {
-    // Prevent default behavior (Prevent file from being opened)
-    ev.preventDefault();
+  switch (true) {
+    case current.matches("initial"):
+      return <div> Loading </div>;
+    case current.matches("failed"):
+      return <div> Failed to fetch required ressources </div>;
+    case current.matches("ready"):
+      return (
+        <div className="App">
+          <header className="App-header">
+            <Title>Danish Coordinate Transformer (Alpha)</Title>
+          </header>
 
-    if (ev.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-        // If dropped items aren't files, reject them
-        if (ev.dataTransfer.items[i].kind === "file") {
-          var file = ev.dataTransfer.items[i].getAsFile();
-          file
-            .text()
-            .then(text => text.split("\r\n"))
-            .then(arr => arr.map(item => item.split(",")))
-            .then(items => {
-              let coordsToAdd = [];
-              items.map(coordPair => {
-                if (coordPair.length === 2) {
-                  return coordsToAdd.push({
-                    sourceCoords: [coordPair[0], coordPair[1]],
-                    id: Math.floor(Math.random() * Math.floor(9999))
-                  });
-                }
-              });
-              return coordsToAdd;
-            })
-            .then(coordsToAdd => {
-              setCoordinatesToTransform([
-                ...coordinatesToTransform,
-                ...coordsToAdd
-              ]);
-            });
-        }
-      }
-    } /*else {
-      // Use DataTransfer interface to access the file(s)
-      for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-        ev.dataTransfer.files[i].text().then(text => console.log(text));
-      }
-    }*/
-  }
+          <Map center={[54.88484306, 11.2214225]} zoom={12}>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Title>Danish Coordinate Transformer (Alpha)</Title>
-      </header>
+            {coordinatesToTransform.map((markerCords, i) => {
+              if (
+                markerCords.displayCoords &&
+                typeof markerCords.displayCoords[0] === "number"
+              ) {
+                return (
+                  <Marker
+                    key={i + "s"}
+                    position={[
+                      markerCords.displayCoords[0],
+                      markerCords.displayCoords[1]
+                    ]}
+                  />
+                );
+              }
+            })}
+          </Map>
 
-      <Map center={[54.88484306, 11.2214225]} zoom={12}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
+          <TransformSelectContainer>
+            <SourceDestinationSelecter
+              source={source}
+              destination={destination}
+              setSource={setSource}
+              setDestination={setDestination}
+              srs={srs}
+              machineContext={current.context}
+              send={send}
+              current={current}
+            />
+          </TransformSelectContainer>
 
-        {coordinatesToTransform.map((markerCords, i) => {
-          if (
-            markerCords.displayCoords &&
-            typeof markerCords.displayCoords[0] === "number"
-          ) {
-            return (
-              <Marker
-                key={i + "s"}
-                position={[
-                  markerCords.displayCoords[0],
-                  markerCords.displayCoords[1]
-                ]}
+          <FlexRow>
+            <UIContainer
+              id="drop_zone"
+              onDrop={e =>
+                dropHandler(
+                  e,
+                  setCoordinatesToTransform,
+                  coordinatesToTransform
+                )
+              }
+              onDragOver={e => dragOverHandler(e)}
+            >
+              <CoordinateToTransformSelecter
+                addCoordinatesToTransform={addCoordinatesToTransform}
               />
-            );
-          }
-        })}
-      </Map>
 
-      <TransformSelectContainer>
-        <SourceDestinationSelecter
-          source={source}
-          destination={destination}
-          setSource={setSource}
-          setDestination={setDestination}
-          srs={srs}
-        />
-      </TransformSelectContainer>
+              <OverflowUL>
+                <li>Add coordinates to transform</li>
+                {coordinatesToTransform.map((li, i) => {
+                  if (li.destinationCoords) {
+                    return (
+                      <li
+                        key={i}
+                      >{`${li.destinationCoords[0]}, ${li.destinationCoords[1]}`}</li>
+                    );
+                  } else {
+                    return (
+                      <li
+                        key={i}
+                      >{`${li.sourceCoords[0]}, ${li.sourceCoords[1]}`}</li>
+                    );
+                  }
+                })}
+              </OverflowUL>
+              <button onClick={iterateCoordinates}> Transform </button>
+            </UIContainer>
 
-      <CoordinatesToTransform
-        id="drop_zone"
-        onDrop={e => dropHandler(e)}
-        onDragOver={e => dragOverHandler(e)}
-      >
-        <CoordinateToTransformSelecter
-          addCoordinatesToTransform={addCoordinatesToTransform}
-        />
-        <button onClick={iterateCoordinates}> Transform </button>
-
-        <ul>
-          <li>Add coordinates to transform</li>
-          {coordinatesToTransform.map((li, i) => {
-            if (li.destinationCoords) {
-              return (
-                <li
-                  key={i}
-                >{`${li.destinationCoords[0]}, ${li.destinationCoords[1]}`}</li>
-              );
-            } else {
-              return (
-                <li
-                  key={i}
-                >{`${li.sourceCoords[0]}, ${li.sourceCoords[1]}`}</li>
-              );
-            }
-          })}
-        </ul>
-      </CoordinatesToTransform>
-    </div>
-  );
+            <UIContainer>
+              <ProgressItem>
+                {current.context.sourceSrs &&
+                current.context.destinationSrs !== ""
+                  ? "Done"
+                  : "Choose spatial reference systems"}
+              </ProgressItem>
+              <ProgressItem>
+                {current.context.coords.length > 0
+                  ? "Done"
+                  : "Add coordinates to transform"}
+              </ProgressItem>
+              <ProgressItem>
+                {current.matches("ready.transformed")
+                  ? "Done"
+                  : "Transform coordinates"}
+              </ProgressItem>
+              <button onClick={reset}> Reset </button>
+            </UIContainer>
+          </FlexRow>
+        </div>
+      );
+    default:
+      return <div>Switch Logic went wrong!</div>;
+  }
 }
 
 export default App;
