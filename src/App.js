@@ -236,7 +236,6 @@ function App() {
     newState[index] = coordinateObject;
     setCoordinatesToTransform(newState);
 
-    console.log(coordinatesToTransform);
   }
 
   async function* run(coords) {
@@ -299,7 +298,7 @@ function App() {
     send("TRANSFORM");
     for await (const val of asyncIterator) {
       console.log(val);
-      console.log(current.value);
+   
       continue;
     }
     send("SUCCESS");
