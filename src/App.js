@@ -39,7 +39,8 @@ function App() {
             active: {
               on: {
                 TRANSFORM: { target: "transforming" },
-                RESET: { target: "allinactive" }
+                RESET: { target: "allinactive" },
+                FAILEDTOTRANSFORM: { target: "failedtotransform" }
               }
             },
             transforming: {
@@ -76,6 +77,8 @@ function App() {
   const [coordinatesToTransform, setCoordinatesToTransform] = useState([]);
   const [source, setSource] = useState("--Please choose an option--");
   const [destination, setDestination] = useState("--Please choose an option--");
+  const incompatibleSRSError =
+    "It is not possible to transform between the selected coordinate systems. Press Reset to choose new settings.";
   const [current, send] = useMachine(transformMachine, {
     actions: {
       load: () => {
@@ -180,7 +183,8 @@ function App() {
           addTransformedCoordinates(
             result,
             coordinateObject,
-            displayOrDesination
+            displayOrDesination,
+            1 // success
           );
         })
         .catch(error => {
@@ -190,6 +194,13 @@ function App() {
               "CRS's are not compatible across countries"
             ) {
               send("FAILEDTOTRANSFORM");
+            } else {
+              addTransformedCoordinates(
+                { v1: null, v2: null },
+                coordinateObject,
+                displayOrDesination,
+                2 // out of bounds
+              );
             }
           });
         });
@@ -215,13 +226,17 @@ function App() {
   function addTransformedCoordinates(
     result,
     coordinateObject,
-    displayOrDesination
+    displayOrDesination,
+    responseState
   ) {
     coordinateObject[displayOrDesination] = [result.v1, result.v2];
+    coordinateObject["responseState"] = responseState;
     let newState = [...coordinatesToTransform];
     const index = newState.findIndex(e => e.id === coordinateObject.id);
     newState[index] = coordinateObject;
     setCoordinatesToTransform(newState);
+
+    console.log(coordinatesToTransform);
   }
 
   async function* run(coords) {
@@ -282,17 +297,12 @@ function App() {
   async function iterateCoordinates() {
     const asyncIterator = run(coordinatesToTransform);
     send("TRANSFORM");
-
-    //if (current.matches("ready.active")) {
-    send("TRANSFORM");
-
     for await (const val of asyncIterator) {
       console.log(val);
+      console.log(current.value);
       continue;
     }
-
     send("SUCCESS");
-    // }
   }
 
   function delay(ms) {
@@ -374,21 +384,27 @@ function App() {
                 {coordinatesToTransform.length === 0 ? (
                   <li>Add coordinates to transform</li>
                 ) : null}
-                {coordinatesToTransform.map((li, i) => {
-                  if (li.destinationCoords) {
-                    return (
-                      <li
-                        key={i}
-                      >{`${li.destinationCoords[0]}, ${li.destinationCoords[1]}`}</li>
-                    );
-                  } else {
-                    return (
-                      <li
-                        key={i}
-                      >{`${li.sourceCoords[0]}, ${li.sourceCoords[1]}`}</li>
-                    );
-                  }
-                })}
+                {current.matches("ready.failedtotransform") ? (
+                  <p>{incompatibleSRSError}</p>
+                ) : (
+                  coordinatesToTransform.map((li, i) => {
+                    if (li.destinationCoords) {
+                      return (
+                        <li key={i}>
+                          {li.responseState === 1
+                            ? `${li.destinationCoords[0]}, ${li.destinationCoords[1]}`
+                            : `Coordinates out of bounds`}
+                        </li>
+                      );
+                    } else {
+                      return (
+                        <li
+                          key={i}
+                        >{`${li.sourceCoords[0]}, ${li.sourceCoords[1]}`}</li>
+                      );
+                    }
+                  })
+                )}
               </OverflowUL>
               <button onClick={iterateCoordinates}> Transform </button>
             </UIContainer>
