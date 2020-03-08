@@ -164,6 +164,7 @@ function App() {
       ? ([first, second] = coordinateObject.destinationCoords)
       : ([first, second] = coordinateObject.sourceCoords);
 
+    console.log(from, to);
     if (srs.flat().includes(source) && srs.flat().includes(destination))
       fetch(
         `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${from}/${to}/${parseFloat(
@@ -235,7 +236,6 @@ function App() {
     const index = newState.findIndex(e => e.id === coordinateObject.id);
     newState[index] = coordinateObject;
     setCoordinatesToTransform(newState);
-
   }
 
   async function* run(coords) {
@@ -298,7 +298,7 @@ function App() {
     send("TRANSFORM");
     for await (const val of asyncIterator) {
       console.log(val);
-   
+
       continue;
     }
     send("SUCCESS");
@@ -326,7 +326,7 @@ function App() {
             <Title>Danish Coordinate Transformer (Alpha)</Title>
           </header>
 
-          <Map center={[54.88484306, 11.2214225]} zoom={12}>
+          <Map center={[56.88484306, 11.2214225]} zoom={7}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
