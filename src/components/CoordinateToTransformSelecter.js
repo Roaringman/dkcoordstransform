@@ -21,7 +21,7 @@ function CoordinateToTransformSelecter(props) {
         <input
           type="text"
           inputmode="numeric"
-          pattern="^[-+]?([1-8]?\d(\.\d+)?|100000000(\.0+)?)"
+          pattern="^[-]?\d+\.?\d+$"
           name="first"
           onChange={e => (firstComponent = parseFloat(e.target.value))}
         />
@@ -32,7 +32,7 @@ function CoordinateToTransformSelecter(props) {
         <input
           type="text"
           inputmode="numeric"
-          pattern="[-+]?(100000000(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$"
+          pattern="^[-]?\d+\.?\d+$"
           name="second"
           //value={value => secondComponent + value}
           onChange={e => (secondComponent = parseFloat(e.target.value))}

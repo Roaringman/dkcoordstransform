@@ -6,6 +6,7 @@ import { Machine } from "xstate";
 import "./App.css";
 import initializeSRS from "./functions/fetching";
 import dragAndDropHandlers from "./functions/dragAndDropHandlers";
+import generateRandomID from "./functions/generateRandomID";
 
 import CoordinateToTransformSelecter from "./components/CoordinateToTransformSelecter";
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
@@ -215,7 +216,7 @@ function App() {
       ...coordinatesToTransform,
       {
         sourceCoords: [first, second],
-        id: Math.floor(Math.random() * Math.floor(9999))
+        id: generateRandomID(8)
       }
     ]);
 
@@ -236,6 +237,8 @@ function App() {
     const index = newState.findIndex(e => e.id === coordinateObject.id);
     newState[index] = coordinateObject;
     setCoordinatesToTransform(newState);
+
+    console.log(coordinatesToTransform);
   }
 
   async function* run(coords) {
@@ -391,6 +394,8 @@ function App() {
                       return (
                         <li key={i}>
                           {li.responseState === 1
+                            ? `${li.destinationCoords[0]}, ${li.destinationCoords[1]}`
+                            : li.destinationCoords[0] !== null
                             ? `${li.destinationCoords[0]}, ${li.destinationCoords[1]}`
                             : `Coordinates out of bounds`}
                         </li>
