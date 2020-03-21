@@ -57,7 +57,7 @@ export const StatusContainer = styled.div`
   grid-column-start: 11;
   grid-column-end: 12;
   grid-row-start: 3;
-  grid-row-end: 7;
+  grid-row-end: 6;
   background-color: ${blues["300"]};
   z-index: 3;
 `;
@@ -93,8 +93,7 @@ export const CoordinateAddForm = styled.div`
   flex-direction: column;
   min-height: 20%;
   width: 100%;
-  z-index: 4;
-  margin-buttom: 20pxnp;
+  margin-buttom: 20px;
 `;
 
 export const BtnContainer = styled.div`
@@ -156,6 +155,7 @@ export const ResetBtn = styled.button`
 
 export const ResetBtnHighlight = styled(ResetBtn)`
   background-color: rgba(116, 217, 159, 0.8);
+  color: ${grays["100"]};
 `;
 
 export const InputTableRow = styled.tr`

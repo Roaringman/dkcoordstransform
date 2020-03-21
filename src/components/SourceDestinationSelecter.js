@@ -31,7 +31,6 @@ function SourceDestinationSelecter(props) {
           onChange={e => {
             setSource(e.target.value);
             machineContext.sourceSrs = e.target.value;
-
             if (current.matches("ready.allinactive")) {
               send("READYTOTRANSFORM");
             }

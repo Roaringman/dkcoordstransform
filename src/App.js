@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Map, Marker, TileLayer } from "react-leaflet";
 import { useMachine } from "@xstate/react";
 import { transformMachine } from "./components/machine";
 import "./App.css";
@@ -24,6 +23,7 @@ import {
 import CoordinateToTransformSelecter from "./components/CoordinateToTransformSelecter";
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
 import CoordinateLI from "./components/CoordinateLI";
+import LeafMap from "./components/LeafMap";
 
 function App() {
   const { dragOverHandler, dropHandler } = dragAndDropHandlers;
@@ -245,30 +245,7 @@ function App() {
           }
           onDragOver={e => dragOverHandler(e)}
         >
-          <Map center={[56.88484306, 11.2214225]} zoom={7}>
-            <TileLayer
-              url="https://api.mapbox.com/styles/v1/rgengell/ck5sntzl51eyy1imfdnwkqnhp/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmdlbmdlbGwiLCJhIjoiY2pjaXdxaW5wMXkwbjJ4bzA2OG5iYXc2diJ9.WusoFmQuICEWtBh0pKioMQ"
-              attribution='&copy;  <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            />
-
-            {coordinatesToTransform.map((markerCords, i) => {
-              if (
-                markerCords.displayCoords &&
-                typeof markerCords.displayCoords[0] === "number"
-              ) {
-                return (
-                  <Marker
-                    key={i + "s"}
-                    position={[
-                      markerCords.displayCoords[0],
-                      markerCords.displayCoords[1]
-                    ]}
-                  />
-                );
-              }
-            })}
-          </Map>
-
+          <LeafMap markerCoordinates={coordinatesToTransform}></LeafMap>
           <TransformSelectContainer>
             <TransformSelectGrid>
               <SourceDestinationSelecter
