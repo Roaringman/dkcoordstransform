@@ -1,5 +1,12 @@
 import React from "react";
 import SrsOptions from "./srsOptions";
+import {
+  SrsFrom,
+  SrsTo,
+  SrsSelect,
+  SrsTitle,
+  SrsLabel
+} from "../styles/elements";
 
 function SourceDestinationSelecter(props) {
   let {
@@ -15,32 +22,36 @@ function SourceDestinationSelecter(props) {
 
   return (
     <>
-      <label htmlFor="source-select"> </label>
-      You are converting from
-      <select
-        id="source-select"
-        onChange={e => {
-          setSource(e.target.value);
-          machineContext.sourceSrs = e.target.value;
+      <SrsTitle>Transform</SrsTitle>
 
-          if (current.matches("ready.allinactive")) {
-            send("READYTOTRANSFORM");
-            console.log(current.value);
-          }
-        }}
-      >
-        <option value={source}>{source}</option>
-        {srs.map(srs => {
-          if (typeof srs !== "string") {
-            return <SrsOptions key={`${srs}-source`} srs={srs}></SrsOptions>;
-          } else {
-            return <optgroup key={`${srs}-source`} label={srs}></optgroup>;
-          }
-        })}
-      </select>
-      <label htmlFor="destination-select">
-        to
-        <select
+      <SrsFrom>
+        <SrsLabel htmlFor="source-select">From</SrsLabel>
+        <SrsSelect
+          id="source-select"
+          onChange={e => {
+            setSource(e.target.value);
+            machineContext.sourceSrs = e.target.value;
+
+            if (current.matches("ready.allinactive")) {
+              send("READYTOTRANSFORM");
+              console.log(current.value);
+            }
+          }}
+        >
+          <option value={source}>{source}</option>
+          {srs.map(srs => {
+            if (typeof srs !== "string") {
+              return <SrsOptions key={`${srs}-source`} srs={srs}></SrsOptions>;
+            } else {
+              return <optgroup key={`${srs}-source`} label={srs}></optgroup>;
+            }
+          })}
+        </SrsSelect>
+      </SrsFrom>
+
+      <SrsTo>
+        <SrsLabel htmlFor="destination-select">To</SrsLabel>
+        <SrsSelect
           id="destination-select"
           onChange={e => {
             setDestination(e.target.value);
@@ -59,8 +70,8 @@ function SourceDestinationSelecter(props) {
               return <optgroup key={`${srs}-dest`} label={srs}></optgroup>;
             }
           })}
-        </select>
-      </label>
+        </SrsSelect>
+      </SrsTo>
     </>
   );
 }

@@ -1,78 +1,29 @@
 import React, { useState } from "react";
 import { Map, Marker, TileLayer } from "react-leaflet";
-import styled from "styled-components";
 import { useMachine } from "@xstate/react";
-import { Machine } from "xstate";
+import { transformMachine } from "./components/machine";
 import "./App.css";
 import initializeSRS from "./functions/fetching";
 import dragAndDropHandlers from "./functions/dragAndDropHandlers";
 import generateRandomID from "./functions/generateRandomID";
+import {
+  Title,
+  TransformSelectContainer,
+  TransformSelectGrid,
+  UIContainer,
+  ProgressItem,
+  StatusContainer,
+  OverflowUL,
+  BtnContainer,
+  ActiveBtn,
+  InactiveBtn
+} from "./styles/elements";
 
 import CoordinateToTransformSelecter from "./components/CoordinateToTransformSelecter";
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
+import CoordinateLI from "./components/CoordinateLI";
 
 function App() {
-  const transformMachine = Machine(
-    {
-      id: "coordinateTransformMachine",
-      initial: "initial",
-      context: { srs: [], sourceSrs: "", destinationSrs: "", coords: [] },
-      states: {
-        initial: {
-          entry: ["load"],
-          on: {
-            LOADED: {
-              target: "ready"
-            },
-            FAILED: "failed"
-          }
-        },
-        ready: {
-          initial: "allinactive",
-          states: {
-            allinactive: {
-              entry: ["reset"],
-              on: {
-                READYTOTRANSFORM: { target: "active", cond: "canTransform" },
-                RESET: { target: "allinactive" }
-              }
-            },
-            active: {
-              on: {
-                TRANSFORM: { target: "transforming" },
-                RESET: { target: "allinactive" },
-                FAILEDTOTRANSFORM: { target: "failedtotransform" }
-              }
-            },
-            transforming: {
-              on: {
-                FAILEDTOTRANSFORM: { target: "failedtotransform" },
-                SUCCESS: { target: "transformed" }
-              }
-            },
-            transformed: { on: { RESET: { target: "allinactive" } } },
-
-            failedtotransform: {
-              on: {
-                RESET: { target: "allinactive" }
-              }
-            }
-          }
-        },
-
-        failed: {}
-      }
-    },
-    {
-      guards: {
-        canTransform: context =>
-          context.sourceSrs !== "" &&
-          context.destinationSrs !== "" &&
-          context.coords.length >= 1
-      }
-    }
-  );
-
   const { dragOverHandler, dropHandler } = dragAndDropHandlers;
   const [srs, setSrs] = useState([]);
   const [coordinatesToTransform, setCoordinatesToTransform] = useState([]);
@@ -100,57 +51,14 @@ function App() {
     }
   });
 
-  const Title = styled.h1`
-    position: relative;
-    z-index: 3;
-    font-size: 1.5em;
-    text-align: center;
-    color: palevioletred;
-  `;
-
-  const TransformSelectContainer = styled.div`
-    display: flex;
-    position: relative;
-
-    height: 20vh;
-    width: 100vw;
-    align-items: center;
-    justify-content: center;
-    background-color: palevioletred;
-    z-index: 3;
-  `;
-
-  const UIContainer = styled.div`
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    align-items: start;
-    min-height: 20vh;
-    height: 50vh;
-    margin: 2rem;
-    width: 20vw;
-    background-color: palevioletred;
-    z-index: 3;
-  `;
-
-  const ProgressItem = styled.div`
-    position: relative;
-    background-color: pink;
-    height: 25%;
-    width: 100%;
-  `;
-
-  const FlexRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  `;
-
-  const OverflowUL = styled.ul`
-    max-height: 70%;
-    overflow: auto;
-    width: calc(100% - 2.5rem);
-  `;
+  function createCoordinateString(coordinateComponentList) {
+    let coordinateString = "";
+    coordinateString += `${parseFloat(coordinateComponentList[0]).toFixed(8)}`;
+    coordinateString += `,${parseFloat(coordinateComponentList[1]).toFixed(8)}`;
+    if (coordinateComponentList[2])
+      coordinateString += `,${coordinateComponentList[2]}`;
+    return coordinateString;
+  }
 
   function submitTranslateRequest(
     coordinateObject,
@@ -165,13 +73,14 @@ function App() {
       ? ([first, second] = coordinateObject.destinationCoords)
       : ([first, second] = coordinateObject.sourceCoords);
 
-    console.log(from, to);
+    const coordinateComponents = [first, second];
+    if (coordinateObject.sourceCoords[2])
+      coordinateComponents.push(coordinateObject.sourceCoords[2]);
+
     if (srs.flat().includes(source) && srs.flat().includes(destination))
       fetch(
-        `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${from}/${to}/${parseFloat(
-          first
-        ).toFixed(8)},${parseFloat(second).toFixed(
-          8
+        `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${from}/${to}/${createCoordinateString(
+          coordinateComponents
         )}?token=8336526c09097038d0436ba18e95153b`
       )
         .then(response => {
@@ -208,14 +117,17 @@ function App() {
         });
   }
 
-  function addCoordinatesToTransform(evt, first, second) {
-    current.context.coords.push([first, second]);
+  function addCoordinatesToTransform(evt, longitude, latitude, height) {
+    current.context.coords.push([longitude, latitude]);
+
+    const coordinate = [longitude, latitude];
+    if (height) coordinate.push(height);
 
     evt.preventDefault();
     setCoordinatesToTransform([
       ...coordinatesToTransform,
       {
-        sourceCoords: [first, second],
+        sourceCoords: coordinate,
         id: generateRandomID(8)
       }
     ]);
@@ -237,8 +149,6 @@ function App() {
     const index = newState.findIndex(e => e.id === coordinateObject.id);
     newState[index] = coordinateObject;
     setCoordinatesToTransform(newState);
-
-    console.log(coordinatesToTransform);
   }
 
   async function* run(coords) {
@@ -298,9 +208,10 @@ function App() {
 
   async function iterateCoordinates() {
     const asyncIterator = run(coordinatesToTransform);
-    send("TRANSFORM");
     for await (const val of asyncIterator) {
-      console.log(val);
+      send("TRANSFORM");
+
+      console.log(current.value);
 
       continue;
     }
@@ -324,15 +235,18 @@ function App() {
       return <div> Failed to fetch required ressources </div>;
     case current.matches("ready"):
       return (
-        <div className="App">
-          <header className="App-header">
-            <Title>Danish Coordinate Transformer (Alpha)</Title>
-          </header>
-
+        <div
+          className="App"
+          id="drop_zone"
+          onDrop={e =>
+            dropHandler(e, setCoordinatesToTransform, coordinatesToTransform)
+          }
+          onDragOver={e => dragOverHandler(e)}
+        >
           <Map center={[56.88484306, 11.2214225]} zoom={7}>
             <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://api.mapbox.com/styles/v1/rgengell/ck5sntzl51eyy1imfdnwkqnhp/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmdlbmdlbGwiLCJhIjoiY2pjaXdxaW5wMXkwbjJ4bzA2OG5iYXc2diJ9.WusoFmQuICEWtBh0pKioMQ"
+              attribution='&copy;  <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             />
 
             {coordinatesToTransform.map((markerCords, i) => {
@@ -354,85 +268,72 @@ function App() {
           </Map>
 
           <TransformSelectContainer>
-            <SourceDestinationSelecter
-              source={source}
-              destination={destination}
-              setSource={setSource}
-              setDestination={setDestination}
-              srs={srs}
-              machineContext={current.context}
-              send={send}
-              current={current}
-            />
+            <TransformSelectGrid>
+              <SourceDestinationSelecter
+                source={source}
+                destination={destination}
+                setSource={setSource}
+                setDestination={setDestination}
+                srs={srs}
+                machineContext={current.context}
+                send={send}
+                current={current}
+              />
+            </TransformSelectGrid>
           </TransformSelectContainer>
 
-          <FlexRow>
-            <UIContainer
-              id="drop_zone"
-              onDrop={e =>
-                dropHandler(
-                  e,
-                  setCoordinatesToTransform,
-                  coordinatesToTransform
-                )
-              }
-              onDragOver={e => dragOverHandler(e)}
-            >
-              <CoordinateToTransformSelecter
-                addCoordinatesToTransform={addCoordinatesToTransform}
-              />
+          <UIContainer>
+            <CoordinateToTransformSelecter
+              addCoordinatesToTransform={addCoordinatesToTransform}
+            />
 
-              <OverflowUL>
-                {coordinatesToTransform.length === 0 ? (
-                  <li>Add coordinates to transform</li>
-                ) : null}
-                {current.matches("ready.failedtotransform") ? (
-                  <p>{incompatibleSRSError}</p>
-                ) : (
-                  coordinatesToTransform.map((li, i) => {
-                    if (li.destinationCoords) {
-                      return (
-                        <li key={i}>
-                          {li.responseState === 1
-                            ? `${li.destinationCoords[0]}, ${li.destinationCoords[1]}`
-                            : li.destinationCoords[0] !== null
-                            ? `${li.destinationCoords[0]}, ${li.destinationCoords[1]}`
-                            : `Coordinates out of bounds`}
-                        </li>
-                      );
-                    } else {
-                      return (
-                        <li
-                          key={i}
-                        >{`${li.sourceCoords[0]}, ${li.sourceCoords[1]}`}</li>
-                      );
-                    }
-                  })
-                )}
-              </OverflowUL>
-              <button onClick={iterateCoordinates}> Transform </button>
-            </UIContainer>
+            <OverflowUL>
+              {coordinatesToTransform.length === 0 ? (
+                <li>Add coordinates to transform</li>
+              ) : null}
+              {current.matches("ready.failedtotransform") ? (
+                <p>{incompatibleSRSError}</p>
+              ) : (
+                coordinatesToTransform.map((coordinates, i) => {
+                  return (
+                    <CoordinateLI
+                      key={i}
+                      coordinates={coordinates}
+                    ></CoordinateLI>
+                  );
+                })
+              )}
+            </OverflowUL>
+            <BtnContainer>
+              {current.matches("ready.active") ? (
+                <ActiveBtn onClick={iterateCoordinates}>Transform</ActiveBtn>
+              ) : (
+                <InactiveBtn> Transform </InactiveBtn>
+              )}
 
-            <UIContainer>
-              <ProgressItem>
-                {current.context.sourceSrs &&
-                current.context.destinationSrs !== ""
-                  ? "Done"
-                  : "Choose spatial reference systems"}
-              </ProgressItem>
-              <ProgressItem>
-                {current.context.coords.length > 0
-                  ? "Done"
-                  : "Add coordinates to transform"}
-              </ProgressItem>
-              <ProgressItem>
-                {current.matches("ready.transformed")
-                  ? "Done"
-                  : "Transform coordinates"}
-              </ProgressItem>
-              <button onClick={reset}> Reset </button>
-            </UIContainer>
-          </FlexRow>
+              <InactiveBtn> Download Result </InactiveBtn>
+            </BtnContainer>
+          </UIContainer>
+
+          <StatusContainer>
+            <ProgressItem>
+              {current.context.sourceSrs &&
+              current.context.destinationSrs !== ""
+                ? "Done"
+                : "Choose spatial reference systems"}
+            </ProgressItem>
+            <ProgressItem>
+              {current.context.coords.length > 0
+                ? "Done"
+                : "Add coordinates to transform"}
+            </ProgressItem>
+            <ProgressItem>
+              {current.matches("ready.transformed")
+                ? "Done"
+                : "Transform coordinates"}
+            </ProgressItem>
+            <button onClick={reset}> Reset </button>
+          </StatusContainer>
         </div>
       );
     default:
