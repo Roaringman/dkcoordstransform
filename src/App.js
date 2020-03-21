@@ -16,7 +16,9 @@ import {
   OverflowUL,
   BtnContainer,
   ActiveBtn,
-  InactiveBtn
+  InactiveBtn,
+  ResetBtn,
+  ResetBtnHighlight
 } from "./styles/elements";
 
 import CoordinateToTransformSelecter from "./components/CoordinateToTransformSelecter";
@@ -45,8 +47,6 @@ function App() {
         context.destinationSrs = "";
         context.coords = [];
         setCoordinatesToTransform([]);
-        setSource("--Please choose an option--");
-        setDestination("--Please choose an option--");
       }
     }
   });
@@ -226,6 +226,8 @@ function App() {
 
   function reset() {
     send("RESET");
+    setSource("--Please choose an option--");
+    setDestination("--Please choose an option--");
   }
 
   switch (true) {
@@ -314,6 +316,11 @@ function App() {
               <InactiveBtn> Download Result </InactiveBtn>
             </BtnContainer>
           </UIContainer>
+          {current.matches("ready.failedtotransform") ? (
+            <ResetBtnHighlight onClick={reset}> Reset </ResetBtnHighlight>
+          ) : (
+            <ResetBtn onClick={reset}>Reset</ResetBtn>
+          )}
 
           <StatusContainer>
             <ProgressItem>
@@ -332,7 +339,6 @@ function App() {
                 ? "Done"
                 : "Transform coordinates"}
             </ProgressItem>
-            <button onClick={reset}> Reset </button>
           </StatusContainer>
         </div>
       );

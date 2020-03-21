@@ -34,7 +34,6 @@ function SourceDestinationSelecter(props) {
 
             if (current.matches("ready.allinactive")) {
               send("READYTOTRANSFORM");
-              console.log(current.value);
             }
           }}
         >
@@ -58,7 +57,6 @@ function SourceDestinationSelecter(props) {
             machineContext.destinationSrs = e.target.value;
             if (current.matches("ready.allinactive")) {
               send("READYTOTRANSFORM");
-              console.log(current.value);
             }
           }}
         >

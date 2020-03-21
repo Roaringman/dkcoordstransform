@@ -129,6 +129,35 @@ export const InactiveBtn = styled.button`
   padding: 0;
 `;
 
+export const ResetBtn = styled.button`
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  align-self: end;
+  margin-bottom: 30px;
+  width: 100%;
+  min-width: 100px;
+  height: 50px;
+  border: 2px;
+  border: solid;
+  background-color: rgba(116, 217, 159, 0.2);
+  border-color: rgba(116, 217, 159, 0.5);
+  border-radius: 5px;
+  padding: 0;
+  z-index: 3;
+  color: ${grays["700"]};
+  &:hover {
+    background-color: #74d99f;
+    border: none;
+    color: ${grays["100"]};
+  }
+`;
+
+export const ResetBtnHighlight = styled(ResetBtn)`
+  background-color: rgba(116, 217, 159, 0.8);
+`;
+
 export const InputTableRow = styled.tr`
   display: grid;
   grid-template-columns: 1fr 1fr;
