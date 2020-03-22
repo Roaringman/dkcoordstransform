@@ -5,7 +5,9 @@ import {
   SrsTo,
   SrsSelect,
   SrsTitle,
-  SrsLabel
+  SrsLabel,
+  SrsTitleBackground,
+  SrsFormContainer
 } from "../styles/elements";
 
 function SourceDestinationSelecter(props) {
@@ -22,53 +24,59 @@ function SourceDestinationSelecter(props) {
 
   return (
     <>
-      <SrsTitle>Transform</SrsTitle>
+      <SrsTitleBackground>
+        <SrsTitle>Transform</SrsTitle>
+      </SrsTitleBackground>
 
-      <SrsFrom>
-        <SrsLabel htmlFor="source-select">From</SrsLabel>
-        <SrsSelect
-          id="source-select"
-          onChange={e => {
-            setSource(e.target.value);
-            machineContext.sourceSrs = e.target.value;
-            if (current.matches("ready.allinactive")) {
-              send("READYTOTRANSFORM");
-            }
-          }}
-        >
-          <option value={source}>{source}</option>
-          {srs.map(srs => {
-            if (typeof srs !== "string") {
-              return <SrsOptions key={`${srs}-source`} srs={srs}></SrsOptions>;
-            } else {
-              return <optgroup key={`${srs}-source`} label={srs}></optgroup>;
-            }
-          })}
-        </SrsSelect>
-      </SrsFrom>
+      <SrsFormContainer>
+        <SrsFrom>
+          <SrsLabel htmlFor="source-select">From</SrsLabel>
+          <SrsSelect
+            id="source-select"
+            onChange={e => {
+              setSource(e.target.value);
+              machineContext.sourceSrs = e.target.value;
+              if (current.matches("ready.allinactive")) {
+                send("READYTOTRANSFORM");
+              }
+            }}
+          >
+            <option value={source}>{source}</option>
+            {srs.map(srs => {
+              if (typeof srs !== "string") {
+                return (
+                  <SrsOptions key={`${srs}-source`} srs={srs}></SrsOptions>
+                );
+              } else {
+                return <optgroup key={`${srs}-source`} label={srs}></optgroup>;
+              }
+            })}
+          </SrsSelect>
+        </SrsFrom>
 
-      <SrsTo>
-        <SrsLabel htmlFor="destination-select">To</SrsLabel>
-        <SrsSelect
-          id="destination-select"
-          onChange={e => {
-            setDestination(e.target.value);
-            machineContext.destinationSrs = e.target.value;
-            if (current.matches("ready.allinactive")) {
-              send("READYTOTRANSFORM");
-            }
-          }}
-        >
-          <option value={destination}>{destination}</option>
-          {srs.map(srs => {
-            if (typeof srs !== "string") {
-              return <SrsOptions key={`${srs}-dest`} srs={srs}></SrsOptions>;
-            } else {
-              return <optgroup key={`${srs}-dest`} label={srs}></optgroup>;
-            }
-          })}
-        </SrsSelect>
-      </SrsTo>
+        <SrsTo>
+          <SrsLabel htmlFor="destination-select">To</SrsLabel>
+          <SrsSelect
+            id="destination-select"
+            onChange={e => {
+              setDestination(e.target.value);
+              machineContext.destinationSrs = e.target.value;
+              if (current.matches("ready.allinactive")) {
+                send("READYTOTRANSFORM");
+              }
+            }}
+          >
+            <option value={destination}>{destination}</option>
+            {srs.map(srs => {
+              if (typeof srs !== "string") {
+                return <SrsOptions key={`${srs}-dest`} srs={srs}></SrsOptions>;
+              } else {
+                return <optgroup key={`${srs}-dest`} label={srs}></optgroup>;
+              }
+            })}
+          </SrsSelect>
+        </SrsTo>
+      </SrsFormContainer>
     </>
   );
 }

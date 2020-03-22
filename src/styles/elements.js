@@ -8,7 +8,7 @@ const gray = "#B0BBC2";
 
 const blues = {
   "100": "#F0F4FE",
-  "200": "#D4DEF8",
+  "200": "#6B90A9", //"#D4DEF8",
   "300": "#95AEED",
   "400": "#758CE0",
   "500": "#6175DE",
@@ -37,22 +37,6 @@ export const Title = styled.h1`
   color: palevioletred;
 `;
 
-export const UIContainer = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 3;
-  grid-row-end: 7;
-  height: calc(100% - 20px);
-  width: calc(100% - 20px);
-  margin-left: 20px;
-  background-color: ${blues["300"]};
-  border-radius: 5px;
-  z-index: 3;
-  -webkit-box-shadow: 5px 5px 5px -3px rgba(32, 40, 51, 0.3);
-  -moz-box-shadow: 5px 5px 5px -3px rgba(32, 40, 51, 0.3);
-  box-shadow: 5px 5px 5px -3px rgba(32, 40, 51, 0.3);
-`;
-
 export const StatusContainer = styled.div`
   grid-column-start: 11;
   grid-column-end: 12;
@@ -75,31 +59,11 @@ export const FlexRow = styled.div`
   justify-content: center;
 `;
 
-export const OverflowUL = styled.ul`
-  min-height: 50%;
-  height: calc(80% - 50px - 20px - 10px);
-  overflow: auto;
-  width: calc(100% - 20px);
-  margin: 10px 0 10px 10px;
-  background-color: ${blues["200"]};
-  border-radius: 5px;
-  z-index: 3;
-  box-shadow: inset 5px 5px 5px 0px rgba(0,0,0,1),
-  box-shadow: inset -5px -5px 5px 0px rgba(32, 40, 51, 0.3);
-`;
-
-export const CoordinateAddForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 20%;
-  width: 100%;
-  margin-buttom: 20px;
-`;
-
 export const BtnContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: 0 10px 10px 10px;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 6;
+  grid-row-end: 7;
 `;
 
 export const ActiveBtn = styled.button`
@@ -134,7 +98,6 @@ export const ResetBtn = styled.button`
   grid-row-start: 6;
   grid-row-end: 7;
   align-self: end;
-  margin-bottom: 30px;
   width: 100%;
   min-width: 100px;
   height: 50px;
@@ -159,79 +122,145 @@ export const ResetBtnHighlight = styled(ResetBtn)`
 `;
 
 export const InputTableRow = styled.tr`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+`;
+
+export const TableInput = styled.input`
+  width: 98%;
 `;
 
 // SRS TRANSFORM COMPONENT STYLES
+export const Filler = styled.div`
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  background-color: ${grays["200"]};
+  height: 135px;
+`;
 
 export const TransformSelectContainer = styled.div`
   grid-column-start: 1;
   grid-column-end: 12;
   grid-row-start: 2;
   grid-row-end: 3;
-  background-color: ${blues["400"]};
-  z-index: 3;
-  padding-top: 20px;
+  background-color: ${grays["200"]};
+  z-index: 4;
 `;
 
 export const TransformSelectGrid = styled.div`
   display: grid;
   width: 100%;
-  height: 100%;
+  height: 135px;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 20px;
-  align-items: end;
+  align-items: center;
+`;
+
+export const SrsTitleBackground = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  height: 135px;
+  width: 100%;
+  min-width: 345px;
+  background-color: ${blues["500"]};
 `;
 
 export const SrsTitle = styled.h1`
   font-size: 4rem;
   letter-spacing: 5px;
-  grid-column-start: 2;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 1;
   text-align: right;
   color: ${grays["100"]};
 `;
 
 export const SrsLabel = styled.label`
   height: 100%;
-  align-self: end;
+  display: flex;
+  align-items: center;
   font-size: 4rem;
   grid-row-start: 1;
   grid-row-end: 2;
-  color: ${grays["100"]};
+  color: ${grays["800"]};
+  margin: 0 20px;
 `;
 
 export const SrsSelect = styled.select`
-  grid-row-start: 2;
-  grid-row-end: 3;
-  width: 100%;
-  height: 100%;
   font-size: 1rem;
   text-align: center;
-  background-color: ${grays["200"]};
+  background-color: ${blues["100"]};
   color: ${grays["800"]};
   border-radius: 5px;
   font-family: "Overpass", sans-serif;
 `;
-export const SrsFrom = styled.div`
-  display: grid;
-  height: 100%;
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-start: 5;
-  grid-column-end: 7;
+export const SrsFormContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column-start: 4;
+  grid-column-end: 11;
   grid-row-start: 1;
   grid-row-end: 3;
+  height: 135px;
+  width: 100%;
+`;
+
+export const SrsFrom = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;
 export const SrsTo = styled.div`
-  display: grid;
   height: 100%;
-  grid-template-rows: repeat(2, 1fr);
+  display: flex;
+  align-items: center;
+`;
+
+// UL and FORM for coordinate input
+export const OverflowUL = styled.ul`
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 4;
+  grid-row-end: 6;
+  overflow: auto;
+  background-color: ${blues["100"]};
+  border-radius: 5px;
+  z-index: 3;
+`;
+
+export const CoordinateAddForm = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
+`;
+
+export const CoordinateComponentsTable = styled.table`
+  width: 100%;
+`;
+
+export const CoordinateComponentsTableRowData = styled.table`
+  width: 1fr;
+`;
+
+export const UIContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  grid-column-start: 1;
+  grid-column-end: 4;
   grid-row-start: 1;
-  grid-row-end: 3;
-  grid-column-start: 7;
-  grid-column-end: 9;
+  grid-row-end: 7;
+  height: 100%;
+  width: 100%;
+  min-width: 345px;
+  background-color: ${grays["200"]};
+  z-index: 3;
 `;
