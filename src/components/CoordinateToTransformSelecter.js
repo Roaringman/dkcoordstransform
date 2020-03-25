@@ -7,8 +7,16 @@ import {
   TableInput,
   Filler
 } from "../styles/elements";
+import generateRandomID from "../functions/generateRandomID";
 
 function CoordinateToTransformSelecter(props) {
+  const {
+    current,
+    send,
+    coordinatesToTransform,
+    setCoordinatesToTransform
+  } = props;
+
   const [longitude, setLongitude] = useState();
   const [Latitude, setLatitude] = useState();
   const [ZComponent, setZComponent] = useState();
@@ -23,6 +31,26 @@ function CoordinateToTransformSelecter(props) {
 
   const handleEpochChange = event =>
     setEpochChecked({ checked: event.target.checked });
+
+  function addCoordinatesToTransform(evt, longitude, latitude, height) {
+    evt.preventDefault();
+    const coordinate = [longitude, latitude];
+    current.context.coords.push(coordinate);
+
+    if (height) coordinate.push(height);
+
+    setCoordinatesToTransform([
+      ...coordinatesToTransform,
+      {
+        sourceCoords: coordinate,
+        id: generateRandomID(8)
+      }
+    ]);
+
+    if (current.matches("ready.allinactive")) {
+      send("READYTOTRANSFORM");
+    }
+  }
 
   return (
     <>
@@ -54,7 +82,7 @@ function CoordinateToTransformSelecter(props) {
             const coordinateComponents = [longitude, Latitude];
             if (ZComponent) coordinateComponents.push(ZComponent);
             if (epoch) coordinateComponents.push(epoch);
-            props.addCoordinatesToTransform(e, ...coordinateComponents);
+            addCoordinatesToTransform(e, ...coordinateComponents);
           }}
         >
           <CoordinateComponentsTable>
