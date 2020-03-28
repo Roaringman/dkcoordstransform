@@ -68,6 +68,8 @@ export const BtnContainer = styled.div`
   grid-column-end: 4;
   grid-row-start: 6;
   grid-row-end: 7;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const ActiveBtn = styled.button`
@@ -75,10 +77,10 @@ export const ActiveBtn = styled.button`
   width: 40%;
   min-width: 100px;
   height: 50px;
-  border: 1px;
-  border-style: solid;
+  border: none;
   background-color: #fce8e8;
   border-radius: 5px;
+  margin: 0 20px;
   padding: 0;
   &:hover {
     background-color: #e46464;
@@ -89,9 +91,11 @@ export const InactiveBtn = styled.button`
   postion: relative;
   width: 40%;
   min-width: 100px;
+  margin: 0 20px;
   height: 50px;
   border: 1px;
-
+  border-style: solid;
+  border-color: ${grays["500"]};
   background-color: ${grays["200"]};
   color: ${grays["500"]};
   border-radius: 5px;
@@ -145,8 +149,6 @@ export const Filler = styled.div`
 
   @media (max-width: 875px) {
     grid-row-start: 1;
-    grid-row-end: 3;
-    grid-column-start: 1;
     grid-column-end: 3;
   }
 `;
@@ -187,10 +189,10 @@ export const SrsTitleBackground = styled.div`
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 3;
-  height: 135px;
+  height: 100%;
   width: 100%;
   min-width: 345px;
-  background-color: ${blues["500"]};
+  background-color: ${blues["600"]};
 
   @media (max-width: 875px) {
     justify-content: start;
@@ -219,6 +221,10 @@ export const SrsLabel = styled.label`
   margin: 0 20px;
   @media (max-width: 1150px) {
     font-size: 2rem;
+    margin: 0 10px;
+  }
+
+  @media (max-width: 875px) {
     margin: 0 10px;
   }
 `;
@@ -267,7 +273,6 @@ export const SrsFrom = styled.div`
   @media (max-width: 875px) {
     justify-content: space-between;
     align-items: space-between;
-    margin: 20px 0;
   }
 `;
 export const SrsTo = styled.div`
@@ -351,7 +356,7 @@ export const TableHD = styled.th`
   font-weight: bold;
   text-align: left;
   color: ${grays["100"]};
-  background-color: ${blues["600"]};
+  background-color: ${blues["400"]};
 `;
 
 export const TableRow = styled.tr`
