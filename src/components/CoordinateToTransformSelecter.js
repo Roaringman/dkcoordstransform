@@ -34,7 +34,7 @@ function CoordinateToTransformSelecter(props) {
   function addCoordinatesToTransform(evt, longitude, latitude, height) {
     evt.preventDefault();
     const coordinate = [longitude, latitude];
-    current.context.coords.push(coordinate);
+    current.context.coords = true;
 
     if (height) coordinate.push(height);
 

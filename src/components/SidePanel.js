@@ -56,6 +56,9 @@ function SidePanel(props) {
       newArr.findIndex(i => i.id === item),
       1
     );
+    if (newArr.length === 0) {
+      current.context.coords = false;
+    }
     return newArr;
   };
 
@@ -91,6 +94,7 @@ function SidePanel(props) {
                         exit={{
                           opacity: 0,
                           x: -50,
+                          backgroundColor: "#e46464",
                           transition: { duration: 0.2 }
                         }}
                       >

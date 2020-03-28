@@ -4,7 +4,7 @@ export const transformMachine = Machine(
   {
     id: "coordinateTransformMachine",
     initial: "initial",
-    context: { srs: [], sourceSrs: "", destinationSrs: "", coords: [] },
+    context: { srs: [], sourceSrs: "", destinationSrs: "", coords: false },
     states: {
       initial: {
         entry: ["load"],

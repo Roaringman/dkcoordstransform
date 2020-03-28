@@ -110,7 +110,7 @@ export const ResetBtn = styled.button`
   grid-row-start: 6;
   grid-row-end: 7;
   align-self: end;
-  width: 100%;
+  width: 100px;
   min-width: 100px;
   height: 50px;
   border: 2px;
@@ -128,10 +128,9 @@ export const ResetBtn = styled.button`
   }
 
   @media (max-width: 875px) {
-    grid-row-start: 3;
-    grid-row-end: 4;
-    grid-column-start: 11;
-    grid-column-end: 12;
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
   }
 `;
 
@@ -219,6 +218,7 @@ export const SrsTitle = styled.h1`
 
 export const SrsLabel = styled.label`
   height: 100%;
+  width: 5ch;
   display: flex;
   align-items: center;
   font-size: 4rem;
@@ -253,7 +253,7 @@ export const SrsSelect = styled.select`
 export const SrsFormContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   grid-column-start: 4;
   grid-column-end: 11;
   grid-row-start: 1;
@@ -269,7 +269,7 @@ export const SrsFormContainer = styled.div`
   @media (max-width: 875px) {
     flex-direction: column;
     justify-content: space-between;
-    align-items: end;
+    align-items: space-around;
   }
 `;
 
@@ -303,6 +303,10 @@ export const OverflowUL = styled.section`
   background-color: ${blues["100"]};
   border-radius: 5px;
   z-index: 3;
+  @media (max-width: 875px) {
+    grid-column-start: 1;
+    grid-column-end: 12;
+  }
 `;
 
 export const CoordinateAddForm = styled.div`
@@ -375,8 +379,22 @@ export const RemoveRowH = styled(TableHD)`
 export const TableRow = styled(motion.tr)`
   height: 1.5rem;
   text-align: right;
+  &:hover {
+    background-color: ${blues["800"]};
+    color: ${grays["100"]};
+    path {
+      stroke: ${grays["100"]};
+    }
+  }
   &:nth-child(odd) {
     background-color: ${blues["300"]};
+    &:hover {
+      background-color: ${blues["800"]};
+      color: ${grays["100"]};
+      path {
+        stroke: ${grays["100"]};
+      }
+    }
   }
 `;
 
@@ -398,9 +416,10 @@ export const CoordinateComponentsTableRowData = styled.table`
 
 const Path = props => (
   <motion.path
+    whileHover={{ scale: 1.2 }}
     fill="transparent"
     strokeWidth="3"
-    stroke="hsl(0, 0%, 18%)"
+    stroke={`${grays["900"]}`}
     strokeLinecap="round"
     {...props}
   />

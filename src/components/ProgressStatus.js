@@ -12,7 +12,7 @@ function ProgressStatus(props) {
           : "Choose spatial reference systems"}
       </ProgressItem>
       <ProgressItem>
-        {context.coords.length > 0 ? "Done" : "Add coordinates to transform"}
+        {context.coords === true ? "Done" : "Add coordinates to transform"}
       </ProgressItem>
       <ProgressItem>
         {props.current.matches("ready.transformed")
