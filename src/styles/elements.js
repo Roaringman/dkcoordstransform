@@ -71,7 +71,8 @@ export const ActiveBtn = styled.button`
   width: 40%;
   min-width: 100px;
   height: 50px;
-  border: none;
+  border: 1px;
+  border-style: solid;
   background-color: #fce8e8;
   border-radius: 5px;
   padding: 0;
@@ -85,7 +86,8 @@ export const InactiveBtn = styled.button`
   width: 40%;
   min-width: 100px;
   height: 50px;
-  border: none;
+  border: 1px;
+
   background-color: ${grays["200"]};
   color: ${grays["500"]};
   border-radius: 5px;
@@ -131,13 +133,16 @@ export const Filler = styled.div`
   height: 135px;
 `;
 
-export const TransformSelectContainer = styled.div`
+export const TransformSelectContainer = styled.section`
   grid-column-start: 1;
   grid-column-end: 12;
   grid-row-start: 2;
   grid-row-end: 3;
   background-color: ${grays["200"]};
   z-index: 4;
+  @media (max-width: 875px) {
+    grid-row-start: 1;
+  }
 `;
 
 export const TransformSelectGrid = styled.div`
@@ -148,6 +153,12 @@ export const TransformSelectGrid = styled.div`
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 20px;
   align-items: center;
+
+  @media (max-width: 875px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
 `;
 
 export const SrsTitleBackground = styled.div`
@@ -162,6 +173,10 @@ export const SrsTitleBackground = styled.div`
   width: 100%;
   min-width: 345px;
   background-color: ${blues["500"]};
+
+  @media (max-width: 875px) {
+    justify-content: start;
+  }
 `;
 
 export const SrsTitle = styled.h1`
@@ -180,6 +195,10 @@ export const SrsLabel = styled.label`
   grid-row-end: 2;
   color: ${grays["800"]};
   margin: 0 20px;
+  @media (max-width: 1150px) {
+    font-size: 2rem;
+    margin: 0 10px;
+  }
 `;
 
 export const SrsSelect = styled.select`
@@ -189,7 +208,13 @@ export const SrsSelect = styled.select`
   color: ${grays["800"]};
   border-radius: 5px;
   font-family: "Overpass", sans-serif;
+
+  @media (max-width: 1150px) {
+    height: 2rem;
+    font-size: 0.8rem;
+  }
 `;
+
 export const SrsFormContainer = styled.div`
   display: flex;
   align-items: center;
@@ -200,17 +225,36 @@ export const SrsFormContainer = styled.div`
   grid-row-end: 3;
   height: 135px;
   width: 100%;
+
+  @media (max-width: 1150px) {
+    grid-column-start: 5;
+    grid-column-end: 12;
+  }
+
+  @media (max-width: 875px) {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+  }
 `;
 
 export const SrsFrom = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  @media (max-width: 875px) {
+    justify-content: space-between;
+    align-items: end;
+  }
 `;
 export const SrsTo = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  @media (max-width: 875px) {
+    justify-content: space-between;
+    align-items: end;
+  }
 `;
 
 // UL and FORM for coordinate input
