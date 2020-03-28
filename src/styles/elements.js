@@ -120,6 +120,13 @@ export const ResetBtn = styled.button`
     border: none;
     color: ${grays["100"]};
   }
+
+  @media (max-width: 875px) {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 11;
+    grid-column-end: 12;
+  }
 `;
 
 export const ResetBtnHighlight = styled(ResetBtn)`
@@ -195,6 +202,10 @@ export const SrsTitle = styled.h1`
   letter-spacing: 5px;
   text-align: right;
   color: ${grays["100"]};
+
+  @media (max-width: 875px) {
+    margin: 20px;
+  }
 `;
 
 export const SrsLabel = styled.label`
@@ -255,7 +266,8 @@ export const SrsFrom = styled.div`
   align-items: center;
   @media (max-width: 875px) {
     justify-content: space-between;
-    align-items: end;
+    align-items: space-between;
+    margin: 20px 0;
   }
 `;
 export const SrsTo = styled.div`
@@ -264,7 +276,7 @@ export const SrsTo = styled.div`
   align-items: center;
   @media (max-width: 875px) {
     justify-content: space-between;
-    align-items: end;
+    align-items: space-between;
   }
 `;
 
@@ -307,6 +319,7 @@ export const UIContainer = styled.section`
   @media (max-width: 875px) {
     grid-column-start: 1;
     grid-column-end: 12;
+    min-width: 100%;
   }
 `;
 
