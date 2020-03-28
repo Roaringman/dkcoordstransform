@@ -37,13 +37,17 @@ export const Title = styled.h1`
   color: palevioletred;
 `;
 
-export const StatusContainer = styled.div`
+export const StatusContainer = styled.section`
   grid-column-start: 11;
   grid-column-end: 12;
   grid-row-start: 3;
   grid-row-end: 6;
   background-color: ${blues["300"]};
   z-index: 3;
+
+  @media (max-width: 875px) {
+    visibility: hidden;
+  }
 `;
 
 export const ProgressItem = styled.div`
@@ -131,6 +135,13 @@ export const Filler = styled.div`
   grid-column-end: 4;
   background-color: ${grays["200"]};
   height: 135px;
+
+  @media (max-width: 875px) {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
 `;
 
 export const TransformSelectContainer = styled.section`
@@ -277,7 +288,7 @@ export const CoordinateAddForm = styled.div`
   grid-row-end: 4;
 `;
 
-export const UIContainer = styled.div`
+export const UIContainer = styled.section`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(6, 1fr);
@@ -292,6 +303,11 @@ export const UIContainer = styled.div`
   min-width: 345px;
   background-color: ${grays["200"]};
   z-index: 3;
+
+  @media (max-width: 875px) {
+    grid-column-start: 1;
+    grid-column-end: 12;
+  }
 `;
 
 export const CenteredH2 = styled.h2`
