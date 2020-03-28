@@ -4,8 +4,7 @@ import {
   InputTableRow,
   CoordinateComponentsTable,
   CoordinateComponentsTableRowData,
-  TableInput,
-  Filler
+  TableInput
 } from "../styles/elements";
 import generateRandomID from "../functions/generateRandomID";
 
@@ -54,7 +53,6 @@ function CoordinateToTransformSelecter(props) {
 
   return (
     <>
-      <Filler></Filler>
       <CoordinateAddForm>
         <div>
           <input

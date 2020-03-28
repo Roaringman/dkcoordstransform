@@ -12,7 +12,8 @@ import {
   InactiveBtn,
   Table,
   TableHD,
-  CenteredH2
+  CenteredH2,
+  Filler
 } from "../styles/elements";
 
 //Import functions
@@ -47,6 +48,7 @@ function SidePanel(props) {
 
   return (
     <>
+      <Filler></Filler>
       <CoordinateToTransformSelecter
         current={current}
         send={send}

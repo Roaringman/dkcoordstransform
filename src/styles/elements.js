@@ -146,10 +146,12 @@ export const Filler = styled.div`
   grid-column-end: 4;
   background-color: ${grays["200"]};
   height: 135px;
-
+  z-index: 3;
   @media (max-width: 875px) {
     grid-row-start: 1;
     grid-column-end: 3;
+    min-height: 250px;
+    background-color: pink;
   }
 `;
 
@@ -162,6 +164,7 @@ export const TransformSelectContainer = styled.section`
   z-index: 4;
   @media (max-width: 875px) {
     grid-row-start: 1;
+    grid-row-end: 2;
   }
 `;
 
@@ -178,6 +181,7 @@ export const TransformSelectGrid = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
+    height: 250px;
   }
 `;
 
@@ -195,7 +199,7 @@ export const SrsTitleBackground = styled.div`
   background-color: ${blues["600"]};
 
   @media (max-width: 875px) {
-    justify-content: start;
+    justify-content: center;
   }
 `;
 
@@ -207,6 +211,7 @@ export const SrsTitle = styled.h1`
 
   @media (max-width: 875px) {
     margin: 20px;
+    text-align: center;
   }
 `;
 
