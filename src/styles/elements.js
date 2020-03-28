@@ -218,7 +218,6 @@ export const SrsTitle = styled.h1`
 
 export const SrsLabel = styled.label`
   height: 100%;
-  width: 5ch;
   display: flex;
   align-items: center;
   font-size: 4rem;
@@ -233,6 +232,7 @@ export const SrsLabel = styled.label`
 
   @media (max-width: 875px) {
     margin: 0 10px;
+    width: 5ch;
   }
 `;
 
@@ -243,9 +243,15 @@ export const SrsSelect = styled.select`
   color: ${grays["800"]};
   border-radius: 5px;
   font-family: "Overpass", sans-serif;
+  width: 27ch;
 
   @media (max-width: 1150px) {
     height: 2rem;
+    font-size: 0.8rem;
+    width: 27ch;
+  }
+
+  @media (max-width: 875px) {
     font-size: 0.8rem;
   }
 `;
@@ -253,7 +259,7 @@ export const SrsSelect = styled.select`
 export const SrsFormContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   grid-column-start: 4;
   grid-column-end: 11;
   grid-row-start: 1;
