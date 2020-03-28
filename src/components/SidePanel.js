@@ -1,4 +1,5 @@
 import React from "react";
+import { AnimatePresence } from "framer-motion";
 
 //Import components
 import CoordinateLI from "./CoordinateLI";
@@ -13,7 +14,9 @@ import {
   Table,
   TableHD,
   CenteredH2,
-  Filler
+  Filler,
+  CloseButton,
+  TableRow
 } from "../styles/elements";
 
 //Import functions
@@ -46,6 +49,15 @@ function SidePanel(props) {
     send("SUCCESS");
   }
 
+  const remove = (arr, item) => {
+    const newArr = [...arr];
+    newArr.splice(
+      newArr.findIndex(i => i.id === item),
+      1
+    );
+    return newArr;
+  };
+
   return (
     <>
       <Filler></Filler>
@@ -63,17 +75,39 @@ function SidePanel(props) {
             <Table>
               <tbody>
                 <tr>
+                  <th> </th>
                   <TableHD> Longitude </TableHD>
                   <TableHD> Latitude </TableHD>
                 </tr>
-                {coordinatesToTransform.map((coordinates, i) => {
-                  return (
-                    <CoordinateLI
-                      key={i}
-                      coordinates={coordinates}
-                    ></CoordinateLI>
-                  );
-                })}
+                <AnimatePresence initial={false}>
+                  {coordinatesToTransform.map((coordinates, i) => {
+                    return (
+                      <TableRow
+                        key={coordinates.id}
+                        positionTransition
+                        initial={{ y: -50 }}
+                        animate={{ y: 0 }}
+                        exit={{
+                          opacity: 0,
+                          x: -50,
+                          transition: { duration: 0.2 }
+                        }}
+                      >
+                        <CloseButton
+                          close={() =>
+                            setCoordinatesToTransform(
+                              remove(coordinatesToTransform, coordinates.id)
+                            )
+                          }
+                        ></CloseButton>
+                        <CoordinateLI
+                          key={i}
+                          coordinates={coordinates}
+                        ></CoordinateLI>
+                      </TableRow>
+                    );
+                  })}
+                </AnimatePresence>
               </tbody>
             </Table>
           </>

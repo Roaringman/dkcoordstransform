@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import * as React from "react";
+import { motion } from "framer-motion";
 
 /*const darkBLue = "#20639B";
 const grayishDark = "#6B7175";
@@ -72,7 +74,7 @@ export const BtnContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const ActiveBtn = styled.button`
+export const ActiveBtn = styled(motion.button)`
   postion: relative;
   width: 40%;
   min-width: 100px;
@@ -364,7 +366,7 @@ export const TableHD = styled.th`
   background-color: ${blues["400"]};
 `;
 
-export const TableRow = styled.tr`
+export const TableRow = styled(motion.tr)`
   height: 1.5rem;
   text-align: right;
   &:nth-child(odd) {
@@ -387,3 +389,27 @@ export const CoordinateComponentsTable = styled.table`
 export const CoordinateComponentsTableRowData = styled.table`
   width: 1fr;
 `;
+
+const Path = props => (
+  <motion.path
+    fill="transparent"
+    strokeWidth="3"
+    stroke="hsl(0, 0%, 18%)"
+    strokeLinecap="round"
+    {...props}
+  />
+);
+
+const RemoveBtn = styled.button`
+  border: none;
+  background-color: transparent;
+`;
+
+export const CloseButton = ({ close }) => (
+  <RemoveBtn onClick={close}>
+    <svg width="23" height="23" viewBox="0 0 23 23">
+      <Path d="M 3 16.5 L 17 2.5" />
+      <Path d="M 3 2.5 L 17 16.346" />
+    </svg>
+  </RemoveBtn>
+);

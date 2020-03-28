@@ -39,11 +39,11 @@ function CoordinateToTransformSelecter(props) {
     if (height) coordinate.push(height);
 
     setCoordinatesToTransform([
-      ...coordinatesToTransform,
       {
         sourceCoords: coordinate,
         id: generateRandomID(8)
-      }
+      },
+      ...coordinatesToTransform
     ]);
 
     if (current.matches("ready.allinactive")) {
