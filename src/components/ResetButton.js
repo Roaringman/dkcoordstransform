@@ -6,8 +6,7 @@ function ResetButton(props) {
 
   function handleSend() {
     send("RESET");
-
-    setSource("hi");
+    setSource("--Please choose an option--");
     setDestination("--Please choose an option--");
   }
 

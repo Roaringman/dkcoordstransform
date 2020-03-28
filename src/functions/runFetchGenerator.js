@@ -53,9 +53,11 @@ function submitTranslateRequest(
           ) {
             send("FAILEDTOTRANSFORM");
           } else {
+            console.log(coordinatesToTransform);
+
             addTransformedCoordinates(
-              setCoordinatesToTransform,
               coordinatesToTransform,
+              setCoordinatesToTransform,
               { v1: null, v2: null },
               coordinateObject,
               displayOrDesination,
@@ -76,7 +78,10 @@ function addTransformedCoordinates(
 ) {
   coordinateObject[displayOrDesination] = [result.v1, result.v2];
   coordinateObject["responseState"] = responseState;
-  let newState = [...coordinatesToTransform];
+  let newState =
+    coordinatesToTransform.length === 1
+      ? coordinatesToTransform
+      : [...coordinatesToTransform];
   const index = newState.findIndex(e => e.id === coordinateObject.id);
   newState[index] = coordinateObject;
   setCoordinatesToTransform(newState);

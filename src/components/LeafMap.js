@@ -42,15 +42,15 @@ function LeafMap(props) {
             <tbody>
               <tr>
                 <th>From X</th>
-                <th>From Y</th>
                 <th>To X</th>
+                <th>From Y</th>
                 <th>To Y</th>
               </tr>
 
               <tr>
                 <td>{activeMarker.sourceCoords[0]}</td>
-                <td>{activeMarker.sourceCoords[1]}</td>
                 <td>{activeMarker.destinationCoords[0]}</td>
+                <td>{activeMarker.sourceCoords[1]}</td>
                 <td>{activeMarker.destinationCoords[1]}</td>
               </tr>
             </tbody>

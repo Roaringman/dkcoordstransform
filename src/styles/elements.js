@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const darkBLue = "#20639B";
+/*const darkBLue = "#20639B";
 const grayishDark = "#6B7175";
 const paleBLue = "#96CEF7";
 const lightBlue = "#E0EDF6";
-const gray = "#B0BBC2";
+const gray = "#B0BBC2";*/
 
 const blues = {
   "100": "#F0F4FE",
@@ -121,14 +121,6 @@ export const ResetBtnHighlight = styled(ResetBtn)`
   color: ${grays["100"]};
 `;
 
-export const InputTableRow = styled.tr`
-  display: flex;
-`;
-
-export const TableInput = styled.input`
-  width: 98%;
-`;
-
 // SRS TRANSFORM COMPONENT STYLES
 export const Filler = styled.div`
   grid-row-start: 2;
@@ -222,12 +214,13 @@ export const SrsTo = styled.div`
 `;
 
 // UL and FORM for coordinate input
-export const OverflowUL = styled.ul`
+export const OverflowUL = styled.section`
   grid-column-start: 1;
   grid-column-end: 4;
   grid-row-start: 4;
   grid-row-end: 6;
   overflow: auto;
+  overflow-x: auto;
   background-color: ${blues["100"]};
   border-radius: 5px;
   z-index: 3;
@@ -238,14 +231,6 @@ export const CoordinateAddForm = styled.div`
   grid-column-end: 4;
   grid-row-start: 3;
   grid-row-end: 4;
-`;
-
-export const CoordinateComponentsTable = styled.table`
-  width: 100%;
-`;
-
-export const CoordinateComponentsTableRowData = styled.table`
-  width: 1fr;
 `;
 
 export const UIContainer = styled.div`
@@ -263,4 +248,59 @@ export const UIContainer = styled.div`
   min-width: 345px;
   background-color: ${grays["200"]};
   z-index: 3;
+`;
+
+export const CenteredH2 = styled.h2`
+  width: 100%;
+  color: ${grays["500"]};
+  font-size: 1.3rem;
+  margin-top: 2rem;
+  text-align: center;
+`;
+
+// TABLE STUFF
+
+export const Table = styled.table`
+  min-width: 100%;
+`;
+
+export const TableTD = styled.td`
+  padding: 0 10px;
+  width: 18ch;
+  vertical-align: middle;
+`;
+
+export const TableHD = styled.th`
+  vertical-align: middle;
+  padding: 0 10px;
+  height: 1.8rem;
+  width: 18ch;
+  font-weight: bold;
+  text-align: left;
+  color: ${grays["100"]};
+  background-color: ${blues["600"]};
+`;
+
+export const TableRow = styled.tr`
+  height: 1.5rem;
+  text-align: right;
+  &:nth-child(odd) {
+    background-color: ${blues["300"]};
+  }
+`;
+
+export const InputTableRow = styled.tr`
+  display: flex;
+`;
+
+export const TableInput = styled.input`
+  width: 98%;
+`;
+
+export const CoordinateComponentsTable = styled.table`
+  width: 100%;
+`;
+
+export const CoordinateComponentsTableRowData = styled.table`
+  width: 1fr;
 `;
