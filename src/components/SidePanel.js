@@ -16,7 +16,8 @@ import {
   CenteredH2,
   Filler,
   CloseButton,
-  TableRow
+  TableRow,
+  RemoveRowH
 } from "../styles/elements";
 
 //Import functions
@@ -75,11 +76,11 @@ function SidePanel(props) {
             <Table>
               <tbody>
                 <tr>
-                  <th> </th>
+                  <RemoveRowH> </RemoveRowH>
                   <TableHD> Longitude </TableHD>
                   <TableHD> Latitude </TableHD>
                 </tr>
-                <AnimatePresence initial={false}>
+                <AnimatePresence initial={true}>
                   {coordinatesToTransform.map((coordinates, i) => {
                     return (
                       <TableRow

@@ -148,11 +148,11 @@ export const Filler = styled.div`
   grid-column-end: 4;
   background-color: ${grays["200"]};
   height: 135px;
-  z-index: 3;
   @media (max-width: 875px) {
     grid-row-start: 1;
     grid-column-end: 3;
-    min-height: 250px;
+    grid-column-end: 12;
+    height: 250px;
     background-color: pink;
   }
 `;
@@ -332,6 +332,8 @@ export const UIContainer = styled.section`
     grid-column-start: 1;
     grid-column-end: 12;
     min-width: 100%;
+    min-height: 900px;
+    overflow: auto;
   }
 `;
 
@@ -364,6 +366,10 @@ export const TableHD = styled.th`
   text-align: left;
   color: ${grays["100"]};
   background-color: ${blues["400"]};
+`;
+
+export const RemoveRowH = styled(TableHD)`
+  width: 23px;
 `;
 
 export const TableRow = styled(motion.tr)`
@@ -407,7 +413,7 @@ const RemoveBtn = styled.button`
 
 export const CloseButton = ({ close }) => (
   <RemoveBtn onClick={close}>
-    <svg width="23" height="23" viewBox="0 0 23 23">
+    <svg width="23" height="23" viewBox="0 -5 23 26">
       <Path d="M 3 16.5 L 17 2.5" />
       <Path d="M 3 2.5 L 17 16.346" />
     </svg>
