@@ -57,7 +57,7 @@ export const transformMachine = Machine(
       canTransform: context =>
         context.sourceSrs !== "" &&
         context.destinationSrs !== "" &&
-        context.coords.length >= 1
+        context.coords === true
     }
   }
 );

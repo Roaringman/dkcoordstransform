@@ -45,9 +45,11 @@ function CoordinateToTransformSelecter(props) {
       },
       ...coordinatesToTransform
     ]);
+    console.log(current.value);
 
     if (current.matches("ready.allinactive")) {
       send("READYTOTRANSFORM");
+      console.log(current.value);
     }
   }
 

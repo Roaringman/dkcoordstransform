@@ -209,7 +209,6 @@ export const SrsTitle = styled.h1`
   letter-spacing: 5px;
   text-align: right;
   color: ${grays["100"]};
-
   @media (max-width: 875px) {
     margin: 20px;
     text-align: center;
