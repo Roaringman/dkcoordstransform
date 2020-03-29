@@ -4,7 +4,7 @@ import React from "react";
 import { TableTD } from "../styles/elements";
 
 function CoordinateLI(props) {
-  const { coordinates } = props;
+  const { coordinates, isHeight } = props;
 
   switch (true) {
     case coordinates.destinationCoords && coordinates.responseState === 1:
@@ -12,6 +12,9 @@ function CoordinateLI(props) {
         <>
           <TableTD>{coordinates.destinationCoords[0]}</TableTD>
           <TableTD>{coordinates.destinationCoords[1]}</TableTD>
+          {isHeight ? (
+            <TableTD>{coordinates.destinationCoords[2]}</TableTD>
+          ) : null}
         </>
       );
     case coordinates.destinationCoords &&
@@ -20,6 +23,9 @@ function CoordinateLI(props) {
         <>
           <TableTD>{coordinates.destinationCoords[0]}</TableTD>
           <TableTD>{coordinates.destinationCoords[1]}</TableTD>
+          {isHeight ? (
+            <TableTD>{coordinates.destinationCoords[2]}</TableTD>
+          ) : null}
         </>
       );
     case coordinates.destinationCoords && coordinates.responseState === 2:
@@ -33,6 +39,7 @@ function CoordinateLI(props) {
         <>
           <TableTD>{coordinates.sourceCoords[0]}</TableTD>
           <TableTD>{coordinates.sourceCoords[1]}</TableTD>
+          {isHeight ? <TableTD>{coordinates.sourceCoords[2]}</TableTD> : null}
         </>
       );
   }

@@ -48,15 +48,20 @@ function App() {
     }
   });
 
+  const dropProps = {
+    current: current,
+    send: send,
+    coordinatesToTransform: coordinatesToTransform,
+    setCoordinatesToTransform: setCoordinatesToTransform
+  };
+
   switch (true) {
     case current.matches("ready"):
       return (
         <div
           className="App"
           id="drop_zone"
-          onDrop={e =>
-            dropHandler(e, setCoordinatesToTransform, coordinatesToTransform)
-          }
+          onDrop={e => dropHandler(e, dropProps)}
           onDragOver={e => dragOverHandler(e)}
         >
           <LeafMap markerCoordinates={coordinatesToTransform}></LeafMap>

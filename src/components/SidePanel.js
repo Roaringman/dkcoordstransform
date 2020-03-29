@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 
 //Import components
@@ -62,6 +62,8 @@ function SidePanel(props) {
     return newArr;
   };
 
+  const ZChecked = useRef(null);
+
   return (
     <>
       <Filler></Filler>
@@ -70,6 +72,7 @@ function SidePanel(props) {
         send={send}
         coordinatesToTransform={coordinatesToTransform}
         setCoordinatesToTransform={setCoordinatesToTransform}
+        ZChecked={ZChecked}
       />
       <OverflowUL>
         {coordinatesToTransform.length === 0 ? (
@@ -82,6 +85,9 @@ function SidePanel(props) {
                   <RemoveRowH> </RemoveRowH>
                   <TableHD> Longitude </TableHD>
                   <TableHD> Latitude </TableHD>
+                  {props.current.context.height ? (
+                    <TableHD> Height </TableHD>
+                  ) : null}
                 </tr>
                 <AnimatePresence initial={true}>
                   {coordinatesToTransform.map((coordinates, i) => {
@@ -108,6 +114,7 @@ function SidePanel(props) {
                         <CoordinateLI
                           key={i}
                           coordinates={coordinates}
+                          isHeight={props.current.context.height}
                         ></CoordinateLI>
                       </TableRow>
                     );

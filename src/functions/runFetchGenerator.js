@@ -20,7 +20,10 @@ function submitTranslateRequest(
     : ([first, second] = coordinateObject.sourceCoords);
 
   const coordinateComponents = [first, second];
-  if (coordinateObject.sourceCoords[2])
+  if (
+    coordinateObject.sourceCoords[2] ||
+    coordinateObject.sourceCoords[2] === 0 // sanity check
+  )
     coordinateComponents.push(coordinateObject.sourceCoords[2]);
 
   if (srs.flat().includes(source) && srs.flat().includes(destination))
@@ -76,7 +79,12 @@ function addTransformedCoordinates(
   displayOrDesination,
   responseState
 ) {
-  coordinateObject[displayOrDesination] = [result.v1, result.v2];
+  coordinateObject[displayOrDesination] = [
+    result.v1,
+    result.v2,
+    result.v3,
+    result.v4
+  ];
   coordinateObject["responseState"] = responseState;
   let newState =
     coordinatesToTransform.length === 1
@@ -91,8 +99,8 @@ function createCoordinateString(coordinateComponentList) {
   let coordinateString = "";
   coordinateString += `${parseFloat(coordinateComponentList[0]).toFixed(8)}`;
   coordinateString += `,${parseFloat(coordinateComponentList[1]).toFixed(8)}`;
-  if (coordinateComponentList[2])
-    coordinateString += `,${coordinateComponentList[2]}`;
+  if (coordinateComponentList[2] || coordinateComponentList[2] === 0)
+    coordinateString += `,${parseFloat(coordinateComponentList[2])}`;
   return coordinateString;
 }
 async function* runCoordinateTransformGenerator(transformData) {

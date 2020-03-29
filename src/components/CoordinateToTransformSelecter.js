@@ -8,16 +8,9 @@ import {
   Checkbox,
   CheckMark
 } from "../styles/elements";
-import generateRandomID from "../functions/generateRandomID";
+import addCoordinatesToTransform from "../functions/addCoordinatesToTransform";
 
 function CoordinateToTransformSelecter(props) {
-  const {
-    current,
-    send,
-    coordinatesToTransform,
-    setCoordinatesToTransform
-  } = props;
-
   const [longitude, setLongitude] = useState();
   const [Latitude, setLatitude] = useState();
   const [ZComponent, setZComponent] = useState();
@@ -27,41 +20,24 @@ function CoordinateToTransformSelecter(props) {
   });
   const [epochChecked, setEpochChecked] = useState({ checked: false });
 
-  const handleZChange = event =>
-    setZComponentChecked({ checked: event.target.checked });
-
+  const handleZChange = event => {
+    setZComponentChecked({ checked: !props.current.context.height });
+    props.current.context.height = event.target.checked;
+  };
   const handleEpochChange = event =>
     setEpochChecked({ checked: event.target.checked });
-
-  function addCoordinatesToTransform(evt, longitude, latitude, height) {
-    evt.preventDefault();
-    const coordinate = [longitude, latitude];
-    current.context.coords = true;
-
-    if (height) coordinate.push(height);
-
-    setCoordinatesToTransform([
-      {
-        sourceCoords: coordinate,
-        id: generateRandomID(8)
-      },
-      ...coordinatesToTransform
-    ]);
-
-    if (current.matches("ready.allinactive")) {
-      send("READYTOTRANSFORM");
-    }
-  }
 
   return (
     <>
       <CoordinateAddForm>
         <CoordinateForm
           onSubmit={e => {
+            props.current.context.height = ZComponentChecked.checked;
             const coordinateComponents = [longitude, Latitude];
-            if (ZComponent) coordinateComponents.push(ZComponent);
+            if (props.current.context.height)
+              coordinateComponents.push(parseFloat(ZComponent));
             if (epoch) coordinateComponents.push(epoch);
-            addCoordinatesToTransform(e, ...coordinateComponents);
+            addCoordinatesToTransform(e, props, ...coordinateComponents);
           }}
         >
           <UlFlex>
@@ -90,31 +66,35 @@ function CoordinateToTransformSelecter(props) {
           </UlFlex>
 
           <div>
-            <Checkbox
-              type="checkbox"
-              id="z-check"
-              name="Z"
-              value="Z"
-              checked={ZComponentChecked.checked}
-              onChange={handleZChange}
-            />
-            <label htmlFor="z-check"> Add Z-component</label>
-
-            <label htmlFor="epoch-check">
-              <Checkbox
-                type="checkbox"
-                id="epoch-check"
-                name="Epoch"
-                value="Epoch"
-                checked={epochChecked.checked}
-                onChange={handleEpochChange}
-                disabled={true}
-              />
-              Add Epoch
-            </label>
-
             <div>
-              {ZComponentChecked.checked && (
+              <label htmlFor="z-check">
+                <Checkbox
+                  type="checkbox"
+                  id="z-check"
+                  name="Z"
+                  value="Z"
+                  checked={props.current.context.height}
+                  onChange={handleZChange}
+                  ref={props.ZChecked}
+                />
+                Add Z-component
+              </label>
+
+              <label htmlFor="epoch-check">
+                <Checkbox
+                  type="checkbox"
+                  id="epoch-check"
+                  name="Epoch"
+                  value="Epoch"
+                  checked={epochChecked.checked}
+                  onChange={handleEpochChange}
+                  disabled={true}
+                />
+                Add Epoch
+              </label>
+            </div>
+            <div>
+              {props.current.context.height && (
                 <li>
                   <CoordinateInput
                     required
@@ -122,8 +102,8 @@ function CoordinateToTransformSelecter(props) {
                     type="text"
                     inputMode="numeric"
                     pattern="^[-]?\d*\.?\d+$"
-                    name="second"
-                    onChange={e => setZComponent(parseFloat(e.target.value))}
+                    name="third"
+                    onChange={e => setZComponent(e.target.value)}
                   />
                 </li>
               )}
