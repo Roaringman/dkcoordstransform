@@ -236,6 +236,7 @@ export const SrsLabel = styled.label`
   }
 
   @media (max-width: 875px) {
+    color: ${grays["100"]};
     margin: 0 10px;
     width: 5ch;
     margin: 0;
@@ -246,8 +247,9 @@ export const SrsSelect = styled.select`
   font-size: 1rem;
   text-align: center;
   background-color: ${blues["100"]};
-  color: ${grays["800"]};
+  color: ${grays["700"]};
   border-radius: 5px;
+  border: none;
   font-family: "Overpass", sans-serif;
   width: 27ch;
 
@@ -364,7 +366,6 @@ export const UIContainer = styled.section`
     grid-column-start: 1;
     grid-column-end: 12;
     min-width: 100%;
-    min-height: 900px;
     overflow: auto;
     background-color: ${blues["300"]};
   }
@@ -449,6 +450,9 @@ export const TableHD = styled.th`
   text-align: left;
   color: ${grays["100"]};
   background-color: ${blues["400"]};
+  @media (max-width: 875px) {
+    box-shadow: inset 0 6px 4px -4px rgba(0, 0, 0, 0.7);
+  }
 `;
 
 export const RemoveRowH = styled(TableHD)`
@@ -458,6 +462,7 @@ export const RemoveRowH = styled(TableHD)`
 export const TableRow = styled(motion.tr)`
   height: 1.5rem;
   text-align: right;
+  border-bottom: 1px solid ${grays["300"]};
   &:hover {
     background-color: ${blues["800"]};
     color: ${grays["100"]};
@@ -465,15 +470,12 @@ export const TableRow = styled(motion.tr)`
       stroke: ${grays["100"]};
     }
   }
-  &:nth-child(odd) {
-    background-color: ${blues["300"]};
-    &:hover {
-      background-color: ${blues["800"]};
-      color: ${grays["100"]};
-      path {
-        stroke: ${grays["100"]};
-      }
-    }
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 875px) {
+    height: 2rem;
   }
 `;
 
