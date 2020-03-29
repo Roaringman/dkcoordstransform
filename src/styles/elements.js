@@ -71,13 +71,16 @@ export const BtnContainer = styled.div`
   grid-row-start: 6;
   grid-row-end: 7;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  @media (max-width: 875px) {
+    grid-column-end: 12;
+  }
 `;
 
 export const ActiveBtn = styled(motion.button)`
   postion: relative;
-  width: 40%;
-  min-width: 100px;
+  width: 10ch;
+  min-width: 150px;
   height: 50px;
   border: none;
   background-color: #fce8e8;
@@ -91,8 +94,8 @@ export const ActiveBtn = styled(motion.button)`
 
 export const InactiveBtn = styled.button`
   postion: relative;
-  width: 40%;
-  min-width: 100px;
+  width: 10ch;
+  min-width: 150px;
   margin: 0 20px;
   height: 50px;
   border: 1px;
@@ -235,6 +238,7 @@ export const SrsLabel = styled.label`
   @media (max-width: 875px) {
     margin: 0 10px;
     width: 5ch;
+    margin: 0;
   }
 `;
 
@@ -255,6 +259,7 @@ export const SrsSelect = styled.select`
 
   @media (max-width: 875px) {
     font-size: 0.8rem;
+    width: 25ch;
   }
 `;
 
@@ -277,7 +282,7 @@ export const SrsFormContainer = styled.div`
   @media (max-width: 875px) {
     flex-direction: column;
     justify-content: space-between;
-    align-items: space-around;
+    align-items: center;
   }
 `;
 
@@ -309,13 +314,14 @@ export const OverflowUL = styled.section`
   overflow: auto;
   overflow-x: auto;
   background-color: ${blues["100"]};
-  border-radius: 5px;
   z-index: 3;
+
   @media (max-width: 875px) {
+    border-radius: 0;
     grid-column-start: 1;
     grid-column-end: 12;
-    box-shadow: inset 0 -6px 4px -4px rgba(0, 0, 0, 0.7);
-    box-shadow: inset 0 6px 4px -4px rgba(0, 0, 0, 0.7);
+    box-shadow: inset 0 6px 4px -4px rgba(0, 0, 0, 0.7),
+      inset 0 -6px 4px -4px rgba(0, 0, 0, 0.7);
   }
 `;
 
@@ -411,6 +417,15 @@ export const CoordinateSubmit = styled.input`
   border: none;
   height: 2.3rem;
   color: ${grays["800"]};
+`;
+
+export const Checkbox = styled.input``;
+export const CheckMark = styled.span`
+  border-radius: 5px;
+
+  @media (max-width: 875px) {
+    height: 25px;
+  }
 `;
 
 // TABLE STUFF

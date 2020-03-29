@@ -4,7 +4,9 @@ import {
   UlFlex,
   CoordinateInput,
   CoordinateSubmit,
-  CoordinateForm
+  CoordinateForm,
+  Checkbox,
+  CheckMark
 } from "../styles/elements";
 import generateRandomID from "../functions/generateRandomID";
 
@@ -45,11 +47,9 @@ function CoordinateToTransformSelecter(props) {
       },
       ...coordinatesToTransform
     ]);
-    console.log(current.value);
 
     if (current.matches("ready.allinactive")) {
       send("READYTOTRANSFORM");
-      console.log(current.value);
     }
   }
 
@@ -90,7 +90,7 @@ function CoordinateToTransformSelecter(props) {
           </UlFlex>
 
           <div>
-            <input
+            <Checkbox
               type="checkbox"
               id="z-check"
               name="Z"
@@ -100,16 +100,19 @@ function CoordinateToTransformSelecter(props) {
             />
             <label htmlFor="z-check"> Add Z-component</label>
 
-            <input
-              type="checkbox"
-              id="epoch-check"
-              name="Epoch"
-              value="Epoch"
-              checked={epochChecked.checked}
-              onChange={handleEpochChange}
-              disabled={true}
-            />
-            <label htmlFor="epoch-check">Add Epoch</label>
+            <label htmlFor="epoch-check">
+              <Checkbox
+                type="checkbox"
+                id="epoch-check"
+                name="Epoch"
+                value="Epoch"
+                checked={epochChecked.checked}
+                onChange={handleEpochChange}
+                disabled={true}
+              />
+              Add Epoch
+            </label>
+
             <div>
               {ZComponentChecked.checked && (
                 <li>
