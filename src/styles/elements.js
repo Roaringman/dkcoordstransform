@@ -166,6 +166,8 @@ export const TransformSelectContainer = styled.section`
   @media (max-width: 875px) {
     grid-row-start: 1;
     grid-row-end: 2;
+    background-color: ${blues["400"]};
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.7);
   }
 `;
 
@@ -194,13 +196,14 @@ export const SrsTitleBackground = styled.div`
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 3;
-  height: 100%;
+  height: 135px;
   width: 100%;
   min-width: 345px;
   background-color: ${blues["600"]};
 
   @media (max-width: 875px) {
     justify-content: center;
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.7);
   }
 `;
 
@@ -311,6 +314,8 @@ export const OverflowUL = styled.section`
   @media (max-width: 875px) {
     grid-column-start: 1;
     grid-column-end: 12;
+    box-shadow: inset 0 -6px 4px -4px rgba(0, 0, 0, 0.7);
+    box-shadow: inset 0 6px 4px -4px rgba(0, 0, 0, 0.7);
   }
 `;
 
@@ -327,6 +332,7 @@ export const CoordinateAddForm = styled.div`
   @media (max-width: 875px) {
     grid-column-start: 1;
     grid-column-end: 12;
+    min-height: 170px;
   }
 `;
 
@@ -354,6 +360,7 @@ export const UIContainer = styled.section`
     min-width: 100%;
     min-height: 900px;
     overflow: auto;
+    background-color: ${blues["300"]};
   }
 `;
 
@@ -374,6 +381,12 @@ export const UlFlex = styled.ul`
   list-style-type: none;
 `;
 
+export const CoordinateForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+`;
+
 export const CoordinateInput = styled.input`
   background-color: ${blues["100"]};
   color: ${grays["900"]};
@@ -387,6 +400,17 @@ export const CoordinateInput = styled.input`
     height: 2rem;
     margin: 10px 10px;
   }
+`;
+
+export const CoordinateSubmit = styled.input`
+  align-self: center;
+  justify-self: baseline;
+  margin-top: auto;
+  width: 60%;
+  border-radius: 5px;
+  border: none;
+  height: 2.3rem;
+  color: ${grays["800"]};
 `;
 
 // TABLE STUFF

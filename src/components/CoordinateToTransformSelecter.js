@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { CoordinateAddForm, UlFlex, CoordinateInput } from "../styles/elements";
+import {
+  CoordinateAddForm,
+  UlFlex,
+  CoordinateInput,
+  CoordinateSubmit,
+  CoordinateForm
+} from "../styles/elements";
 import generateRandomID from "../functions/generateRandomID";
 
 function CoordinateToTransformSelecter(props) {
@@ -50,7 +56,7 @@ function CoordinateToTransformSelecter(props) {
   return (
     <>
       <CoordinateAddForm>
-        <form
+        <CoordinateForm
           onSubmit={e => {
             const coordinateComponents = [longitude, Latitude];
             if (ZComponent) coordinateComponents.push(ZComponent);
@@ -134,8 +140,8 @@ function CoordinateToTransformSelecter(props) {
             </div>
           </div>
 
-          <input type="submit" value="Add coordinates" />
-        </form>
+          <CoordinateSubmit type="submit" value="Add coordinates" />
+        </CoordinateForm>
       </CoordinateAddForm>
     </>
   );
