@@ -8,6 +8,11 @@ const paleBLue = "#96CEF7";
 const lightBlue = "#E0EDF6";
 const gray = "#B0BBC2";*/
 
+const breakpoints = {
+  small: 900,
+  medium: 1250
+};
+
 const blues = {
   "100": "#F0F4FE",
   "200": "#6B90A9", //"#D4DEF8",
@@ -47,7 +52,7 @@ export const StatusContainer = styled.section`
   background-color: ${blues["300"]};
   z-index: 3;
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     visibility: hidden;
   }
 `;
@@ -74,7 +79,7 @@ export const BtnContainer = styled.div`
   width: 100%;
 
   justify-content: center;
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     grid-column-end: 12;
   }
 `;
@@ -114,7 +119,7 @@ export const ResetBtn = styled.button`
   grid-column-end: 5;
   grid-row-start: 6;
   grid-row-end: 7;
-  align-self: end;
+  align-self: start;
   width: 100px;
   min-width: 100px;
   height: 50px;
@@ -132,10 +137,15 @@ export const ResetBtn = styled.button`
     color: ${grays["100"]};
   }
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.medium}px) {
+    grid-column-start: 5;
+    grid-column-end: 6;
+  }
+
+  @media (max-width: ${breakpoints.small}px) {
     position: absolute;
-    right: 20px;
-    bottom: 10px;
+    right: calc(50vw - 50px);
+    top: 870px;
   }
 `;
 
@@ -152,7 +162,7 @@ export const Filler = styled.div`
   grid-column-end: 4;
   background-color: ${grays["200"]};
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     grid-row-start: 1;
     grid-column-end: 3;
     grid-column-end: 12;
@@ -168,10 +178,10 @@ export const TransformSelectContainer = styled.section`
   grid-row-end: 3;
   background-color: ${grays["200"]};
   z-index: 4;
-  @media (min-width: 1150px) {
+  @media (min-width: ${breakpoints.medium}px) {
     height: 135px;
   }
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     grid-row-start: 1;
     grid-row-end: 2;
     background-color: ${blues["400"]};
@@ -188,7 +198,7 @@ export const TransformSelectGrid = styled.div`
   grid-column-gap: 20px;
   align-items: center;
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -209,7 +219,7 @@ export const SrsTitleBackground = styled.div`
   min-width: 345px;
   background-color: ${blues["600"]};
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     justify-content: center;
     box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.7);
   }
@@ -221,7 +231,7 @@ export const SrsTitle = styled.h1`
   text-align: right;
   color: ${grays["100"]};
   margin-right: 10px;
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     margin: 20px;
     text-align: center;
   }
@@ -236,12 +246,12 @@ export const SrsLabel = styled.label`
   grid-row-end: 2;
   color: ${grays["800"]};
   margin: 0 20px;
-  @media (max-width: 1150px) {
+  @media (max-width: ${breakpoints.medium}px) {
     font-size: 2rem;
     margin: 0 10px;
   }
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     color: ${grays["100"]};
     margin: 0 10px;
     width: 5ch;
@@ -259,13 +269,13 @@ export const SrsSelect = styled.select`
   font-family: "Overpass", sans-serif;
   width: 27ch;
 
-  @media (max-width: 1150px) {
+  @media (max-width: ${breakpoints.medium}px) {
     height: 2rem;
     font-size: 0.8rem;
     width: 27ch;
   }
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     font-size: 0.8rem;
     width: 25ch;
   }
@@ -282,12 +292,12 @@ export const SrsFormContainer = styled.div`
   height: 135px;
   width: 100%;
 
-  @media (max-width: 1150px) {
+  @media (max-width: ${breakpoints.medium}px) {
     grid-column-start: 5;
     grid-column-end: 12;
   }
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -298,7 +308,7 @@ export const SrsFrom = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     justify-content: space-between;
     align-items: space-between;
   }
@@ -307,7 +317,7 @@ export const SrsTo = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     justify-content: space-between;
     align-items: space-between;
   }
@@ -324,7 +334,7 @@ export const OverflowUL = styled.section`
   background-color: ${blues["100"]};
   z-index: 3;
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     border-radius: 0;
     grid-column-start: 1;
     grid-column-end: 12;
@@ -343,7 +353,7 @@ export const CoordinateAddForm = styled.div`
   min-width: 125px;
   margin: 0 20px;
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     grid-column-start: 1;
     grid-column-end: 12;
     min-height: 170px;
@@ -368,7 +378,7 @@ export const UIContainer = styled.section`
   min-height: 900px;
   overflow-x: none;
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     grid-column-start: 1;
     grid-column-end: 12;
     min-width: 100%;
@@ -409,7 +419,7 @@ export const CoordinateInput = styled.input`
   border: none;
   min-width: 10ch;
   max-width: 18ch;
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     height: 2rem;
     margin: 10px 10px;
   }
@@ -430,7 +440,7 @@ export const Checkbox = styled.input``;
 export const CheckMark = styled.span`
   border-radius: 5px;
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     height: 25px;
   }
 `;
@@ -456,7 +466,7 @@ export const TableHD = styled.th`
   text-align: left;
   color: ${grays["100"]};
   background-color: ${blues["400"]};
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     box-shadow: inset 0 6px 4px -4px rgba(0, 0, 0, 0.7);
   }
 `;
@@ -481,7 +491,7 @@ export const TableRow = styled(motion.tr)`
     border-bottom: none;
   }
 
-  @media (max-width: 875px) {
+  @media (max-width: ${breakpoints.small}px) {
     height: 2rem;
   }
 `;
