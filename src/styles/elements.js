@@ -321,7 +321,8 @@ export const CoordinateAddForm = styled.div`
   grid-row-end: 4;
   display: flex;
   justify-content: center;
-  width: 100%;
+  min-width: 125px;
+  margin: 0 20px;
 
   @media (max-width: 875px) {
     grid-column-start: 1;
@@ -374,12 +375,16 @@ export const UlFlex = styled.ul`
 `;
 
 export const CoordinateInput = styled.input`
+  background-color: ${blues["100"]};
+  color: ${grays["900"]};
   margin: 10px 10px;
-  height: 1.2rem;
+  height: 1.5rem;
   border-radius: 5px;
-
+  border: none;
+  min-width: 10ch;
+  max-width: 18ch;
   @media (max-width: 875px) {
-    height: 1.8rem;
+    height: 2rem;
     margin: 10px 10px;
   }
 `;
