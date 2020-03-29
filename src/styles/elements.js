@@ -71,6 +71,8 @@ export const BtnContainer = styled.div`
   grid-row-start: 6;
   grid-row-end: 7;
   display: flex;
+  width: 100%;
+
   justify-content: center;
   @media (max-width: 875px) {
     grid-column-end: 12;
@@ -80,7 +82,7 @@ export const BtnContainer = styled.div`
 export const ActiveBtn = styled(motion.button)`
   postion: relative;
   width: 10ch;
-  min-width: 150px;
+  min-width: 140px;
   height: 50px;
   border: none;
   background-color: #fce8e8;
@@ -95,7 +97,7 @@ export const ActiveBtn = styled(motion.button)`
 export const InactiveBtn = styled.button`
   postion: relative;
   width: 10ch;
-  min-width: 150px;
+  min-width: 140px;
   margin: 0 20px;
   height: 50px;
   border: 1px;
@@ -149,7 +151,7 @@ export const Filler = styled.div`
   grid-column-start: 1;
   grid-column-end: 4;
   background-color: ${grays["200"]};
-  height: 135px;
+
   @media (max-width: 875px) {
     grid-row-start: 1;
     grid-column-end: 3;
@@ -166,6 +168,9 @@ export const TransformSelectContainer = styled.section`
   grid-row-end: 3;
   background-color: ${grays["200"]};
   z-index: 4;
+  @media (min-width: 1150px) {
+    height: 135px;
+  }
   @media (max-width: 875px) {
     grid-row-start: 1;
     grid-row-end: 2;
@@ -215,6 +220,7 @@ export const SrsTitle = styled.h1`
   letter-spacing: 5px;
   text-align: right;
   color: ${grays["100"]};
+  margin-right: 10px;
   @media (max-width: 875px) {
     margin: 20px;
     text-align: center;
@@ -360,7 +366,7 @@ export const UIContainer = styled.section`
   background-color: ${grays["200"]};
   z-index: 3;
   min-height: 900px;
-  overflow: auto;
+  overflow-x: none;
 
   @media (max-width: 875px) {
     grid-column-start: 1;
@@ -396,7 +402,7 @@ export const CoordinateForm = styled.form`
 
 export const CoordinateInput = styled.input`
   background-color: ${blues["100"]};
-  color: ${grays["900"]};
+  color: ${grays["700"]};
   margin: 10px 10px;
   height: 1.5rem;
   border-radius: 5px;
@@ -417,7 +423,7 @@ export const CoordinateSubmit = styled.input`
   border-radius: 5px;
   border: none;
   height: 2.3rem;
-  color: ${grays["800"]};
+  color: ${grays["700"]};
 `;
 
 export const Checkbox = styled.input``;
@@ -462,6 +468,7 @@ export const RemoveRowH = styled(TableHD)`
 export const TableRow = styled(motion.tr)`
   height: 1.5rem;
   text-align: right;
+  color: ${grays["700"]};
   border-bottom: 1px solid ${grays["300"]};
   &:hover {
     background-color: ${blues["800"]};
@@ -488,7 +495,7 @@ const Path = props => (
     whileHover={{ scale: 1.2 }}
     fill="transparent"
     strokeWidth="3"
-    stroke={`${grays["900"]}`}
+    stroke={`${grays["700"]}`}
     strokeLinecap="round"
     {...props}
   />
