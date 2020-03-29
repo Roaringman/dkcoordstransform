@@ -145,7 +145,7 @@ export const ResetBtn = styled.button`
   @media (max-width: ${breakpoints.small}px) {
     position: absolute;
     right: calc(50vw - 50px);
-    top: 870px;
+    top: calc(100% - 66px);
   }
 `;
 
