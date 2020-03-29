@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  CoordinateAddForm,
-  InputTableRow,
-  CoordinateComponentsTable,
-  CoordinateComponentsTableRowData,
-  TableInput
-} from "../styles/elements";
+import { CoordinateAddForm, UlFlex, CoordinateInput } from "../styles/elements";
 import generateRandomID from "../functions/generateRandomID";
 
 function CoordinateToTransformSelecter(props) {
@@ -56,27 +50,6 @@ function CoordinateToTransformSelecter(props) {
   return (
     <>
       <CoordinateAddForm>
-        <div>
-          <input
-            type="checkbox"
-            id="z-check"
-            name="Z"
-            value="Z"
-            checked={ZComponentChecked.checked}
-            onChange={handleZChange}
-          />
-          <label htmlFor="z-check"> Add Z-component</label>
-          <input
-            type="checkbox"
-            id="epoch-check"
-            name="Epoch"
-            value="Epoch"
-            checked={epochChecked.checked}
-            onChange={handleEpochChange}
-          />
-          <label htmlFor="epoch-check">Add Epoch</label>
-        </div>
-
         <form
           onSubmit={e => {
             const coordinateComponents = [longitude, Latitude];
@@ -85,60 +58,81 @@ function CoordinateToTransformSelecter(props) {
             addCoordinatesToTransform(e, ...coordinateComponents);
           }}
         >
-          <CoordinateComponentsTable>
-            <tbody>
-              <InputTableRow>
-                <CoordinateComponentsTableRowData>
-                  <TableInput
+          <UlFlex>
+            <li>
+              <CoordinateInput
+                required
+                placeholder="Longitude/X"
+                type="text"
+                inputMode="numeric"
+                pattern="^[-]?\d*\.?\d+$"
+                name="first"
+                onChange={e => setLongitude(parseFloat(e.target.value))}
+              />
+            </li>
+            <li>
+              <CoordinateInput
+                required
+                placeholder="Latitude/Y"
+                type="text"
+                inputMode="numeric"
+                pattern="^[-]?\d*\.?\d+$"
+                name="second"
+                onChange={e => setLatitude(parseFloat(e.target.value))}
+              />
+            </li>
+          </UlFlex>
+
+          <div>
+            <input
+              type="checkbox"
+              id="z-check"
+              name="Z"
+              value="Z"
+              checked={ZComponentChecked.checked}
+              onChange={handleZChange}
+            />
+            <label htmlFor="z-check"> Add Z-component</label>
+
+            <input
+              type="checkbox"
+              id="epoch-check"
+              name="Epoch"
+              value="Epoch"
+              checked={epochChecked.checked}
+              onChange={handleEpochChange}
+              disabled={true}
+            />
+            <label htmlFor="epoch-check">Add Epoch</label>
+            <div>
+              {ZComponentChecked.checked && (
+                <li>
+                  <CoordinateInput
                     required
-                    placeholder="Longitude/X"
-                    type="text"
-                    inputMode="numeric"
-                    pattern="^[-]?\d*\.?\d+$"
-                    name="first"
-                    onChange={e => setLongitude(parseFloat(e.target.value))}
-                  />
-                </CoordinateComponentsTableRowData>
-                <CoordinateComponentsTableRowData>
-                  <TableInput
-                    required
-                    placeholder="Latitude/Y"
+                    placeholder="Height/Z"
                     type="text"
                     inputMode="numeric"
                     pattern="^[-]?\d*\.?\d+$"
                     name="second"
-                    onChange={e => setLatitude(parseFloat(e.target.value))}
+                    onChange={e => setZComponent(parseFloat(e.target.value))}
                   />
-                </CoordinateComponentsTableRowData>
-                {ZComponentChecked.checked && (
-                  <CoordinateComponentsTableRowData>
-                    <TableInput
-                      required
-                      placeholder="Height/Z"
-                      type="text"
-                      inputMode="numeric"
-                      pattern="^[-]?\d*\.?\d+$"
-                      name="second"
-                      onChange={e => setZComponent(parseFloat(e.target.value))}
-                    />
-                  </CoordinateComponentsTableRowData>
-                )}
-                {epochChecked.checked && (
-                  <CoordinateComponentsTableRowData>
-                    <TableInput
-                      required
-                      placeholder="Epoch"
-                      type="text"
-                      inputMode="numeric"
-                      pattern="^[-]?\d*\.?\d+$"
-                      name="second"
-                      onChange={e => console.log("epoch")}
-                    />
-                  </CoordinateComponentsTableRowData>
-                )}
-              </InputTableRow>
-            </tbody>
-          </CoordinateComponentsTable>
+                </li>
+              )}
+              {epochChecked.checked && (
+                <li>
+                  <CoordinateInput
+                    required
+                    placeholder="Epoch"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="^[-]?\d*\.?\d+$"
+                    name="second"
+                    onChange={e => console.log("epoch")}
+                  />
+                </li>
+              )}
+            </div>
+          </div>
 
           <input type="submit" value="Add coordinates" />
         </form>

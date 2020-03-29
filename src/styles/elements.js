@@ -319,6 +319,14 @@ export const CoordinateAddForm = styled.div`
   grid-column-end: 4;
   grid-row-start: 3;
   grid-row-end: 4;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  @media (max-width: 875px) {
+    grid-column-start: 1;
+    grid-column-end: 12;
+  }
 `;
 
 export const UIContainer = styled.section`
@@ -336,6 +344,8 @@ export const UIContainer = styled.section`
   min-width: 345px;
   background-color: ${grays["200"]};
   z-index: 3;
+  min-height: 900px;
+  overflow: auto;
 
   @media (max-width: 875px) {
     grid-column-start: 1;
@@ -352,6 +362,26 @@ export const CenteredH2 = styled.h2`
   font-size: 1.3rem;
   margin-top: 2rem;
   text-align: center;
+`;
+
+//
+
+export const UlFlex = styled.ul`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+`;
+
+export const CoordinateInput = styled.input`
+  margin: 10px 10px;
+  height: 1.2rem;
+  border-radius: 5px;
+
+  @media (max-width: 875px) {
+    height: 1.8rem;
+    margin: 10px 10px;
+  }
 `;
 
 // TABLE STUFF
@@ -405,18 +435,6 @@ export const TableRow = styled(motion.tr)`
 
 export const InputTableRow = styled.tr`
   display: flex;
-`;
-
-export const TableInput = styled.input`
-  width: 98%;
-`;
-
-export const CoordinateComponentsTable = styled.table`
-  width: 100%;
-`;
-
-export const CoordinateComponentsTableRowData = styled.table`
-  width: 1fr;
 `;
 
 const Path = props => (
