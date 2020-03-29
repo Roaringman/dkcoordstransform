@@ -56,8 +56,6 @@ function submitTranslateRequest(
           ) {
             send("FAILEDTOTRANSFORM");
           } else {
-            console.log(coordinatesToTransform);
-
             addTransformedCoordinates(
               coordinatesToTransform,
               setCoordinatesToTransform,
