@@ -29,6 +29,9 @@ export default function addCoordinatesToTransform(
   current.context.coordinates = [
     {
       sourceCoords: coordinate,
+      destinationCoords: null,
+      displayCoords: null,
+      responseState: null,
       id: generateRandomID(8)
     },
     ...current.context.coordinates

@@ -2,12 +2,19 @@ import React from "react";
 import { ResetBtn, ResetBtnHighlight } from "../styles/elements";
 
 function ResetButton(props) {
-  const { send, current, setSource, setDestination } = props;
+  const {
+    send,
+    current,
+    setSource,
+    setDestination,
+    setCoordinatesToTransform
+  } = props;
 
   function handleSend() {
     send("RESET");
     setSource("--Please choose an option--");
     setDestination("--Please choose an option--");
+    setCoordinatesToTransform([]);
   }
 
   switch (true) {

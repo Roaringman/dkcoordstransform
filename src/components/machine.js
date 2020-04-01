@@ -10,7 +10,8 @@ export const transformMachine = Machine(
       destinationSrs: "",
       coords: false,
       coordinates: [],
-      height: null
+      height: null,
+      failMessage: ""
     },
     states: {
       initial: {

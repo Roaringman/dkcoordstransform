@@ -16,10 +16,7 @@ function LeafMap(props) {
       <ZoomControl position="bottomright"></ZoomControl>
 
       {markerCoordinates.map((marker, i) => {
-        if (
-          marker.displayCoords &&
-          typeof marker.displayCoords[0] === "number"
-        ) {
+        if (marker.displayCoords) {
           return (
             <Marker
               key={i + "s"}

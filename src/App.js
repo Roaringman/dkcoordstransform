@@ -41,9 +41,8 @@ function App() {
       reset: context => {
         context.sourceSrs = "";
         context.destinationSrs = "";
-        context.coords = [];
-
-        setCoordinatesToTransform([]);
+        context.coords = false;
+        context.coordinates = [];
       }
     }
   });
@@ -94,6 +93,7 @@ function App() {
             send={send}
             setSource={setSource}
             setDestination={setDestination}
+            setCoordinatesToTransform={setCoordinatesToTransform}
           ></ResetButton>
           <StatusContainer>
             <ProgressStatus current={current} />

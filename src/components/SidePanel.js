@@ -21,7 +21,7 @@ import {
 } from "../styles/elements";
 
 //Import functions
-import runCoordinateTransformGenerator from "../functions/runFetchGenerator";
+import { fetchAndUpdateCoordinate } from "../functions/runFetchGenerator";
 
 function SidePanel(props) {
   const {
@@ -31,23 +31,51 @@ function SidePanel(props) {
     setCoordinatesToTransform
   } = props;
 
-  const incompatibleSRSError =
-    "It is not possible to transform between the selected coordinate systems. Press Reset to choose new settings.";
-  const asyncIterator = runCoordinateTransformGenerator([
-    send,
-    current,
-    coordinatesToTransform,
-    setCoordinatesToTransform,
-    current.context
-  ]);
-
-  async function iterateCoordinates() {
-    for await (const val of asyncIterator) {
+  function updatePromises(listOfCoordinates) {
+    const updatedCoordiatesToTransform = [];
+    listOfCoordinates.map(coordinateData => {
       send("TRANSFORM");
+      return updatedCoordiatesToTransform.push(
+        fetchAndUpdateCoordinate(
+          current.context.sourceSrs,
+          current.context.destinationSrs,
+          coordinateData
+        )
+      );
+    });
+    return updatedCoordiatesToTransform;
+  }
 
-      continue;
-    }
-    send("SUCCESS");
+  function iterateCoordinates() {
+    Promise.all(updatePromises(coordinatesToTransform))
+      .then(function(destinationResult) {
+        return destinationResult;
+      })
+      .then(function(withDestination) {
+        if (withDestination[0].responseState >= 3) {
+          throw new Error(withDestination[0].responseState); //If the response code is not 1 or 2, the whole app enters fail state
+        } else {
+          setCoordinatesToTransform(withDestination); //Sets the destination coordinates
+          const displayResult = Promise.all(updatePromises(withDestination));
+          return displayResult;
+        }
+      })
+      .then(function(displayResult) {
+        setCoordinatesToTransform(displayResult); //Sets the display coordinates
+        send("SUCCESS");
+      })
+      .catch(error => {
+        switch (error.message) {
+          case "3":
+            current.context.failMessage =
+              "CRS's are not compatible across countries. Press the reset button to start over";
+            return send("FAILEDTOTRANSFORM");
+          default:
+            current.context.failMessage =
+              "Something unexpected happened. Press the reset button to try again";
+            return send("FAILEDTOTRANSFORM");
+        }
+      });
   }
 
   const remove = (arr, item) => {
@@ -125,7 +153,7 @@ function SidePanel(props) {
           </>
         )}
         {current.matches("ready.failedtotransform") ? (
-          <p>{incompatibleSRSError}</p>
+          <p>{current.context.failMessage}</p>
         ) : null}
       </OverflowUL>
       <BtnContainer>

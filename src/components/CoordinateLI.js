@@ -28,10 +28,10 @@ function CoordinateLI(props) {
           ) : null}
         </>
       );
-    case coordinates.destinationCoords && coordinates.responseState === 2:
+    case coordinates.responseState === 2:
       return (
         <>
-          <li>{`Coordinates out of bounds`}</li>
+          <td colspan={3}>{`Coordinates out of bounds`}</td>
         </>
       );
     default:
