@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Map, Marker, TileLayer, ZoomControl, Popup } from "react-leaflet";
 
-function LeafMap(props) {
-  const { markerCoordinates } = props;
+//Import context
+import { CoordinateContext } from "../context/CoordinateContext";
+
+function LeafMap() {
+  const [coordinatesToTransform] = useContext(CoordinateContext);
 
   const [center, setCenter] = useState([56.88484306, 11.2214225]);
   const [activeMarker, setActiveMarker] = useState(null);
@@ -15,7 +18,7 @@ function LeafMap(props) {
       />
       <ZoomControl position="bottomright"></ZoomControl>
 
-      {markerCoordinates.map((marker, i) => {
+      {coordinatesToTransform.map((marker, i) => {
         if (marker.displayCoords) {
           return (
             <Marker
@@ -43,7 +46,6 @@ function LeafMap(props) {
                 <th>From Y</th>
                 <th>To Y</th>
               </tr>
-
               <tr>
                 <td>{activeMarker.sourceCoords[0]}</td>
                 <td>{activeMarker.destinationCoords[0]}</td>

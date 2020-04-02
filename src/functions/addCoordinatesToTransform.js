@@ -26,7 +26,7 @@ export default function addCoordinatesToTransform(
     send("READYTOTRANSFORM");
   }
 
-  current.context.coordinates = [
+  const newCoordinatesToTransform = [
     {
       sourceCoords: coordinate,
       destinationCoords: null,
@@ -34,8 +34,8 @@ export default function addCoordinatesToTransform(
       responseState: null,
       id: generateRandomID(8)
     },
-    ...current.context.coordinates
+    ...coordinatesToTransform
   ];
-  setCoordinatesToTransform(current.context.coordinates);
+  setCoordinatesToTransform(newCoordinatesToTransform);
   return coordinatesToTransform;
 }

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useMachine } from "@xstate/react";
 import { transformMachine } from "./components/machine";
 
+//Import context
+import { CoordinateProvider } from "./context/CoordinateContext";
+
 //Import components
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
 import LeafMap from "./components/LeafMap";
@@ -25,7 +28,7 @@ import {
 function App() {
   const { dragOverHandler, dropHandler } = dragAndDropHandlers;
   const [srs, setSrs] = useState([]);
-  const [coordinatesToTransform, setCoordinatesToTransform] = useState([]);
+  //const [coordinatesToTransform, setCoordinatesToTransform] = useState([]);
   const [source, setSource] = useState("--Please choose an option--");
   const [destination, setDestination] = useState("--Please choose an option--");
 
@@ -47,62 +50,58 @@ function App() {
     }
   });
 
-  const dropProps = {
+  /* const dropProps = {
     current: current,
     send: send,
     coordinatesToTransform: coordinatesToTransform,
     setCoordinatesToTransform: setCoordinatesToTransform
-  };
+  };*/
 
   switch (true) {
     case current.matches("ready"):
       return (
-        <div
-          className="App"
-          id="drop_zone"
-          onDrop={e => dropHandler(e, dropProps)}
-          onDragOver={e => dragOverHandler(e)}
-        >
-          <LeafMap markerCoordinates={coordinatesToTransform}></LeafMap>
+        <CoordinateProvider>
+          <div
+            className="App"
+            id="drop_zone"
+            onDrop={e => dropHandler(e, null /*dropProps*/)}
+            onDragOver={e => dragOverHandler(e)}
+          >
+            <LeafMap></LeafMap>
 
-          <TransformSelectContainer>
-            <TransformSelectGrid>
-              <SourceDestinationSelecter
-                source={source}
-                destination={destination}
-                setSource={setSource}
-                setDestination={setDestination}
-                srs={srs}
-                machineContext={current.context}
-                send={send}
-                current={current}
-              />
-            </TransformSelectGrid>
-          </TransformSelectContainer>
+            <TransformSelectContainer>
+              <TransformSelectGrid>
+                <SourceDestinationSelecter
+                  source={source}
+                  destination={destination}
+                  setSource={setSource}
+                  setDestination={setDestination}
+                  srs={srs}
+                  machineContext={current.context}
+                  send={send}
+                  current={current}
+                />
+              </TransformSelectGrid>
+            </TransformSelectContainer>
 
-          <UIContainer>
-            <SidePanel
-              send={send}
+            <UIContainer>
+              <SidePanel send={send} current={current}></SidePanel>
+            </UIContainer>
+            <ResetButton
               current={current}
-              coordinatesToTransform={coordinatesToTransform}
-              setCoordinatesToTransform={setCoordinatesToTransform}
-            ></SidePanel>
-          </UIContainer>
-          <ResetButton
-            current={current}
-            send={send}
-            setSource={setSource}
-            setDestination={setDestination}
-            setCoordinatesToTransform={setCoordinatesToTransform}
-          ></ResetButton>
-          <StatusContainer>
-            <ProgressStatus current={current} />
-          </StatusContainer>
-        </div>
+              send={send}
+              setSource={setSource}
+              setDestination={setDestination}
+            ></ResetButton>
+            <StatusContainer>
+              <ProgressStatus current={current} />
+            </StatusContainer>
+          </div>
+        </CoordinateProvider>
       );
 
     case current.matches("initial"):
-      return <div> Loading </div>;
+      return <div> Loading... </div>;
     case current.matches("failed"):
       return <div> Failed to fetch required ressources </div>;
 

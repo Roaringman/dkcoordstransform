@@ -1,5 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import { AnimatePresence } from "framer-motion";
+
+//Import context
+import { CoordinateContext } from "../context/CoordinateContext";
 
 //Import components
 import CoordinateLI from "./CoordinateLI";
@@ -24,12 +27,11 @@ import {
 import { fetchAndUpdateCoordinate } from "../functions/runFetchGenerator";
 
 function SidePanel(props) {
-  const {
-    current,
-    send,
-    coordinatesToTransform,
-    setCoordinatesToTransform
-  } = props;
+  const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
+    CoordinateContext
+  );
+
+  const { current, send } = props;
 
   function updatePromises(listOfCoordinates) {
     const updatedCoordiatesToTransform = [];
@@ -87,6 +89,7 @@ function SidePanel(props) {
     if (newArr.length === 0) {
       current.context.coords = false;
     }
+    //console.log(newArr);
     return newArr;
   };
 
@@ -133,11 +136,11 @@ function SidePanel(props) {
                         }}
                       >
                         <CloseButton
-                          close={() =>
+                          close={() => {
                             setCoordinatesToTransform(
                               remove(coordinatesToTransform, coordinates.id)
-                            )
-                          }
+                            );
+                          }}
                         ></CloseButton>
                         <CoordinateLI
                           key={i}

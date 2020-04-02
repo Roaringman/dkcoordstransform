@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ResetBtn, ResetBtnHighlight } from "../styles/elements";
 
+//Import context
+import { CoordinateContext } from "../context/CoordinateContext";
+
 function ResetButton(props) {
-  const {
-    send,
-    current,
-    setSource,
-    setDestination,
-    setCoordinatesToTransform
-  } = props;
+  const { send, current, setSource, setDestination } = props;
+  const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
+    CoordinateContext
+  );
 
   function handleSend() {
     send("RESET");
