@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+
+// Import functions
 import SrsOptions from "./srsOptions";
+
+// Import styles
 import {
   SrsFrom,
   SrsTo,
@@ -10,17 +14,15 @@ import {
   SrsFormContainer
 } from "../styles/elements";
 
+//Import context
+import { SRSContext } from "../context/SRSContext";
+
 function SourceDestinationSelecter(props) {
-  let {
-    source,
-    destination,
-    setSource,
-    setDestination,
-    srs,
-    machineContext,
-    send,
-    current
-  } = props;
+  const [source, setSource, destination, setDestination] = useContext(
+    SRSContext
+  );
+
+  let { srs, machineContext, send, current } = props;
 
   return (
     <>

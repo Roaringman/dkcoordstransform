@@ -4,6 +4,7 @@ import { transformMachine } from "./components/machine";
 
 //Import context
 import { CoordinateProvider } from "./context/CoordinateContext";
+import { SRSProvider } from "./context/SRSContext";
 
 //Import components
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
@@ -28,9 +29,6 @@ import {
 function App() {
   const { dragOverHandler, dropHandler } = dragAndDropHandlers;
   const [srs, setSrs] = useState([]);
-  //const [coordinatesToTransform, setCoordinatesToTransform] = useState([]);
-  const [source, setSource] = useState("--Please choose an option--");
-  const [destination, setDestination] = useState("--Please choose an option--");
 
   const [current, send] = useMachine(transformMachine, {
     actions: {
@@ -61,42 +59,35 @@ function App() {
     case current.matches("ready"):
       return (
         <CoordinateProvider>
-          <div
-            className="App"
-            id="drop_zone"
-            onDrop={e => dropHandler(e, null /*dropProps*/)}
-            onDragOver={e => dragOverHandler(e)}
-          >
-            <LeafMap></LeafMap>
+          <SRSProvider>
+            <div
+              className="App"
+              id="drop_zone"
+              onDrop={e => dropHandler(e, null /*dropProps*/)}
+              onDragOver={e => dragOverHandler(e)}
+            >
+              <LeafMap></LeafMap>
 
-            <TransformSelectContainer>
-              <TransformSelectGrid>
-                <SourceDestinationSelecter
-                  source={source}
-                  destination={destination}
-                  setSource={setSource}
-                  setDestination={setDestination}
-                  srs={srs}
-                  machineContext={current.context}
-                  send={send}
-                  current={current}
-                />
-              </TransformSelectGrid>
-            </TransformSelectContainer>
+              <TransformSelectContainer>
+                <TransformSelectGrid>
+                  <SourceDestinationSelecter
+                    srs={srs}
+                    machineContext={current.context}
+                    send={send}
+                    current={current}
+                  />
+                </TransformSelectGrid>
+              </TransformSelectContainer>
 
-            <UIContainer>
-              <SidePanel send={send} current={current}></SidePanel>
-            </UIContainer>
-            <ResetButton
-              current={current}
-              send={send}
-              setSource={setSource}
-              setDestination={setDestination}
-            ></ResetButton>
-            <StatusContainer>
-              <ProgressStatus current={current} />
-            </StatusContainer>
-          </div>
+              <UIContainer>
+                <SidePanel send={send} current={current}></SidePanel>
+              </UIContainer>
+              <ResetButton current={current} send={send}></ResetButton>
+              <StatusContainer>
+                <ProgressStatus current={current} />
+              </StatusContainer>
+            </div>
+          </SRSProvider>
         </CoordinateProvider>
       );
 
