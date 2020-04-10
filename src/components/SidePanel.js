@@ -3,6 +3,7 @@ import { AnimatePresence } from "framer-motion";
 
 //Import context
 import { CoordinateContext } from "../context/CoordinateContext";
+import { sourceData } from "../context/SRSContext";
 
 //Import components
 import CoordinateLI from "./CoordinateLI";

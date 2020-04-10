@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   CoordinateAddForm,
   UlFlex,
@@ -10,7 +10,18 @@ import {
 } from "../styles/elements";
 import addCoordinatesToTransform from "../functions/addCoordinatesToTransform";
 
+//Import context
+import { SRSContext } from "../context/SRSContext";
+
+function isEmpty(obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) return false;
+  }
+  return true;
+}
+
 function CoordinateToTransformSelecter(props) {
+  const { sourceData } = useContext(SRSContext);
   const [longitude, setLongitude] = useState();
   const [Latitude, setLatitude] = useState();
   const [ZComponent, setZComponent] = useState();
@@ -44,7 +55,9 @@ function CoordinateToTransformSelecter(props) {
             <li>
               <CoordinateInput
                 required
-                placeholder="Longitude/X"
+                placeholder={
+                  isEmpty(sourceData) ? "Longitude/X" : `${sourceData.X}`
+                }
                 type="text"
                 inputMode="numeric"
                 pattern="^[-]?\d*\.?\d+$"
@@ -55,7 +68,9 @@ function CoordinateToTransformSelecter(props) {
             <li>
               <CoordinateInput
                 required
-                placeholder="Latitude/Y"
+                placeholder={
+                  isEmpty(sourceData) ? "Latitude/Y" : `${sourceData.Y}`
+                }
                 type="text"
                 inputMode="numeric"
                 pattern="^[-]?\d*\.?\d+$"
@@ -73,9 +88,10 @@ function CoordinateToTransformSelecter(props) {
                   id="z-check"
                   name="Z"
                   value="Z"
-                  checked={props.current.context.height}
+                  checked={props.current.context.height && sourceData.Z != null}
                   onChange={handleZChange}
                   ref={props.ZChecked}
+                  disabled={sourceData.Z === null ? true : false}
                 />
                 Add Z-component
               </label>
@@ -94,11 +110,13 @@ function CoordinateToTransformSelecter(props) {
               </label>
             </div>
             <div>
-              {props.current.context.height && (
+              {props.current.context.height && sourceData.Z && (
                 <li>
                   <CoordinateInput
                     required
-                    placeholder="Height/Z"
+                    placeholder={
+                      isEmpty(sourceData) ? "Height/Z" : `${sourceData.Z}`
+                    }
                     type="text"
                     inputMode="numeric"
                     pattern="^[-]?\d*\.?\d+$"

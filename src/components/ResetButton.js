@@ -10,9 +10,7 @@ function ResetButton(props) {
   const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
     CoordinateContext
   );
-  const [source, setSource, destination, setDestination] = useContext(
-    SRSContext
-  );
+  const { source, setSource, setDestination } = useContext(SRSContext);
 
   function handleSend() {
     send("RESET");

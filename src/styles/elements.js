@@ -155,6 +155,35 @@ export const ResetBtnHighlight = styled(ResetBtn)`
 `;
 
 // SRS TRANSFORM COMPONENT STYLES
+
+export const FlexColumnCenter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const SRSInfoBoxArrow = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 45px solid transparent;
+  border-right: 45px solid transparent;
+  border-top: 45px solid #f00;
+`;
+
+export const SRSInfoBoxText = styled.div`
+  background-color: purple;
+  color: white;
+  padding: 10px;
+`;
+
+export const SRSInfoBoxPopUp = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 53px;
+  align-items: center;
+`;
+
 export const Filler = styled.div`
   grid-row-start: 2;
   grid-row-end: 3;
