@@ -26,10 +26,10 @@ function SRSInfoBox(props) {
               <ul>
                 {Object.entries(data).map((value, key) => {
                   if (value[0] === "Title") {
-                    return <h3>{value[1]}</h3>;
+                    return <h3 key={`key-${key}`}>{value[1]}</h3>;
                   } else {
                     return (
-                      <li key={key}>
+                      <li key={`info-${key}`}>
                         {value[1] && // If z-component is defined
                           `${value[0]}: ${dictionary[value[1].toLowerCase()]}`}
                       </li>

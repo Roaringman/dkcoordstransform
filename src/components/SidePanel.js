@@ -10,7 +10,7 @@ import CoordinateLI from "./CoordinateLI";
 import CoordinateToTransformSelecter from "./CoordinateToTransformSelecter";
 
 //Import utils
-import dictionary from "../utils/dictionary";
+import { dictionary } from "../utils/dictionary";
 
 //Import styles
 import {
@@ -34,7 +34,7 @@ function SidePanel(props) {
   const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
     CoordinateContext
   );
-  const { source, destination } = useContext(SRSContext);
+  const { source, destination, sourceData } = useContext(SRSContext);
 
   const { current, send } = props;
 
@@ -114,10 +114,22 @@ function SidePanel(props) {
               <tbody>
                 <tr>
                   <RemoveRowH> </RemoveRowH>
-                  <TableHD> Longitude </TableHD>
-                  <TableHD> Latitude </TableHD>
+                  <TableHD>
+                    {sourceData.X
+                      ? dictionary[sourceData["X"].toLowerCase()]
+                      : "Longitude"}
+                  </TableHD>
+                  <TableHD>
+                    {sourceData.Y
+                      ? dictionary[sourceData["Y"].toLowerCase()]
+                      : "Latitude"}
+                  </TableHD>
                   {ZChecked.current.checked ? (
-                    <TableHD> Height </TableHD>
+                    <TableHD>
+                      {sourceData.Z
+                        ? dictionary[sourceData["Z"].toLowerCase()]
+                        : "Height"}
+                    </TableHD>
                   ) : null}
                 </tr>
                 <AnimatePresence initial={true}>
@@ -135,13 +147,15 @@ function SidePanel(props) {
                           transition: { duration: 0.2 },
                         }}
                       >
-                        <CloseButton
-                          close={() => {
-                            setCoordinatesToTransform(
-                              remove(coordinatesToTransform, coordinates.id)
-                            );
-                          }}
-                        ></CloseButton>
+                        <td>
+                          <CloseButton
+                            close={() => {
+                              setCoordinatesToTransform(
+                                remove(coordinatesToTransform, coordinates.id)
+                              );
+                            }}
+                          />
+                        </td>
                         <CoordinateLI
                           key={i}
                           coordinates={coordinates}
