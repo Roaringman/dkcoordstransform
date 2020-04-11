@@ -21,13 +21,11 @@ function LeafMap() {
       <ZoomControl position="bottomright"></ZoomControl>
 
       {coordinatesToTransform.map((marker, i) => {
-        console.log(marker);
-
         const coordinate =
           destination === "EPSG:4326"
             ? marker.destinationCoords
             : marker.displayCoords;
-        console.log(coordinate);
+
         if (marker.displayCoords) {
           const filterCoordinate = coordinate.filter(
             (coordinate) => typeof coordinate === "number"

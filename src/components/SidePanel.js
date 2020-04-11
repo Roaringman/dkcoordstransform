@@ -91,7 +91,6 @@ function SidePanel(props) {
     if (newArr.length === 0) {
       current.context.coords = false;
     }
-    //console.log(newArr);
     return newArr;
   };
 
