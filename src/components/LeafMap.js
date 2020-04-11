@@ -3,9 +3,11 @@ import { Map, Marker, TileLayer, ZoomControl, Popup } from "react-leaflet";
 
 //Import context
 import { CoordinateContext } from "../context/CoordinateContext";
+import { SRSContext } from "../context/SRSContext";
 
 function LeafMap() {
   const [coordinatesToTransform] = useContext(CoordinateContext);
+  const { destination } = useContext(SRSContext);
 
   const [center, setCenter] = useState([56.88484306, 11.2214225]);
   const [activeMarker, setActiveMarker] = useState(null);
@@ -19,17 +21,25 @@ function LeafMap() {
       <ZoomControl position="bottomright"></ZoomControl>
 
       {coordinatesToTransform.map((marker, i) => {
-        if (
-          marker.displayCoords &&
-          marker.displayCoords.includes("undefined")
-        ) {
-          return (
+        console.log(marker);
+
+        const coordinate =
+          destination === "EPSG:4326"
+            ? marker.destinationCoords
+            : marker.displayCoords;
+        console.log(coordinate);
+        if (marker.displayCoords) {
+          const filterCoordinate = coordinate.filter(
+            (coordinate) => typeof coordinate === "number"
+          );
+
+          return filterCoordinate.length === 2 ? (
             <Marker
               key={i + "s"}
-              position={[marker.displayCoords[0], marker.displayCoords[1]]}
+              position={[filterCoordinate[0], filterCoordinate[1]]}
               onClick={() => setActiveMarker(marker)}
             />
-          );
+          ) : null;
         }
       })}
 

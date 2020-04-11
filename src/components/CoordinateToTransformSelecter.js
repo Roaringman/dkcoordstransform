@@ -55,6 +55,7 @@ function CoordinateToTransformSelecter(props) {
               coordinateComponents.push(parseFloat(ZComponent));
             if (epoch) coordinateComponents.push(epoch);
             addCoordinatesToTransform(e, props, ...coordinateComponents);
+            console.log(props.coordinatesToTransform);
           }}
         >
           <UlFlex>
