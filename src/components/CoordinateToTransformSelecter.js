@@ -146,14 +146,18 @@ function CoordinateToTransformSelecter(props) {
                     inputMode="numeric"
                     pattern="^[-]?\d*\.?\d+$"
                     name="second"
-                    onChange={(e) => console.log("epoch")}
+                    onChange={(e) => setEpoch(epoch)}
                   />
                 </li>
               )}
             </div>
           </div>
 
-          <CoordinateSubmit type="submit" value="Add coordinates" />
+          <CoordinateSubmit
+            type="submit"
+            value="Add coordinates"
+            disabled={props.current.matches("ready.transformed")}
+          />
         </CoordinateForm>
       </CoordinateAddForm>
     </>
