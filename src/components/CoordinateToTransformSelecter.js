@@ -1,4 +1,12 @@
 import React, { useState, useContext } from "react";
+
+// Import context
+import { SRSContext } from "../context/SRSContext";
+
+// Import utils
+import { dictionary } from "../utils/dictionary";
+
+// Import styles
 import {
   CoordinateAddForm,
   UlFlex,
@@ -6,12 +14,10 @@ import {
   CoordinateSubmit,
   CoordinateForm,
   Checkbox,
-  CheckMark
 } from "../styles/elements";
-import addCoordinatesToTransform from "../functions/addCoordinatesToTransform";
 
-//Import context
-import { SRSContext } from "../context/SRSContext";
+// Import functions
+import addCoordinatesToTransform from "../functions/addCoordinatesToTransform";
 
 function isEmpty(obj) {
   for (var key in obj) {
@@ -27,22 +33,22 @@ function CoordinateToTransformSelecter(props) {
   const [ZComponent, setZComponent] = useState();
   const [epoch, setEpoch] = useState();
   const [ZComponentChecked, setZComponentChecked] = useState({
-    checked: false
+    checked: false,
   });
   const [epochChecked, setEpochChecked] = useState({ checked: false });
 
-  const handleZChange = event => {
+  const handleZChange = (event) => {
     setZComponentChecked({ checked: !props.current.context.height });
     props.current.context.height = event.target.checked;
   };
-  const handleEpochChange = event =>
+  const handleEpochChange = (event) =>
     setEpochChecked({ checked: event.target.checked });
 
   return (
     <>
       <CoordinateAddForm>
         <CoordinateForm
-          onSubmit={e => {
+          onSubmit={(e) => {
             props.current.context.height = ZComponentChecked.checked;
             const coordinateComponents = [longitude, Latitude];
             if (props.current.context.height)
@@ -56,26 +62,30 @@ function CoordinateToTransformSelecter(props) {
               <CoordinateInput
                 required
                 placeholder={
-                  isEmpty(sourceData) ? "Longitude/X" : `${sourceData.X}`
+                  isEmpty(sourceData)
+                    ? "Longitude/X"
+                    : `${dictionary[sourceData.X.toLowerCase()]}`
                 }
                 type="text"
                 inputMode="numeric"
                 pattern="^[-]?\d*\.?\d+$"
                 name="first"
-                onChange={e => setLongitude(parseFloat(e.target.value))}
+                onChange={(e) => setLongitude(parseFloat(e.target.value))}
               />
             </li>
             <li>
               <CoordinateInput
                 required
                 placeholder={
-                  isEmpty(sourceData) ? "Latitude/Y" : `${sourceData.Y}`
+                  isEmpty(sourceData)
+                    ? "Latitude/Y"
+                    : `${dictionary[sourceData.Y.toLowerCase()]}`
                 }
                 type="text"
                 inputMode="numeric"
                 pattern="^[-]?\d*\.?\d+$"
                 name="second"
-                onChange={e => setLatitude(parseFloat(e.target.value))}
+                onChange={(e) => setLatitude(parseFloat(e.target.value))}
               />
             </li>
           </UlFlex>
@@ -115,13 +125,15 @@ function CoordinateToTransformSelecter(props) {
                   <CoordinateInput
                     required
                     placeholder={
-                      isEmpty(sourceData) ? "Height/Z" : `${sourceData.Z}`
+                      isEmpty(sourceData)
+                        ? "Height/Z"
+                        : `${dictionary[sourceData.Z.toLowerCase()]}`
                     }
                     type="text"
                     inputMode="numeric"
                     pattern="^[-]?\d*\.?\d+$"
                     name="third"
-                    onChange={e => setZComponent(e.target.value)}
+                    onChange={(e) => setZComponent(e.target.value)}
                   />
                 </li>
               )}
@@ -134,7 +146,7 @@ function CoordinateToTransformSelecter(props) {
                     inputMode="numeric"
                     pattern="^[-]?\d*\.?\d+$"
                     name="second"
-                    onChange={e => console.log("epoch")}
+                    onChange={(e) => console.log("epoch")}
                   />
                 </li>
               )}

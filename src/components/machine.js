@@ -5,23 +5,22 @@ export const transformMachine = Machine(
     id: "coordinateTransformMachine",
     initial: "initial",
     context: {
-      srs: [],
       sourceSrs: "",
       destinationSrs: "",
       coords: false,
       coordinates: [],
       height: null,
-      failMessage: ""
+      failMessage: "",
     },
     states: {
       initial: {
         entry: ["load"],
         on: {
           LOADED: {
-            target: "ready"
+            target: "ready",
           },
-          FAILED: "failed"
-        }
+          FAILED: "failed",
+        },
       },
       ready: {
         initial: "allinactive",
@@ -30,42 +29,42 @@ export const transformMachine = Machine(
             entry: ["reset"],
             on: {
               READYTOTRANSFORM: { target: "active", cond: "canTransform" },
-              RESET: { target: "allinactive" }
-            }
+              RESET: { target: "allinactive" },
+            },
           },
           active: {
             on: {
               TRANSFORM: { target: "transforming" },
               RESET: { target: "allinactive" },
-              FAILEDTOTRANSFORM: { target: "failedtotransform" }
-            }
+              FAILEDTOTRANSFORM: { target: "failedtotransform" },
+            },
           },
           transforming: {
             on: {
               FAILEDTOTRANSFORM: { target: "failedtotransform" },
               SUCCESS: { target: "transformed" },
-              TRANSFORM: { target: "transforming" }
-            }
+              TRANSFORM: { target: "transforming" },
+            },
           },
           transformed: { on: { RESET: { target: "allinactive" } } },
 
           failedtotransform: {
             on: {
-              RESET: { target: "allinactive" }
-            }
-          }
-        }
+              RESET: { target: "allinactive" },
+            },
+          },
+        },
       },
 
-      failed: {}
-    }
+      failed: {},
+    },
   },
   {
     guards: {
-      canTransform: context =>
+      canTransform: (context) =>
         context.sourceSrs !== "" &&
         context.destinationSrs !== "" &&
-        context.coords === true
-    }
+        context.coords === true,
+    },
   }
 );

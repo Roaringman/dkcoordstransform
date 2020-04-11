@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
 
+// Import utils
+import { dictionary } from "../utils/dictionary";
+
 // Import functions
 import SrsOptions from "./srsOptions";
 
@@ -15,7 +18,7 @@ import {
   SrsLabel,
   SrsTitleBackground,
   SrsFormContainer,
-  FlexColumnCenter
+  FlexColumnCenter,
 } from "../styles/elements";
 
 //Import context
@@ -30,7 +33,7 @@ function SourceDestinationSelecter(props) {
     sourceData,
     setSourceData,
     destinationData,
-    setDestinationData
+    setDestinationData,
   } = useContext(SRSContext);
 
   let { srs, machineContext, send, current } = props;
@@ -39,18 +42,18 @@ function SourceDestinationSelecter(props) {
     fetch(
       `https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/${target}?token=8336526c09097038d0436ba18e95153b`
     )
-      .then(response => response.json())
-      .then(dataJson => {
+      .then((response) => response.json())
+      .then((dataJson) => {
         const filteredData = {
           Title: dataJson.title,
           Coverage: dataJson.country,
           X: dataJson.v1,
           Y: dataJson.v2,
-          Z: dataJson.v3
+          Z: dataJson.v3,
         };
         setData(filteredData);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(
           "There has been a problem with your fetch operation:",
           error
@@ -71,7 +74,7 @@ function SourceDestinationSelecter(props) {
             <SRSInfoBox data={sourceData} />
             <SrsSelect
               id="source-select"
-              onChange={e => {
+              onChange={(e) => {
                 const value = e.target.value;
                 setSource(value);
                 getSRSData(value, setSourceData);
@@ -82,14 +85,17 @@ function SourceDestinationSelecter(props) {
               }}
             >
               <option value={source}>{source}</option>
-              {srs.map(srs => {
+              {srs.map((srs) => {
                 if (typeof srs !== "string") {
                   return (
                     <SrsOptions key={`${srs}-source`} srs={srs}></SrsOptions>
                   );
                 } else {
                   return (
-                    <optgroup key={`${srs}-source`} label={srs}></optgroup>
+                    <optgroup
+                      key={`${srs}-source`}
+                      label={dictionary[srs.toLowerCase()]}
+                    ></optgroup>
                   );
                 }
               })}
@@ -103,7 +109,7 @@ function SourceDestinationSelecter(props) {
             <SRSInfoBox data={destinationData} />
             <SrsSelect
               id="destination-select"
-              onChange={e => {
+              onChange={(e) => {
                 const value = e.target.value;
                 setDestination(value);
                 getSRSData(value, setDestinationData);
@@ -114,13 +120,18 @@ function SourceDestinationSelecter(props) {
               }}
             >
               <option value={destination}>{destination}</option>
-              {srs.map(srs => {
+              {srs.map((srs) => {
                 if (typeof srs !== "string") {
                   return (
                     <SrsOptions key={`${srs}-dest`} srs={srs}></SrsOptions>
                   );
                 } else {
-                  return <optgroup key={`${srs}-dest`} label={srs}></optgroup>;
+                  return (
+                    <optgroup
+                      key={`${srs}-dest`}
+                      label={dictionary[srs.toLowerCase()]}
+                    ></optgroup>
+                  );
                 }
               })}
             </SrsSelect>

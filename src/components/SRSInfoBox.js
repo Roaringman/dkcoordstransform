@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
-//Import styles
+// Import utils
+import { dictionary } from "../utils/dictionary";
+
+// Import styles
 import {
   SRSInfoBoxPopUp,
   SRSInfoBoxText,
-  SRSInfoBoxArrow
+  SRSInfoBoxArrow,
 } from "../styles/elements";
 
 function SRSInfoBox(props) {
@@ -22,8 +25,16 @@ function SRSInfoBox(props) {
             <SRSInfoBoxText>
               <ul>
                 {Object.entries(data).map((value, key) => {
-                  console.log(value);
-                  return <li key={key}>{`${value[0]}: ${value[1]}`}</li>;
+                  if (value[0] === "Title") {
+                    return <h3>{value[1]}</h3>;
+                  } else {
+                    return (
+                      <li key={key}>
+                        {value[1] && // If z-component is defined
+                          `${value[0]}: ${dictionary[value[1].toLowerCase()]}`}
+                      </li>
+                    );
+                  }
                 })}
               </ul>
             </SRSInfoBoxText>

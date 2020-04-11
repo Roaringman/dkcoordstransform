@@ -19,7 +19,10 @@ function LeafMap() {
       <ZoomControl position="bottomright"></ZoomControl>
 
       {coordinatesToTransform.map((marker, i) => {
-        if (marker.displayCoords) {
+        if (
+          marker.displayCoords &&
+          marker.displayCoords.includes("undefined")
+        ) {
           return (
             <Marker
               key={i + "s"}
@@ -34,7 +37,7 @@ function LeafMap() {
         <Popup
           position={[
             activeMarker.displayCoords[0],
-            activeMarker.displayCoords[1]
+            activeMarker.displayCoords[1],
           ]}
           onClose={() => setActiveMarker(null)}
         >

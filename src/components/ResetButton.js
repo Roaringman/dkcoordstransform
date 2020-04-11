@@ -10,14 +10,20 @@ function ResetButton(props) {
   const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
     CoordinateContext
   );
-  const { source, setSource, setDestination } = useContext(SRSContext);
+  const {
+    setSource,
+    setDestination,
+    setSourceData,
+    setDestinationData,
+  } = useContext(SRSContext);
 
   function handleSend() {
     send("RESET");
     setSource("--Please choose an option--");
     setDestination("--Please choose an option--");
     setCoordinatesToTransform([]);
-    console.log(source);
+    setSourceData({});
+    setDestinationData({});
   }
 
   switch (true) {

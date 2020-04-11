@@ -3,11 +3,14 @@ import { AnimatePresence } from "framer-motion";
 
 //Import context
 import { CoordinateContext } from "../context/CoordinateContext";
-import { sourceData } from "../context/SRSContext";
+import { SRSContext } from "../context/SRSContext";
 
 //Import components
 import CoordinateLI from "./CoordinateLI";
 import CoordinateToTransformSelecter from "./CoordinateToTransformSelecter";
+
+//Import utils
+import dictionary from "../utils/dictionary";
 
 //Import styles
 import {
@@ -21,7 +24,7 @@ import {
   Filler,
   CloseButton,
   TableRow,
-  RemoveRowH
+  RemoveRowH,
 } from "../styles/elements";
 
 //Import functions
@@ -31,19 +34,16 @@ function SidePanel(props) {
   const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
     CoordinateContext
   );
+  const { source, destination } = useContext(SRSContext);
 
   const { current, send } = props;
 
   function updatePromises(listOfCoordinates) {
     const updatedCoordiatesToTransform = [];
-    listOfCoordinates.map(coordinateData => {
+    listOfCoordinates.map((coordinateData) => {
       send("TRANSFORM");
       return updatedCoordiatesToTransform.push(
-        fetchAndUpdateCoordinate(
-          current.context.sourceSrs,
-          current.context.destinationSrs,
-          coordinateData
-        )
+        fetchAndUpdateCoordinate(source, destination, coordinateData)
       );
     });
     return updatedCoordiatesToTransform;
@@ -51,10 +51,10 @@ function SidePanel(props) {
 
   function iterateCoordinates() {
     Promise.all(updatePromises(coordinatesToTransform))
-      .then(function(destinationResult) {
+      .then(function (destinationResult) {
         return destinationResult;
       })
-      .then(function(withDestination) {
+      .then(function (withDestination) {
         if (withDestination[0].responseState >= 3) {
           throw new Error(withDestination[0].responseState); //If the response code is not 1 or 2, the whole app enters fail state
         } else {
@@ -63,11 +63,11 @@ function SidePanel(props) {
           return displayResult;
         }
       })
-      .then(function(displayResult) {
+      .then(function (displayResult) {
         setCoordinatesToTransform(displayResult); //Sets the display coordinates
         send("SUCCESS");
       })
-      .catch(error => {
+      .catch((error) => {
         switch (error.message) {
           case "3":
             current.context.failMessage =
@@ -80,11 +80,12 @@ function SidePanel(props) {
         }
       });
   }
+  const ZChecked = useRef(null);
 
   const remove = (arr, item) => {
     const newArr = [...arr];
     newArr.splice(
-      newArr.findIndex(i => i.id === item),
+      newArr.findIndex((i) => i.id === item),
       1
     );
     if (newArr.length === 0) {
@@ -93,8 +94,6 @@ function SidePanel(props) {
     //console.log(newArr);
     return newArr;
   };
-
-  const ZChecked = useRef(null);
 
   return (
     <>
@@ -117,7 +116,7 @@ function SidePanel(props) {
                   <RemoveRowH> </RemoveRowH>
                   <TableHD> Longitude </TableHD>
                   <TableHD> Latitude </TableHD>
-                  {props.current.context.height ? (
+                  {ZChecked.current.checked ? (
                     <TableHD> Height </TableHD>
                   ) : null}
                 </tr>
@@ -133,7 +132,7 @@ function SidePanel(props) {
                           opacity: 0,
                           x: -50,
                           backgroundColor: "#e46464",
-                          transition: { duration: 0.2 }
+                          transition: { duration: 0.2 },
                         }}
                       >
                         <CloseButton
@@ -146,7 +145,7 @@ function SidePanel(props) {
                         <CoordinateLI
                           key={i}
                           coordinates={coordinates}
-                          isHeight={props.current.context.height}
+                          ZChecked={ZChecked.current.checked}
                         ></CoordinateLI>
                       </TableRow>
                     );
