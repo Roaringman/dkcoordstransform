@@ -11,13 +11,14 @@ import {
 } from "../styles/elements";
 
 function SRSInfoBox(props) {
+  const { isSRSSelected, data } = props;
   const [isToggled, toggle] = useState(false);
-  const { data } = props;
+
   function handleToggle() {
     return toggle(!isToggled);
   }
 
-  switch (isToggled) {
+  switch (isToggled && isSRSSelected) {
     case true:
       return (
         <>
@@ -44,10 +45,18 @@ function SRSInfoBox(props) {
         </>
       );
     case false:
-      return <button onClick={handleToggle}>?</button>;
+      return (
+        <button onClick={handleToggle} disabled={!isSRSSelected}>
+          ?
+        </button>
+      );
 
     default:
-      return <button onClick={handleToggle}>?</button>;
+      return (
+        <button onClick={handleToggle} disabled={!isSRSSelected}>
+          ?
+        </button>
+      );
   }
 }
 

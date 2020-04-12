@@ -39,26 +39,28 @@ function SourceDestinationSelecter(props) {
   let { srs, machineContext, send, current } = props;
 
   function getSRSData(target, setData) {
-    fetch(
-      `https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/${target}?token=8336526c09097038d0436ba18e95153b`
-    )
-      .then((response) => response.json())
-      .then((dataJson) => {
-        const filteredData = {
-          Title: dataJson.title,
-          Coverage: dataJson.country,
-          X: dataJson.v1,
-          Y: dataJson.v2,
-          Z: dataJson.v3,
-        };
-        setData(filteredData);
-      })
-      .catch((error) => {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error
-        );
-      });
+    if (srs.flat().includes(target)) {
+      fetch(
+        `https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/${target}?token=8336526c09097038d0436ba18e95153b`
+      )
+        .then((response) => response.json())
+        .then((dataJson) => {
+          const filteredData = {
+            Title: dataJson.title,
+            Coverage: dataJson.country,
+            X: dataJson.v1,
+            Y: dataJson.v2,
+            Z: dataJson.v3,
+          };
+          setData(filteredData);
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+        });
+    }
   }
 
   return (
@@ -71,14 +73,17 @@ function SourceDestinationSelecter(props) {
         <SrsFrom>
           <SrsLabel htmlFor="source-select">From</SrsLabel>
           <FlexColumnCenter>
-            <SRSInfoBox data={sourceData} />
+            <SRSInfoBox
+              isSRSSelected={srs.flat().includes(source)}
+              data={sourceData}
+            />
             <SrsSelect
               id="source-select"
               onChange={(e) => {
-                const value = e.target.value;
+                let value = e.target.value;
                 setSource(value);
                 getSRSData(value, setSourceData);
-                machineContext.sourceSrs = value;
+                machineContext.sourceSrs = "value";
                 if (current.matches("ready.allinactive")) {
                   send("READYTOTRANSFORM");
                 }
@@ -94,7 +99,7 @@ function SourceDestinationSelecter(props) {
                   return (
                     <optgroup
                       key={`${srs}-source`}
-                      label={dictionary[srs.toLowerCase()]}
+                      label={dictionary[srs.toLowerCase()]} // Translate GL to Greenland and DK to Denmark
                     ></optgroup>
                   );
                 }
@@ -106,7 +111,10 @@ function SourceDestinationSelecter(props) {
         <SrsTo>
           <SrsLabel htmlFor="destination-select">To</SrsLabel>
           <FlexColumnCenter>
-            <SRSInfoBox data={destinationData} />
+            <SRSInfoBox
+              isSRSSelected={srs.flat().includes(destination)}
+              data={destinationData}
+            />
             <SrsSelect
               id="destination-select"
               onChange={(e) => {
@@ -129,7 +137,7 @@ function SourceDestinationSelecter(props) {
                   return (
                     <optgroup
                       key={`${srs}-dest`}
-                      label={dictionary[srs.toLowerCase()]}
+                      label={dictionary[srs.toLowerCase()]} // Translate GL to Greenland and DK to Denmark
                     ></optgroup>
                   );
                 }

@@ -5,7 +5,7 @@ export const dictionary = {
   westing: "Westing",
   northing: "Northing",
   ellipsoidehøjde: "Ellipsoidal Height",
-  kote: "Kote",
+  kote: "Elevation",
   dk: "Denmark",
   gl: "Greenland",
   global: "Global",

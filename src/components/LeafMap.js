@@ -26,10 +26,12 @@ function LeafMap() {
             ? marker.destinationCoords
             : marker.displayCoords;
 
-        if (marker.displayCoords) {
+        if (coordinate) {
           const filterCoordinate = coordinate.filter(
             (coordinate) => typeof coordinate === "number"
           );
+
+          marker.displayCoords = filterCoordinate;
 
           return filterCoordinate.length === 2 ? (
             <Marker
