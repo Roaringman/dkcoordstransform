@@ -10,8 +10,10 @@ const gray = "#B0BBC2";*/
 
 const breakpoints = {
   small: 900,
-  medium: 1250
+  medium: 1250,
 };
+
+const OrangeAccent = "F7B023";
 
 const blues = {
   "100": "#F0F4FE",
@@ -22,7 +24,7 @@ const blues = {
   "600": "#495DC6",
   "700": "#3547A4",
   "800": "#253586",
-  "900": "#1F2C6D"
+  "900": "#1F2C6D",
 };
 const grays = {
   "100": "#F8F9FA",
@@ -33,7 +35,7 @@ const grays = {
   "600": "#929FB1",
   "700": "#6E7A8A",
   "800": "#404B5A",
-  "900": "#202833"
+  "900": "#202833",
 };
 
 export const Title = styled.h1`
@@ -160,6 +162,10 @@ export const FlexColumnCenter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 4rem;
+  @media (max-width: ${breakpoints.medium}px) {
+    height: 4rem;
+  }
 `;
 
 export const SRSInfoBoxArrow = styled.div`
@@ -238,7 +244,7 @@ export const TransformSelectGrid = styled.div`
 export const SrsTitleBackground = styled.div`
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   grid-column-start: 1;
   grid-column-end: 4;
   grid-row-start: 1;
@@ -274,10 +280,12 @@ export const SrsLabel = styled.label`
   grid-row-start: 1;
   grid-row-end: 2;
   color: ${grays["800"]};
+
   margin: 0 20px;
   @media (max-width: ${breakpoints.medium}px) {
     font-size: 2rem;
-    margin: 0 10px;
+    margin: 0 10px 5px;
+    align-items: flex-end;
   }
 
   @media (max-width: ${breakpoints.small}px) {
@@ -285,6 +293,7 @@ export const SrsLabel = styled.label`
     margin: 0 10px;
     width: 5ch;
     margin: 0;
+    align-items: center;
   }
 `;
 
@@ -294,9 +303,30 @@ export const SrsSelect = styled.select`
   background-color: ${blues["100"]};
   color: ${grays["700"]};
   border-radius: 5px;
-  border: none;
   font-family: "Overpass", sans-serif;
   width: 27ch;
+  border: 1px solid #aaa;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+  background-color: #fff;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23${OrangeAccent}%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"),
+    linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
+  background-repeat: no-repeat, repeat;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.65em auto, 100%;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  
+
+  &:focus {
+    border-color: ${grays["600"]};
+    box-shadow: 0 0 1px 1px rgba(247, 176, 35, .1);
+    box-shadow: 0 0 0 1px -moz-mac-focusring;
+    outline: none;
+  }
+  :hover {
+    border-color: #888;
+  }
 
   @media (max-width: ${breakpoints.medium}px) {
     height: 2rem;
@@ -337,6 +367,7 @@ export const SrsFrom = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  height: 4rem;
   @media (max-width: ${breakpoints.small}px) {
     justify-content: space-between;
     align-items: space-between;
@@ -346,6 +377,7 @@ export const SrsTo = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  height: 4rem;
   @media (max-width: ${breakpoints.small}px) {
     justify-content: space-between;
     align-items: space-between;
@@ -460,9 +492,26 @@ export const CoordinateSubmit = styled.input`
   margin-top: auto;
   width: 60%;
   border-radius: 5px;
-  border: none;
+  border: solid 2px;
+  border-color: #${OrangeAccent};
   height: 2.3rem;
   color: ${grays["700"]};
+  background-color: #${OrangeAccent}10;
+  &:focus {
+    border-color: #${OrangeAccent};
+    box-shadow: 0 0 1px 1px rgba(247, 176, 35, 0.9);
+    box-shadow: 0 0 0 1px -moz-mac-focusring;
+    outline: none;
+  }
+  &:hover {
+    background-color: #${OrangeAccent};
+    color: ${grays["100"]};
+  }
+  &:disabled {
+    border-color: ${grays["500"]};
+    background-color: ${grays["200"]};
+    color: ${grays["500"]};
+  }
 `;
 
 export const Checkbox = styled.input``;
@@ -529,7 +578,7 @@ export const InputTableRow = styled.tr`
   display: flex;
 `;
 
-const Path = props => (
+const Path = (props) => (
   <motion.path
     whileHover={{ scale: 1.2 }}
     fill="transparent"
