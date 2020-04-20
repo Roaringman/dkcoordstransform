@@ -46,26 +46,6 @@ export const Title = styled.h1`
   color: palevioletred;
 `;
 
-export const StatusContainer = styled.section`
-  grid-column-start: 11;
-  grid-column-end: 12;
-  grid-row-start: 3;
-  grid-row-end: 6;
-  background-color: ${blues["300"]};
-  z-index: 3;
-
-  @media (max-width: ${breakpoints.small}px) {
-    visibility: hidden;
-  }
-`;
-
-export const ProgressItem = styled.div`
-  position: relative;
-  background-color: ${blues["300"]};
-  height: 25%;
-  width: 100%;
-`;
-
 export const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -207,18 +187,18 @@ export const Filler = styled.div`
 `;
 
 export const TransformSelectContainer = styled.section`
-  grid-column-start: 1;
-  grid-column-end: 12;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  position: absolute;
+  width: 100%;
+  height: 135px;
+  top: 135px;
   background-color: ${grays["200"]};
   z-index: 4;
   @media (min-width: ${breakpoints.medium}px) {
     height: 135px;
   }
   @media (max-width: ${breakpoints.small}px) {
-    grid-row-start: 1;
-    grid-row-end: 2;
+    top: 0px;
+    height: calc(135px * 2);
     background-color: ${blues["400"]};
     box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.7);
   }
@@ -431,7 +411,7 @@ export const UIContainer = styled.section`
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 7;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   min-width: 345px;
   background-color: ${grays["200"]};
@@ -514,7 +494,14 @@ export const CoordinateSubmit = styled.input`
   }
 `;
 
-export const Checkbox = styled.input``;
+export const Checkbox = styled.input`
+  &:focus {
+    border-color: ${grays["600"]};
+    box-shadow: 0 0 1px 1px rgba(247, 176, 35, 0.1);
+    box-shadow: 0 0 0 1px -moz-mac-focusring;
+    outline: none;
+  }
+`;
 export const CheckMark = styled.span`
   border-radius: 5px;
 
@@ -601,4 +588,53 @@ export const CloseButton = ({ close }) => (
       <Path d="M 3 2.5 L 17 16.346" />
     </svg>
   </RemoveBtn>
+);
+
+// STATUS STUFF
+
+export const StatusContainer = styled.section`
+  position: absolute;
+  width: 250px;
+  height: 400px;
+  top: 350px;
+  right: 50px;
+
+  display: transparent;
+  z-index: 3;
+
+  @media (max-width: ${breakpoints.small}px) {
+    visibility: hidden;
+  }
+`;
+
+export const ProgressItem = styled.div`
+  position: relative;
+  height: 50px;
+  width: 50px;
+  margin: 0 25px 20px 0;
+`;
+
+export const ProgressDescription = styled.h3`
+  color: ${blues["100"]};
+  background-color: #00000080;
+  align-text: right;
+  height: 5ch;
+`;
+
+export const FlexRowRightAligned = styled(FlexRow)`
+  justify-content: flex-end;
+`;
+
+export const ProgressIndicator = ({ num, done }) => (
+  <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+    <circle
+      cx="25"
+      cy="25"
+      r="20"
+      fill={done ? "#F7B023" : `${blues["600"]}`}
+    />
+    <text x="25" y="25" fill={`${grays["100"]}`}>
+      {num}
+    </text>
+  </svg>
 );

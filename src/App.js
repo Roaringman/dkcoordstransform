@@ -5,13 +5,13 @@ import { transformMachine } from "./components/machine";
 //Import context
 import { CoordinateProvider } from "./context/CoordinateContext";
 import { SRSProvider } from "./context/SRSContext";
+import { RefProvider } from "./context/RefContext";
 
 //Import components
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
 import LeafMap from "./components/LeafMap";
 import ProgressStatus from "./components/ProgressStatus";
 import SidePanel from "./components/SidePanel";
-import ResetButton from "./components/ResetButton";
 
 //Import functions
 import initializeSRS from "./functions/fetching";
@@ -23,7 +23,7 @@ import {
   TransformSelectContainer,
   TransformSelectGrid,
   UIContainer,
-  StatusContainer
+  StatusContainer,
 } from "./styles/elements";
 
 function App() {
@@ -33,19 +33,19 @@ function App() {
   const [current, send] = useMachine(transformMachine, {
     actions: {
       load: () => {
-        initializeSRS(current).then(result => {
+        initializeSRS(current).then((result) => {
           current.context.srs = result.allSRS;
           setSrs(current.context.srs);
           send(result.state);
         });
       },
-      reset: context => {
+      reset: (context) => {
         context.sourceSrs = "";
         context.destinationSrs = "";
         context.coords = false;
         context.coordinates = [];
-      }
-    }
+      },
+    },
   });
 
   /* const dropProps = {
@@ -60,33 +60,35 @@ function App() {
       return (
         <CoordinateProvider>
           <SRSProvider>
-            <div
-              className="App"
-              id="drop_zone"
-              onDrop={e => dropHandler(e, null /*dropProps*/)}
-              onDragOver={e => dragOverHandler(e)}
-            >
-              <LeafMap></LeafMap>
+            <RefProvider>
+              <div
+                className="App"
+                id="drop_zone"
+                onDrop={(e) => dropHandler(e, null /*dropProps*/)}
+                onDragOver={(e) => dragOverHandler(e)}
+              >
+                <LeafMap></LeafMap>
 
-              <TransformSelectContainer>
-                <TransformSelectGrid>
-                  <SourceDestinationSelecter
-                    srs={srs}
-                    machineContext={current.context}
-                    send={send}
-                    current={current}
-                  />
-                </TransformSelectGrid>
-              </TransformSelectContainer>
+                <TransformSelectContainer>
+                  <TransformSelectGrid>
+                    <SourceDestinationSelecter
+                      srs={srs}
+                      machineContext={current.context}
+                      send={send}
+                      current={current}
+                    />
+                  </TransformSelectGrid>
+                </TransformSelectContainer>
 
-              <UIContainer>
-                <SidePanel send={send} current={current}></SidePanel>
-              </UIContainer>
-              <ResetButton current={current} send={send}></ResetButton>
-              <StatusContainer>
-                <ProgressStatus current={current} />
-              </StatusContainer>
-            </div>
+                <UIContainer>
+                  <SidePanel send={send} current={current}></SidePanel>
+                </UIContainer>
+
+                <StatusContainer>
+                  <ProgressStatus current={current} send={send} />
+                </StatusContainer>
+              </div>
+            </RefProvider>
           </SRSProvider>
         </CoordinateProvider>
       );

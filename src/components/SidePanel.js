@@ -31,7 +31,7 @@ import {
 import { fetchAndUpdateCoordinate } from "../functions/runFetchGenerator";
 
 function SidePanel(props) {
-  const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
+  const { coordinatesToTransform, setCoordinatesToTransform } = useContext(
     CoordinateContext
   );
   const { source, destination, sourceData } = useContext(SRSContext);

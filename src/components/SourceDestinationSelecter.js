@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 
 // Import utils
 import { dictionary } from "../utils/dictionary";
@@ -23,6 +23,7 @@ import {
 
 //Import context
 import { SRSContext } from "../context/SRSContext";
+import { RefContext } from "../context/RefContext";
 
 function SourceDestinationSelecter(props) {
   const {
@@ -35,6 +36,15 @@ function SourceDestinationSelecter(props) {
     destinationData,
     setDestinationData,
   } = useContext(SRSContext);
+
+  const { setSourceRef, setDestinationRef } = useContext(RefContext);
+  const sourceRef = useRef(null);
+  const destinationRef = useRef(null);
+
+  useEffect(() => {
+    setSourceRef(sourceRef);
+    setDestinationRef(setDestinationRef);
+  }, []);
 
   let { srs, machineContext, send, current } = props;
 
@@ -79,6 +89,7 @@ function SourceDestinationSelecter(props) {
             />
             <SrsSelect
               id="source-select"
+              ref={sourceRef}
               onChange={(e) => {
                 let value = e.target.value;
                 setSource(value);
@@ -117,6 +128,7 @@ function SourceDestinationSelecter(props) {
             />
             <SrsSelect
               id="destination-select"
+              ref={destinationRef}
               onChange={(e) => {
                 const value = e.target.value;
                 setDestination(value);

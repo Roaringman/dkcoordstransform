@@ -4,12 +4,11 @@ import { ResetBtn, ResetBtnHighlight } from "../styles/elements";
 //Import context
 import { CoordinateContext } from "../context/CoordinateContext";
 import { SRSContext } from "../context/SRSContext";
+import { RefContext } from "../context/RefContext";
 
 function ResetButton(props) {
   const { send, current } = props;
-  const [coordinatesToTransform, setCoordinatesToTransform] = useContext(
-    CoordinateContext
-  );
+  const { setCoordinatesToTransform } = useContext(CoordinateContext);
   const {
     setSource,
     setDestination,
@@ -17,13 +16,17 @@ function ResetButton(props) {
     setDestinationData,
   } = useContext(SRSContext);
 
+  const { sourceRef, destinationRef } = useContext(RefContext);
+
   function handleSend() {
+    console.log(sourceRef.current);
     send("RESET");
-    setSource("--Please choose an option--");
-    setDestination("--Please choose an option--");
+    setSource(null);
+    setDestination(null);
     setCoordinatesToTransform([]);
     setSourceData({});
     setDestinationData({});
+    sourceRef.current.value = "NUUU";
   }
 
   switch (true) {

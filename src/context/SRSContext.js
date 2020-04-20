@@ -2,9 +2,9 @@ import React, { useState, createContext } from "react";
 
 export const SRSContext = createContext();
 
-export const SRSProvider = props => {
-  const [source, setSource] = useState("--Please choose an option--");
-  const [destination, setDestination] = useState("--Please choose an option--");
+export const SRSProvider = (props) => {
+  const [source, setSource] = useState(null);
+  const [destination, setDestination] = useState(null);
   const [sourceData, setSourceData] = useState({});
   const [destinationData, setDestinationData] = useState({});
 
@@ -18,7 +18,7 @@ export const SRSProvider = props => {
         sourceData,
         setSourceData,
         destinationData,
-        setDestinationData
+        setDestinationData,
       }}
     >
       {props.children}

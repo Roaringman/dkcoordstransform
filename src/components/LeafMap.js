@@ -6,7 +6,7 @@ import { CoordinateContext } from "../context/CoordinateContext";
 import { SRSContext } from "../context/SRSContext";
 
 function LeafMap() {
-  const [coordinatesToTransform] = useContext(CoordinateContext);
+  const { coordinatesToTransform } = useContext(CoordinateContext);
   const { destination } = useContext(SRSContext);
 
   const [center, setCenter] = useState([56.88484306, 11.2214225]);
