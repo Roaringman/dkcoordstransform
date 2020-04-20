@@ -97,6 +97,7 @@ export const InactiveBtn = styled.button`
 `;
 
 export const ResetBtn = styled.button`
+  pointer-events: all;
   grid-column-start: 4;
   grid-column-end: 5;
   grid-row-start: 6;
@@ -598,7 +599,7 @@ export const StatusContainer = styled.section`
   height: 400px;
   top: 350px;
   right: 50px;
-
+  pointer-events: none;
   display: transparent;
   z-index: 3;
 
@@ -612,6 +613,7 @@ export const ProgressItem = styled.div`
   height: 50px;
   width: 50px;
   margin: 0 25px 20px 0;
+  pointer-events: all;
 `;
 
 export const ProgressDescription = styled.h3`
