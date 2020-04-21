@@ -297,15 +297,15 @@ export const SrsFormContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  grid-column-start: 4;
-  grid-column-end: 11;
+  grid-column-start: 2;
+  grid-column-end: 12;
   grid-row-start: 1;
   grid-row-end: 3;
   height: 135px;
   width: 100%;
 
   @media (max-width: ${breakpoints.medium}px) {
-    grid-column-start: 5;
+    grid-column-start: 2;
     grid-column-end: 12;
   }
 
