@@ -14,6 +14,11 @@ import {
   CoordinateSubmit,
   CoordinateForm,
   Checkbox,
+  ActiveBtn,
+  InactiveBtn,
+  FlexRow,
+  FlexRowRightAligned,
+  CoordinateFormSection,
 } from "../styles/elements";
 
 // Import functions
@@ -27,22 +32,20 @@ function isEmpty(obj) {
 }
 
 function CoordinateToTransformSelecter(props) {
+  const { iterateCoordinates } = props;
   const { sourceData } = useContext(SRSContext);
   const [longitude, setLongitude] = useState();
   const [Latitude, setLatitude] = useState();
   const [ZComponent, setZComponent] = useState();
-  const [epoch, setEpoch] = useState();
+
   const [ZComponentChecked, setZComponentChecked] = useState({
     checked: false,
   });
-  const [epochChecked, setEpochChecked] = useState({ checked: false });
 
   const handleZChange = (event) => {
     setZComponentChecked({ checked: !props.current.context.height });
     props.current.context.height = event.target.checked;
   };
-  const handleEpochChange = (event) =>
-    setEpochChecked({ checked: event.target.checked });
 
   return (
     <>
@@ -53,12 +56,12 @@ function CoordinateToTransformSelecter(props) {
             const coordinateComponents = [longitude, Latitude];
             if (props.current.context.height)
               coordinateComponents.push(parseFloat(ZComponent));
-            if (epoch) coordinateComponents.push(epoch);
+
             addCoordinatesToTransform(e, props, ...coordinateComponents);
           }}
         >
-          <UlFlex>
-            <li>
+          <CoordinateFormSection>
+            <UlFlex>
               <CoordinateInput
                 required
                 placeholder={
@@ -72,8 +75,7 @@ function CoordinateToTransformSelecter(props) {
                 name="first"
                 onChange={(e) => setLongitude(parseFloat(e.target.value))}
               />
-            </li>
-            <li>
+
               <CoordinateInput
                 required
                 placeholder={
@@ -87,39 +89,9 @@ function CoordinateToTransformSelecter(props) {
                 name="second"
                 onChange={(e) => setLatitude(parseFloat(e.target.value))}
               />
-            </li>
-          </UlFlex>
+            </UlFlex>
 
-          <div>
-            <div>
-              <label htmlFor="z-check">
-                <Checkbox
-                  type="checkbox"
-                  id="z-check"
-                  name="Z"
-                  value="Z"
-                  checked={props.current.context.height && sourceData.Z != null}
-                  onChange={handleZChange}
-                  ref={props.ZChecked}
-                  disabled={sourceData.Z === null ? true : false}
-                />
-                Add Z-component
-              </label>
-
-              <label htmlFor="epoch-check">
-                <Checkbox
-                  type="checkbox"
-                  id="epoch-check"
-                  name="Epoch"
-                  value="Epoch"
-                  checked={epochChecked.checked}
-                  onChange={handleEpochChange}
-                  disabled={true}
-                />
-                Add Epoch
-              </label>
-            </div>
-            <div>
+            <UlFlex>
               {props.current.context.height && sourceData.Z && (
                 <li>
                   <CoordinateInput
@@ -137,27 +109,35 @@ function CoordinateToTransformSelecter(props) {
                   />
                 </li>
               )}
-              {epochChecked.checked && (
-                <li>
-                  <CoordinateInput
-                    required
-                    placeholder="Epoch"
-                    type="text"
-                    inputMode="numeric"
-                    pattern="^[-]?\d*\.?\d+$"
-                    name="second"
-                    onChange={(e) => setEpoch(epoch)}
-                  />
-                </li>
-              )}
-            </div>
-          </div>
+              <label htmlFor="z-check">
+                <Checkbox
+                  type="checkbox"
+                  id="z-check"
+                  name="Z"
+                  value="Z"
+                  checked={props.current.context.height && sourceData.Z != null}
+                  onChange={handleZChange}
+                  ref={props.ZChecked}
+                  disabled={sourceData.Z === null ? true : false}
+                />
+                Add Z-component
+              </label>
+            </UlFlex>
+          </CoordinateFormSection>
 
-          <CoordinateSubmit
-            type="submit"
-            value="Add coordinates"
-            disabled={props.current.matches("ready.transformed")}
-          />
+          <FlexRow>
+            <CoordinateSubmit
+              type="submit"
+              value="Add Coordinate"
+              disabled={props.current.matches("ready.transformed")}
+            />
+
+            {props.current.matches("ready.active") ? (
+              <ActiveBtn onClick={iterateCoordinates}>Transform</ActiveBtn>
+            ) : (
+              <InactiveBtn> Transform </InactiveBtn>
+            )}
+          </FlexRow>
         </CoordinateForm>
       </CoordinateAddForm>
     </>

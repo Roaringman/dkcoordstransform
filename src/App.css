@@ -7,7 +7,8 @@
     width: 100vw;
     height:100vh;
     font-family: 'Overpass', sans-serif;
-    min-height: 900px;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 ul {
@@ -23,12 +24,12 @@ li {
 }
 
 .leaflet-container {
-  width: 100%;
+  width: calc(100vw - 465px);
   height: 100vh;
+
   position: absolute;
-  min-height: 900px;
   top: 0;
-    left: 0;
+    left: 465px;
     z-index: 2;
     pointer-events: auto;
 }

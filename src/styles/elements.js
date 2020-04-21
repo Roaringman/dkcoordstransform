@@ -9,8 +9,8 @@ const lightBlue = "#E0EDF6";
 const gray = "#B0BBC2";*/
 
 const breakpoints = {
-  small: 900,
-  medium: 1250,
+  small: 1100,
+  medium: 1445,
 };
 
 const OrangeAccent = "F7B023";
@@ -64,36 +64,6 @@ export const BtnContainer = styled.div`
   @media (max-width: ${breakpoints.small}px) {
     grid-column-end: 12;
   }
-`;
-
-export const ActiveBtn = styled(motion.button)`
-  postion: relative;
-  width: 10ch;
-  min-width: 140px;
-  height: 50px;
-  border: none;
-  background-color: #fce8e8;
-  border-radius: 5px;
-  margin: 0 20px;
-  padding: 0;
-  &:hover {
-    background-color: #e46464;
-  }
-`;
-
-export const InactiveBtn = styled.button`
-  postion: relative;
-  width: 10ch;
-  min-width: 140px;
-  margin: 0 20px;
-  height: 50px;
-  border: 1px;
-  border-style: solid;
-  border-color: ${grays["500"]};
-  background-color: ${grays["200"]};
-  color: ${grays["500"]};
-  border-radius: 5px;
-  padding: 0;
 `;
 
 export const ResetBtn = styled.button`
@@ -189,7 +159,7 @@ export const Filler = styled.div`
 
 export const TransformSelectContainer = styled.section`
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 135px;
   top: 135px;
   background-color: ${grays["200"]};
@@ -226,16 +196,18 @@ export const SrsTitleBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 3;
+
   height: 135px;
-  width: 100%;
-  min-width: 345px;
+  width: 465px;
   background-color: ${blues["600"]};
 
   @media (max-width: ${breakpoints.small}px) {
+    width: 100%;
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
     justify-content: center;
     box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.7);
   }
@@ -413,7 +385,7 @@ export const UIContainer = styled.section`
   grid-row-start: 1;
   grid-row-end: 7;
   height: 100vh;
-  width: 100%;
+  width: 465px;
   min-width: 345px;
   background-color: ${grays["200"]};
   z-index: 3;
@@ -439,17 +411,23 @@ export const CenteredH2 = styled.h2`
 
 //
 
-export const UlFlex = styled.ul`
+export const UlFlex = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   list-style-type: none;
 `;
 
+export const CoordinateFormSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-self: flex-start;
+`;
+
 export const CoordinateForm = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: space-between;
 `;
 
 export const CoordinateInput = styled.input`
@@ -471,7 +449,7 @@ export const CoordinateSubmit = styled.input`
   align-self: center;
   justify-self: baseline;
   margin-top: auto;
-  width: 60%;
+  width: 50%;
   border-radius: 5px;
   border: solid 2px;
   border-color: #${OrangeAccent};
@@ -493,6 +471,38 @@ export const CoordinateSubmit = styled.input`
     background-color: ${grays["200"]};
     color: ${grays["500"]};
   }
+`;
+
+export const ActiveBtn = styled(motion.button)`
+  postion: relative;
+  width: 10ch;
+  min-width: 140px;
+  height: 2.3rem;
+  width: 50%;
+  border: none;
+  background-color: #fce8e8;
+  border-radius: 5px;
+  margin: 0 20px;
+  padding: 0;
+  &:hover {
+    background-color: #e46464;
+  }
+`;
+
+export const InactiveBtn = styled.button`
+  postion: relative;
+  width: 10ch;
+  min-width: 140px;
+  margin: 0 20px;
+  height: 2.3rem;
+  width: 50%;
+  border: 2px;
+  border-style: solid;
+  border-color: ${grays["500"]};
+  background-color: ${grays["200"]};
+  color: ${grays["500"]};
+  border-radius: 5px;
+  padding: 0;
 `;
 
 export const Checkbox = styled.input`

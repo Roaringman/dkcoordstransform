@@ -25,6 +25,7 @@ import {
   CloseButton,
   TableRow,
   RemoveRowH,
+  FlexRowRightAligned,
 } from "../styles/elements";
 
 //Import functions
@@ -103,6 +104,7 @@ function SidePanel(props) {
         coordinatesToTransform={coordinatesToTransform}
         setCoordinatesToTransform={setCoordinatesToTransform}
         ZChecked={ZChecked}
+        iterateCoordinates={iterateCoordinates}
       />
       <OverflowUL>
         {coordinatesToTransform.length === 0 ? (
@@ -173,11 +175,6 @@ function SidePanel(props) {
         ) : null}
       </OverflowUL>
       <BtnContainer>
-        {current.matches("ready.active") ? (
-          <ActiveBtn onClick={iterateCoordinates}>Transform</ActiveBtn>
-        ) : (
-          <InactiveBtn> Transform </InactiveBtn>
-        )}
         <InactiveBtn> Download Result </InactiveBtn>
       </BtnContainer>
     </>
