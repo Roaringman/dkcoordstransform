@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 // Import utils
-import { dictionary } from "../utils/dictionary";
+import { dictionary } from "../../utils/dictionary";
 
 // Import styles
 import {
   SRSInfoBoxPopUp,
   SRSInfoBoxText,
   SRSInfoBoxArrow,
-} from "../styles/elements";
+} from "./StylesLooseComponents/LooseComponentElements";
 
 function SRSInfoBox(props) {
   const { isSRSSelected, data } = props;

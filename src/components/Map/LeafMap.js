@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import { Map, Marker, TileLayer, ZoomControl, Popup } from "react-leaflet";
 
 //Import context
-import { CoordinateContext } from "../context/CoordinateContext";
-import { SRSContext } from "../context/SRSContext";
+import { CoordinateContext } from "../../context/CoordinateContext";
+import { SRSContext } from "../../context/SRSContext";
 
 function LeafMap() {
   const { coordinatesToTransform } = useContext(CoordinateContext);

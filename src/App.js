@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMachine } from "@xstate/react";
-import { transformMachine } from "./components/machine";
+import { transformMachine } from "./context/machine";
 
 //Import context
 import { CoordinateProvider } from "./context/CoordinateContext";
@@ -8,13 +8,13 @@ import { SRSProvider } from "./context/SRSContext";
 import { RefProvider } from "./context/RefContext";
 
 //Import components
-import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
-import LeafMap from "./components/LeafMap";
-import ProgressStatus from "./components/ProgressStatus";
+import SourceDestinationSelector from "./components/SourceDestinationSelector/SourceDestinationSelector";
+import LeafMap from "./components/Map/LeafMap";
+import ProgressStatus from "./components/LooseComponents/ProgressStatus";
 import SidePanel from "./components/SidePanel/SidePanel";
 
 //Import functions
-import initializeSRS from "./functions/fetching";
+import { initializeSRS } from "./functions/fetching";
 import dragAndDropHandlers from "./functions/dragAndDropHandlers";
 
 //Import styles
@@ -71,9 +71,8 @@ function App() {
 
                 <TransformSelectContainer>
                   <TransformSelectGrid>
-                    <SourceDestinationSelecter
+                    <SourceDestinationSelector
                       srs={srs}
-                      machineContext={current.context}
                       send={send}
                       current={current}
                     />
@@ -96,7 +95,7 @@ function App() {
     case current.matches("initial"):
       return <div> Loading... </div>;
     case current.matches("failed"):
-      return <div> Failed to fetch required ressources </div>;
+      return <div> Failed to fetch required ressources, try again later </div>;
 
     default:
       return <div>Switch Logic went wrong!</div>;

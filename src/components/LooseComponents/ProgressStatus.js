@@ -1,19 +1,19 @@
 import React, { useContext, useState } from "react";
 
 // Import components
-import ResetButton from "../components/ResetButton";
+import ResetButton from "./ResetButton";
 
 //Import context
-import { CoordinateContext } from "../context/CoordinateContext";
-import { SRSContext } from "../context/SRSContext";
+import { CoordinateContext } from "../../context/CoordinateContext";
+import { SRSContext } from "../../context/SRSContext";
 
 // Import style
+import { FlexRowRightAligned } from "../../styles/elements";
 import {
   ProgressItem,
   ProgressIndicator,
-  FlexRowRightAligned,
   ProgressDescription,
-} from "../styles/elements";
+} from "./StylesLooseComponents/LooseComponentElements";
 
 function ProgressStatus(props) {
   const { current, send } = props;
@@ -34,11 +34,11 @@ function ProgressStatus(props) {
   return (
     <>
       <FlexRowRightAligned>
-        {progressOne ? (
+        {progressOne && (
           <ProgressDescription>
             Choose spatial reference system
           </ProgressDescription>
-        ) : null}
+        )}
         <ProgressItem
           onMouseEnter={() => handleEnter(setProgressOne)}
           onMouseLeave={() => handleLeave(setProgressOne)}
@@ -50,9 +50,9 @@ function ProgressStatus(props) {
         </ProgressItem>
       </FlexRowRightAligned>
       <FlexRowRightAligned>
-        {progressTwo ? (
+        {progressTwo && (
           <ProgressDescription>Add cordinates to transform</ProgressDescription>
-        ) : null}
+        )}
         <ProgressItem
           onMouseEnter={() => handleEnter(setProgressTwo)}
           onMouseLeave={() => handleLeave(setProgressTwo)}
@@ -64,9 +64,9 @@ function ProgressStatus(props) {
         </ProgressItem>
       </FlexRowRightAligned>
       <FlexRowRightAligned>
-        {progressThree ? (
+        {progressThree && (
           <ProgressDescription>Transform coordinates</ProgressDescription>
-        ) : null}
+        )}
         <ProgressItem
           onMouseEnter={() => handleEnter(setProgressThree)}
           onMouseLeave={() => handleLeave(setProgressThree)}

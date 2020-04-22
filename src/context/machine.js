@@ -5,11 +5,10 @@ export const transformMachine = Machine(
     id: "coordinateTransformMachine",
     initial: "initial",
     context: {
-      sourceSrs: "",
+      sourceSrs: "32",
       destinationSrs: "",
       coords: false,
       coordinates: [],
-      height: null,
       failMessage: "",
     },
     states: {
