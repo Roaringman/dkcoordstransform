@@ -30,7 +30,7 @@ function ResetButton(props) {
     setCoordinatesToTransform([]);
     setSourceData({});
     setDestinationData({});
-    sourceRef.current.value = "NUUU";
+    //sourceRef.current.value = "NUUU";
   }
 
   switch (true) {
