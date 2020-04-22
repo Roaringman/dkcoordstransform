@@ -1,50 +1,43 @@
 import React, { useState, useContext } from "react";
 
-// Import context
-import { SRSContext } from "../context/SRSContext";
+//Import context
+import { SRSContext } from "../../context/SRSContext";
 
 // Import utils
-import { dictionary } from "../utils/dictionary";
+import { dictionary, isEmpty } from "../../utils/dictionary";
 
 // Import styles
+import { FlexRow } from "../../styles/elements";
 import {
-  CoordinateAddForm,
+  ActiveBtn,
+  InactiveBtn,
   UlFlex,
+  Checkbox,
+  CoordinateAddForm,
   CoordinateInput,
   CoordinateSubmit,
   CoordinateForm,
-  Checkbox,
-  ActiveBtn,
-  InactiveBtn,
-  FlexRow,
-  FlexRowRightAligned,
   CoordinateFormSection,
-} from "../styles/elements";
+} from "./StylesSidePanel/SidePanelElements";
 
 // Import functions
-import addCoordinatesToTransform from "../functions/addCoordinatesToTransform";
+import addCoordinatesToTransform from "../../functions/addCoordinatesToTransform";
 
-function isEmpty(obj) {
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) return false;
-  }
-  return true;
-}
-
-function CoordinateToTransformSelecter(props) {
-  const { iterateCoordinates } = props;
+function CoordinateToTransformSelector(props) {
+  const { current, ZChecked, iterateCoordinates } = props;
   const { sourceData } = useContext(SRSContext);
+
+  //Component private state
   const [longitude, setLongitude] = useState();
   const [Latitude, setLatitude] = useState();
   const [ZComponent, setZComponent] = useState();
-
   const [ZComponentChecked, setZComponentChecked] = useState({
     checked: false,
   });
 
   const handleZChange = (event) => {
-    setZComponentChecked({ checked: !props.current.context.height });
-    props.current.context.height = event.target.checked;
+    setZComponentChecked({ checked: !current.context.height });
+    current.context.height = event.target.checked;
   };
 
   return (
@@ -52,9 +45,9 @@ function CoordinateToTransformSelecter(props) {
       <CoordinateAddForm>
         <CoordinateForm
           onSubmit={(e) => {
-            props.current.context.height = ZComponentChecked.checked;
+            current.context.height = ZComponentChecked.checked;
             const coordinateComponents = [longitude, Latitude];
-            if (props.current.context.height)
+            if (current.context.height)
               coordinateComponents.push(parseFloat(ZComponent));
 
             addCoordinatesToTransform(e, props, ...coordinateComponents);
@@ -92,7 +85,7 @@ function CoordinateToTransformSelecter(props) {
             </UlFlex>
 
             <UlFlex>
-              {props.current.context.height && sourceData.Z && (
+              {current.context.height && sourceData.Z && (
                 <li>
                   <CoordinateInput
                     required
@@ -115,9 +108,9 @@ function CoordinateToTransformSelecter(props) {
                   id="z-check"
                   name="Z"
                   value="Z"
-                  checked={props.current.context.height && sourceData.Z != null}
+                  checked={current.context.height && sourceData.Z != null}
                   onChange={handleZChange}
-                  ref={props.ZChecked}
+                  ref={ZChecked}
                   disabled={sourceData.Z === null ? true : false}
                 />
                 Add Z-component
@@ -129,10 +122,10 @@ function CoordinateToTransformSelecter(props) {
             <CoordinateSubmit
               type="submit"
               value="Add Coordinate"
-              disabled={props.current.matches("ready.transformed")}
+              disabled={current.matches("ready.transformed")}
             />
 
-            {props.current.matches("ready.active") ? (
+            {current.matches("ready.active") ? (
               <ActiveBtn onClick={iterateCoordinates}>Transform</ActiveBtn>
             ) : (
               <InactiveBtn> Transform </InactiveBtn>
@@ -144,4 +137,4 @@ function CoordinateToTransformSelecter(props) {
   );
 }
 
-export default CoordinateToTransformSelecter;
+export default CoordinateToTransformSelector;

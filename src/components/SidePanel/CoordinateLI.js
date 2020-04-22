@@ -1,7 +1,7 @@
 import React from "react";
 
 //Import styles
-import { TableTD } from "../styles/elements";
+import { TableTD } from "./StylesSidePanel/SidePanelElements";
 
 function CoordinateLI(props) {
   const { coordinates, ZChecked } = props;

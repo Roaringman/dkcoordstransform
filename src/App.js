@@ -11,7 +11,7 @@ import { RefProvider } from "./context/RefContext";
 import SourceDestinationSelecter from "./components/SourceDestinationSelecter";
 import LeafMap from "./components/LeafMap";
 import ProgressStatus from "./components/ProgressStatus";
-import SidePanel from "./components/SidePanel";
+import SidePanel from "./components/SidePanel/SidePanel";
 
 //Import functions
 import initializeSRS from "./functions/fetching";
