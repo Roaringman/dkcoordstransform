@@ -6,6 +6,7 @@ import {
   grays,
   breakpoints,
   OrangeAccent,
+  TransparentBlack,
 } from "../../../styles/elements";
 
 export const ProgressItem = styled.div`
@@ -18,7 +19,7 @@ export const ProgressItem = styled.div`
 
 export const ProgressDescription = styled.h3`
   color: ${blues["100"]};
-  background-color: #00000080;
+  background-color: ${TransparentBlack};
   align-text: right;
   height: 5ch;
 `;
@@ -81,21 +82,23 @@ export const ResetBtnHighlight = styled(ResetBtn)`
 export const SRSInfoBoxArrow = styled.div`
   width: 0;
   height: 0;
-  border-left: 45px solid transparent;
-  border-right: 45px solid transparent;
-  border-top: 45px solid #f00;
+  border-radius: 2px;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #${OrangeAccent};
 `;
 
 export const SRSInfoBoxText = styled.div`
-  background-color: purple;
-  color: white;
+  background-color: ${TransparentBlack};
+  color: ${grays["100"]};
   padding: 10px;
+  height: 80px;
 `;
 
-export const SRSInfoBoxPopUp = styled.div`
+export const SRSInfoBoxPopUp = styled.aside`
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 53px;
+  top: -100px;
   align-items: center;
 `;

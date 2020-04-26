@@ -73,7 +73,6 @@ function SidePanel(props) {
 
   return (
     <>
-      <Filler></Filler>
       <CoordinateToTransformSelector
         current={current}
         send={send}

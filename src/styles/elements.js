@@ -12,6 +12,7 @@ export const breakpoints = {
 };
 
 export const OrangeAccent = "F7B023";
+export const TransparentBlack = "#00000080";
 
 export const blues = {
   "100": "#F0F4FE",
@@ -50,7 +51,7 @@ export const TransformSelectContainer = styled.section`
   position: absolute;
   width: 100vw;
   height: 135px;
-  top: 135px;
+  top: 115px;
   background-color: ${grays["200"]};
   z-index: 4;
   @media (min-width: ${breakpoints.medium}px) {
@@ -91,14 +92,13 @@ export const UIContainer = styled.section`
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 7;
-  height: 100vh;
+  height: 900px;
   width: 465px;
   min-width: 345px;
   background-color: ${grays["200"]};
   z-index: 3;
-  min-height: 900px;
-  overflow-x: none;
-
+  overflow-x: hidden;
+  overflow-y: auto;
   @media (max-width: ${breakpoints.small}px) {
     grid-column-start: 1;
     grid-column-end: 12;
