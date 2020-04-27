@@ -36,7 +36,7 @@ export const Filler = styled.div`
 export const OverflowUL = styled.section`
   grid-column-start: 1;
   grid-column-end: 4;
-  grid-row-start: 4;
+  grid-row-start: 2;
   grid-row-end: 7;
   overflow: auto;
   overflow-x: auto;
@@ -76,8 +76,9 @@ export const TableTD = styled.td`
 export const CoordinateAddForm = styled.div`
   grid-column-start: 1;
   grid-column-end: 4;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  height: 200px;
   display: flex;
   justify-content: center;
   min-width: 125px;

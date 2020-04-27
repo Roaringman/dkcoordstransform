@@ -99,7 +99,7 @@ export const SRSInfoBoxPopUp = styled.aside`
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: -100px;
+  top: 10px;
   align-items: center;
 `;
 
@@ -108,17 +108,22 @@ export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`
   justify-content: center;
   padding: 10px 0 10px 10px;
   align-items: center;
-  grid-column-start: 4;
-  grid-column-end: 5;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-column-start: 2;
+  grid-row-start: 2;
+
   width: 100%;
   height: 3em;
   z-index: 3;
   hyphens: auto;
+  overflow-y: auto;
+  min-width: 10em;
 
   @media (max-width: ${breakpoints.medium}px) {
-    grid-column-start: 5;
-    grid-column-end: 6;
+    grid-column-start: 6;
+    grid-column-end: 7;
+  }
+
+  @media (max-width: ${breakpoints.small}px) {
+    display: none;
   }
 `;

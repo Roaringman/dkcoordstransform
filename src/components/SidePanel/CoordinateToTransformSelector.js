@@ -56,6 +56,7 @@ function CoordinateToTransformSelector(props) {
           <CoordinateFormSection>
             <UlFlex>
               <CoordinateInput
+                key={"x"}
                 required
                 placeholder={
                   isEmpty(sourceData)
@@ -70,6 +71,7 @@ function CoordinateToTransformSelector(props) {
               />
 
               <CoordinateInput
+                key={"y"}
                 required
                 placeholder={
                   isEmpty(sourceData)

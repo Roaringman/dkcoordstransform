@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Import utils
 import { dictionary } from "../../utils/dictionary";
@@ -27,14 +27,11 @@ function SrsSelector(props) {
   /* const { setSourceRef, setDestinationRef } = useContext(RefContext);
   const sourceRef = useRef(null);
   const destinationRef = useRef(null);
+  */
 
-  useEffect(() => {
-    setSourceRef(sourceRef);
-    setDestinationRef(setDestinationRef);
-  }, [setSourceRef, setDestinationRef]);
-*/
   return (
     <SrsSelect
+      key={`${target}`}
       id={`${target}-select`}
       //ref={sourceRef}
       onChange={(e) => {

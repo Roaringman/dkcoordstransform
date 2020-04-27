@@ -9,12 +9,7 @@ import CoordinateToTransformSelector from "./CoordinateToTransformSelector";
 import TableSidePanel from "./Table-SidePanel";
 
 //Import styles
-import {
-  OverflowUL,
-  Filler,
-  BtnContainer,
-  InactiveBtn,
-} from "./StylesSidePanel/SidePanelElements";
+import { OverflowUL } from "./StylesSidePanel/SidePanelElements";
 
 //Import functions
 import { fetchAndUpdateCoordinate } from "../../functions/runFetchGenerator";

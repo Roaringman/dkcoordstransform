@@ -7,6 +7,7 @@
     width: 100vw;
     font-family: 'Overpass', sans-serif;
     height: 100vh; 
+    background-color: orange;
 }
 
 ul {
@@ -22,13 +23,8 @@ li {
 }
 
 .leaflet-container {
-  width: calc(100vw - 465px);
-  height: 100%;
-  position: absolute;
-  top: 0;
-    left: 465px;
-    z-index: 2;
-    pointer-events: auto;
+  width: 100%;
+  height: 100vh;
 }
 
 button, input {

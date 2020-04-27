@@ -15,6 +15,8 @@
     "react-leaflet": "^2.6.1",
     "react-scripts": "3.4.0",
     "styled-components": "^5.0.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4",
     "xstate": "^4.8.0"
   },
   "scripts": {
@@ -43,7 +45,7 @@
     ]
   },
   "devDependencies": {
-    "@architect/sandbox": "^1.7.2",
+    "@architect/sandbox": "^1.9.5",
     "@begin/data": "^1.2.0",
     "cross-env": "^7.0.0",
     "npm-run-all": "^4.1.5",

@@ -5,6 +5,9 @@ import { Map, Marker, TileLayer, ZoomControl, Popup } from "react-leaflet";
 import { CoordinateContext } from "../../context/CoordinateContext";
 import { SRSContext } from "../../context/SRSContext";
 
+// Import styles
+import { LeafletContainer } from "./MapElements/MapElements";
+
 function LeafMap(props) {
   const { current } = props;
   const { coordinatesToTransform } = useContext(CoordinateContext);
@@ -32,63 +35,65 @@ function LeafMap(props) {
   }, [center, current, coordinatesToTransform]);
 
   return (
-    <Map center={center} zoom={7} zoomControl={false} maxBounds={maxBounds}>
-      <TileLayer
-        url="https://api.mapbox.com/styles/v1/rgengell/ck5sntzl51eyy1imfdnwkqnhp/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmdlbmdlbGwiLCJhIjoiY2pjaXdxaW5wMXkwbjJ4bzA2OG5iYXc2diJ9.WusoFmQuICEWtBh0pKioMQ"
-        attribution='&copy;  <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      />
-      <ZoomControl position="bottomright"></ZoomControl>
+    <LeafletContainer>
+      <Map center={center} zoom={7} zoomControl={false} maxBounds={maxBounds}>
+        <TileLayer
+          url="https://api.mapbox.com/styles/v1/rgengell/ck5sntzl51eyy1imfdnwkqnhp/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmdlbmdlbGwiLCJhIjoiY2pjaXdxaW5wMXkwbjJ4bzA2OG5iYXc2diJ9.WusoFmQuICEWtBh0pKioMQ"
+          attribution='&copy;  <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        />
+        <ZoomControl position="bottomright"></ZoomControl>
 
-      {coordinatesToTransform.map((marker, i) => {
-        const coordinate =
-          destination === "EPSG:4326"
-            ? marker.destinationCoords
-            : marker.displayCoords;
+        {coordinatesToTransform.map((marker, i) => {
+          const coordinate =
+            destination === "EPSG:4326"
+              ? marker.destinationCoords
+              : marker.displayCoords;
 
-        if (coordinate) {
-          const filterCoordinate = coordinate.filter(
-            (coordinate) => typeof coordinate === "number"
-          );
+          if (coordinate) {
+            const filterCoordinate = coordinate.filter(
+              (coordinate) => typeof coordinate === "number"
+            );
 
-          marker.displayCoords = filterCoordinate;
+            marker.displayCoords = filterCoordinate;
 
-          return filterCoordinate.length === 2 ? (
-            <Marker
-              key={i + "s"}
-              position={[filterCoordinate[0], filterCoordinate[1]]}
-              onClick={() => setActiveMarker(marker)}
-            />
-          ) : null;
-        }
-      })}
+            return filterCoordinate.length === 2 ? (
+              <Marker
+                key={i + "s"}
+                position={[filterCoordinate[0], filterCoordinate[1]]}
+                onClick={() => setActiveMarker(marker)}
+              />
+            ) : null;
+          }
+        })}
 
-      {activeMarker && (
-        <Popup
-          position={[
-            activeMarker.displayCoords[0],
-            activeMarker.displayCoords[1],
-          ]}
-          onClose={() => setActiveMarker(null)}
-        >
-          <table>
-            <tbody>
-              <tr>
-                <th>From X</th>
-                <th>To X</th>
-                <th>From Y</th>
-                <th>To Y</th>
-              </tr>
-              <tr>
-                <td>{activeMarker.sourceCoords[0]}</td>
-                <td>{activeMarker.destinationCoords[0]}</td>
-                <td>{activeMarker.sourceCoords[1]}</td>
-                <td>{activeMarker.destinationCoords[1]}</td>
-              </tr>
-            </tbody>
-          </table>
-        </Popup>
-      )}
-    </Map>
+        {activeMarker && (
+          <Popup
+            position={[
+              activeMarker.displayCoords[0],
+              activeMarker.displayCoords[1],
+            ]}
+            onClose={() => setActiveMarker(null)}
+          >
+            <table>
+              <tbody>
+                <tr>
+                  <th>From X</th>
+                  <th>To X</th>
+                  <th>From Y</th>
+                  <th>To Y</th>
+                </tr>
+                <tr>
+                  <td>{activeMarker.sourceCoords[0]}</td>
+                  <td>{activeMarker.destinationCoords[0]}</td>
+                  <td>{activeMarker.sourceCoords[1]}</td>
+                  <td>{activeMarker.destinationCoords[1]}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Popup>
+        )}
+      </Map>
+    </LeafletContainer>
   );
 }
 

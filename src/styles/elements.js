@@ -52,9 +52,7 @@ export const TransformSelectContainer = styled.section`
   grid-column-end: 11;
   grid-row-start: 1;
   grid-row-end: 2;
-
-  margin-top: 60px;
-
+  margin-top: 110px;
   width: 100vw;
   height: 135px;
   background-color: ${grays["200"]};
@@ -94,8 +92,7 @@ export const UIContainer = styled.section`
   grid-column-gap: 20px;
   grid-row-gap: 20px;
   grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 1;
+  grid-row-start: 2;
   grid-row-end: 7;
   width: 465px;
   min-width: 345px;
@@ -113,14 +110,14 @@ export const UIContainer = styled.section`
   }
 `;
 
-export const StatusContainer = styled.section`
+export const StatusContainer = styled.aside`
   grid-column-start: 10;
   grid-column-end: 11;
   grid-row-start: 3;
   grid-row-end: 5;
   width: 250px;
   height: 400px;
-  margin-right: 50px;
+
   pointer-events: none;
   display: transparent;
   z-index: 3;
