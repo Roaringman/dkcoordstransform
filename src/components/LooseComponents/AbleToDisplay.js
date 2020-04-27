@@ -10,10 +10,11 @@ export function AbleToDisplay(props) {
   const { current } = props;
   const { coordinatesToTransform } = useContext(CoordinateContext);
 
-  if (
-    current.matches("ready.transformed") &&
-    coordinatesToTransform.length === 0
-  )
+  const filterDisplayed = coordinatesToTransform.filter(
+    (coordinate) => coordinate.displayCoords !== null
+  );
+
+  if (current.matches("ready.transformed") && filterDisplayed.length === 0)
     return (
       <DisplayCoordinatesInfo>
         <p>Could not display any coordinates</p>
