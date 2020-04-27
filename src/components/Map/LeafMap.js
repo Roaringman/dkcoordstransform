@@ -1,19 +1,39 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Map, Marker, TileLayer, ZoomControl, Popup } from "react-leaflet";
 
 //Import context
 import { CoordinateContext } from "../../context/CoordinateContext";
 import { SRSContext } from "../../context/SRSContext";
 
-function LeafMap() {
+function LeafMap(props) {
+  const { current } = props;
   const { coordinatesToTransform } = useContext(CoordinateContext);
   const { destination } = useContext(SRSContext);
 
   const [center, setCenter] = useState([56.88484306, 11.2214225]);
+  const [maxBounds, setMaxBounds] = useState();
   const [activeMarker, setActiveMarker] = useState(null);
 
+  useEffect(() => {
+    let restrictBounds = [center];
+    setMaxBounds(restrictBounds);
+
+    if (
+      current.matches("ready.transformed") &&
+      coordinatesToTransform.length > 0 //&&
+    ) {
+      restrictBounds = [];
+      coordinatesToTransform.map((coordinates) =>
+        restrictBounds.push(coordinates.displayCoords)
+      );
+    }
+    restrictBounds.includes(null)
+      ? setMaxBounds([center])
+      : setMaxBounds(restrictBounds);
+  }, [center, current, coordinatesToTransform]);
+
   return (
-    <Map center={center} zoom={7} zoomControl={false}>
+    <Map center={center} zoom={7} zoomControl={false} maxBounds={maxBounds}>
       <TileLayer
         url="https://api.mapbox.com/styles/v1/rgengell/ck5sntzl51eyy1imfdnwkqnhp/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmdlbmdlbGwiLCJhIjoiY2pjaXdxaW5wMXkwbjJ4bzA2OG5iYXc2diJ9.WusoFmQuICEWtBh0pKioMQ"
         attribution='&copy;  <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

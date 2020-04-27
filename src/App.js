@@ -67,7 +67,7 @@ function App() {
                 onDrop={(e) => dropHandler(e, null /*dropProps*/)}
                 onDragOver={(e) => dragOverHandler(e)}
               >
-                <LeafMap></LeafMap>
+                <LeafMap current={current}></LeafMap>
 
                 <TransformSelectContainer>
                   <TransformSelectGrid>

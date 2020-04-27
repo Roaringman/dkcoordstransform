@@ -92,7 +92,6 @@ export const UIContainer = styled.section`
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 7;
-  height: 900px;
   width: 465px;
   min-width: 345px;
   background-color: ${grays["200"]};

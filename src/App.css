@@ -6,8 +6,7 @@
     grid-row-gap: 20px;
     width: 100vw;
     font-family: 'Overpass', sans-serif;
-    height: 100vh;
-    overflow: hidden;
+    height: 100vh; 
 }
 
 ul {
@@ -24,8 +23,7 @@ li {
 
 .leaflet-container {
   width: calc(100vw - 465px);
-  height: 100vh;
-
+  height: 100%;
   position: absolute;
   top: 0;
     left: 465px;
