@@ -43,6 +43,7 @@ export const OverflowUL = styled.section`
   background-color: ${blues["100"]};
   z-index: 3;
   margin-bottom: 20px;
+  width: 100%;
 
   @media (max-width: ${breakpoints.small}px) {
     border-radius: 0;
@@ -82,7 +83,6 @@ export const CoordinateAddForm = styled.div`
   display: flex;
   justify-content: center;
   min-width: 125px;
-  margin: 0 20px;
 
   @media (max-width: ${breakpoints.small}px) {
     grid-column-start: 1;
@@ -95,6 +95,20 @@ export const CoordinateFormSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-self: flex-start;
+`;
+
+export const FailMessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  hyphon: auto;
+  margin: 20px;
+`;
+
+export const Paragraph = styled.p`
+  color: ${grays["800"]};
+  margin-bottom: 20px;
 `;
 
 export const CoordinateForm = styled.form`
@@ -169,7 +183,8 @@ export const ActiveBtn = styled(motion.button)`
   height: 2.3rem;
   width: 50%;
   border: none;
-  background-color: #fce8e8;
+  color: ${grays["100"]};
+  background-color: #${OrangeAccent};
   border-radius: 5px;
   margin: 0 20px;
   padding: 0;

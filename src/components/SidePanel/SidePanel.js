@@ -77,7 +77,7 @@ function SidePanel(props) {
         iterateCoordinates={iterateCoordinates}
       />
       <OverflowUL>
-        <TableSidePanel current={current} ZChecked={ZChecked} />
+        <TableSidePanel send={send} current={current} ZChecked={ZChecked} />
       </OverflowUL>
     </>
   );

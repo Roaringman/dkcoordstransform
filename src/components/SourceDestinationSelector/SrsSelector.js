@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 // Import utils
 import { dictionary } from "../../utils/dictionary";
@@ -9,9 +9,6 @@ import { getSRSData } from "../../functions/fetching";
 
 // Import styles
 import { SrsSelect } from "./Styles_SourceDestinationSelector/SourceDestinationSelectorElements";
-
-//Import context
-import { RefContext } from "../../context/RefContext";
 
 function SrsSelector(props) {
   let {
@@ -24,16 +21,14 @@ function SrsSelector(props) {
     setTarget,
   } = props;
 
-  /* const { setSourceRef, setDestinationRef } = useContext(RefContext);
-  const sourceRef = useRef(null);
-  const destinationRef = useRef(null);
-  */
-
   return (
     <SrsSelect
       key={`${target}`}
       id={`${target}-select`}
-      //ref={sourceRef}
+      disabled={
+        current.matches("ready.transformed") ||
+        current.matches("ready.failedToTransform")
+      }
       onChange={(e) => {
         const value = e.target.value;
         current.context[`${targetName}Srs`] = value;

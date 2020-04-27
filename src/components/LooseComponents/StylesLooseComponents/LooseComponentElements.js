@@ -44,7 +44,6 @@ export const ResetBtn = styled.button`
   grid-column-end: 5;
   grid-row-start: 6;
   grid-row-end: 7;
-  align-self: start;
   width: 100px;
   min-width: 100px;
   height: 50px;

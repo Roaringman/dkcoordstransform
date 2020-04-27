@@ -7,6 +7,7 @@ import { SRSContext } from "../../context/SRSContext";
 
 //Import components
 import CoordinateLI from "./CoordinateLI";
+import ResetButton from "../LooseComponents/ResetButton";
 
 //Import utils
 import { dictionary } from "../../utils/dictionary";
@@ -19,10 +20,12 @@ import {
   TableRow,
   RemoveRowH,
   CenteredH2,
+  FailMessageContainer,
+  Paragraph,
 } from "./StylesSidePanel/SidePanelElements";
 
 function TableSidePanel(props) {
-  const { current, ZChecked } = props;
+  const { send, current, ZChecked } = props;
 
   const { coordinatesToTransform, setCoordinatesToTransform } = useContext(
     CoordinateContext
@@ -43,10 +46,28 @@ function TableSidePanel(props) {
 
   switch (true) {
     case current.matches("ready.failedtotransform"):
-      return <p>{current.context.failMessage}</p>;
+      return (
+        <FailMessageContainer>
+          <Paragraph>{current.context.failMessage}.</Paragraph>
+          <ResetButton current={current} send={send} />
+        </FailMessageContainer>
+      );
 
-    case coordinatesToTransform.length === 0:
+    case coordinatesToTransform.length === 0 &&
+      !current.matches("ready.transformed"):
       return <CenteredH2>Add coordinates to transform</CenteredH2>;
+
+    case coordinatesToTransform.length === 0 &&
+      current.matches("ready.transformed"):
+      return (
+        <FailMessageContainer>
+          <Paragraph>
+            There are no coordinates to display or download. Press reset to
+            start over.
+          </Paragraph>
+          <ResetButton current={current} send={send} />
+        </FailMessageContainer>
+      );
 
     default:
       return (

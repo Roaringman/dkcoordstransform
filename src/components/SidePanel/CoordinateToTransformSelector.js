@@ -68,6 +68,10 @@ function CoordinateToTransformSelector(props) {
                 pattern="^[-]?\d*\.?\d+$"
                 name="first"
                 onChange={(e) => setLongitude(parseFloat(e.target.value))}
+                disabled={
+                  current.matches("ready.transformed") ||
+                  current.matches("ready.failedtotransform")
+                }
               />
 
               <CoordinateInput
@@ -83,6 +87,10 @@ function CoordinateToTransformSelector(props) {
                 pattern="^[-]?\d*\.?\d+$"
                 name="second"
                 onChange={(e) => setLatitude(parseFloat(e.target.value))}
+                disabled={
+                  current.matches("ready.transformed") ||
+                  current.matches("ready.failedtotransform")
+                }
               />
             </UlFlex>
 
@@ -101,6 +109,10 @@ function CoordinateToTransformSelector(props) {
                     pattern="^[-]?\d*\.?\d+$"
                     name="third"
                     onChange={(e) => setZComponent(e.target.value)}
+                    disabled={
+                      current.matches("ready.transformed") ||
+                      current.matches("ready.failedToTransform")
+                    }
                   />
                 </li>
               )}
@@ -113,7 +125,11 @@ function CoordinateToTransformSelector(props) {
                   checked={current.context.height && sourceData.Z != null}
                   onChange={handleZChange}
                   ref={ZChecked}
-                  disabled={sourceData.Z === null ? true : false}
+                  disabled={
+                    sourceData.Z === null ||
+                    current.matches("ready.transformed") ||
+                    current.matches("ready.failedToTransform")
+                  }
                 />
                 Add Z-component
               </label>
