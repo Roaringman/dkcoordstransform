@@ -7,7 +7,7 @@
     width: 100vw;
     font-family: 'Overpass', sans-serif;
     height: 100vh; 
-    background-color: orange;
+    background: rgba(31,44,109,1) ;
 }
 
 ul {
