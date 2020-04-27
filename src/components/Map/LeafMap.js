@@ -10,14 +10,14 @@ function LeafMap(props) {
   const { coordinatesToTransform } = useContext(CoordinateContext);
   const { destination } = useContext(SRSContext);
 
-  const [center, setCenter] = useState([56.88484306, 11.2214225]);
+  const [center] = useState([56.88484306, 11.2214225]);
   const [maxBounds, setMaxBounds] = useState();
   const [activeMarker, setActiveMarker] = useState(null);
 
   useEffect(() => {
+    //Sets the max bounds of the map based on existance of display coordinates
     let restrictBounds = [center];
     setMaxBounds(restrictBounds);
-
     if (
       current.matches("ready.transformed") &&
       coordinatesToTransform.length > 0 //&&
@@ -27,9 +27,8 @@ function LeafMap(props) {
         restrictBounds.push(coordinates.displayCoords)
       );
     }
-    restrictBounds.includes(null)
-      ? setMaxBounds([center])
-      : setMaxBounds(restrictBounds);
+    const filtered = restrictBounds.filter((value) => value !== null);
+    filtered.length === 0 ? setMaxBounds([center]) : setMaxBounds(filtered);
   }, [center, current, coordinatesToTransform]);
 
   return (

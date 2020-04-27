@@ -12,6 +12,7 @@ import SourceDestinationSelector from "./components/SourceDestinationSelector/So
 import LeafMap from "./components/Map/LeafMap";
 import ProgressStatus from "./components/LooseComponents/ProgressStatus";
 import SidePanel from "./components/SidePanel/SidePanel";
+import AbleToDisplay from "./components/LooseComponents/AbleToDisplay";
 
 //Import functions
 import { initializeSRS } from "./functions/fetching";
@@ -61,7 +62,7 @@ function App() {
         <CoordinateProvider>
           <SRSProvider>
             <RefProvider>
-              <div
+              <main
                 className="App"
                 id="drop_zone"
                 onDrop={(e) => dropHandler(e, null /*dropProps*/)}
@@ -83,10 +84,12 @@ function App() {
                   <SidePanel send={send} current={current}></SidePanel>
                 </UIContainer>
 
+                <AbleToDisplay current={current} />
+
                 <StatusContainer>
                   <ProgressStatus current={current} send={send} />
                 </StatusContainer>
-              </div>
+              </main>
             </RefProvider>
           </SRSProvider>
         </CoordinateProvider>

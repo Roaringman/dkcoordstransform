@@ -37,11 +37,12 @@ export const OverflowUL = styled.section`
   grid-column-start: 1;
   grid-column-end: 4;
   grid-row-start: 4;
-  grid-row-end: 6;
+  grid-row-end: 7;
   overflow: auto;
   overflow-x: auto;
   background-color: ${blues["100"]};
   z-index: 3;
+  margin-bottom: 20px;
 
   @media (max-width: ${breakpoints.small}px) {
     border-radius: 0;

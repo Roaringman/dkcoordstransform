@@ -102,3 +102,23 @@ export const SRSInfoBoxPopUp = styled.aside`
   top: -100px;
   align-items: center;
 `;
+
+export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 10px 10px;
+  align-items: center;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  width: 100%;
+  height: 3em;
+  z-index: 3;
+  hyphens: auto;
+
+  @media (max-width: ${breakpoints.medium}px) {
+    grid-column-start: 5;
+    grid-column-end: 6;
+  }
+`;

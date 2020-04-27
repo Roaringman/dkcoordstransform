@@ -84,9 +84,6 @@ function SidePanel(props) {
       <OverflowUL>
         <TableSidePanel current={current} ZChecked={ZChecked} />
       </OverflowUL>
-      <BtnContainer>
-        <InactiveBtn> Download Result </InactiveBtn>
-      </BtnContainer>
     </>
   );
 }

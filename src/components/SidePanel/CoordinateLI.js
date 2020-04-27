@@ -31,7 +31,7 @@ function CoordinateLI(props) {
     case coordinates.responseState === 2:
       return (
         <>
-          <td colspan={4}>{`Coordinates out of bounds`}</td>
+          <td colSpan={4}>{`Coordinates out of bounds`}</td>
         </>
       );
     default:

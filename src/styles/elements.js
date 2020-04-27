@@ -48,10 +48,15 @@ export const FlexColumnCenter = styled.div`
 `;
 
 export const TransformSelectContainer = styled.section`
-  position: absolute;
+  grid-column-start: 1;
+  grid-column-end: 11;
+  grid-row-start: 1;
+  grid-row-end: 2;
+
+  margin-top: 60px;
+
   width: 100vw;
   height: 135px;
-  top: 115px;
   background-color: ${grays["200"]};
   z-index: 4;
   @media (min-width: ${breakpoints.medium}px) {
@@ -109,11 +114,13 @@ export const UIContainer = styled.section`
 `;
 
 export const StatusContainer = styled.section`
-  position: absolute;
+  grid-column-start: 10;
+  grid-column-end: 11;
+  grid-row-start: 3;
+  grid-row-end: 5;
   width: 250px;
   height: 400px;
-  top: 350px;
-  right: 50px;
+  margin-right: 50px;
   pointer-events: none;
   display: transparent;
   z-index: 3;
