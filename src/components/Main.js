@@ -14,6 +14,7 @@ import LeafMap from "./Map/LeafMap";
 import ProgressStatus from "./LooseComponents/ProgressStatus";
 import SidePanel from "./SidePanel/SidePanel";
 import AbleToDisplay from "./LooseComponents/AbleToDisplay";
+import DownloadButton from "./LooseComponents/DownloadButton";
 
 //Import functions
 import { initializeSRS } from "../functions/fetching";
@@ -92,6 +93,7 @@ function Main() {
                 </UIContainer>
 
                 <AbleToDisplay current={current} />
+                <DownloadButton current={current} />
 
                 <StatusContainer>
                   <ProgressStatus current={current} send={send} />

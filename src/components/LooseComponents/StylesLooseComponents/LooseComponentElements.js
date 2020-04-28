@@ -125,3 +125,26 @@ export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`
     display: none;
   }
 `;
+
+export const DownloadButtonStyle = styled.button`
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  z-index: 3;
+  width: 10em;
+  height: 4em;
+  color: ${grays["100"]};
+  background-color: #${OrangeAccent};
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+
+  &:focus {
+    border: solid 2px white;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
