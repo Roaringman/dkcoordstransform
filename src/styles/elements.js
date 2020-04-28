@@ -55,6 +55,7 @@ export const Article = styled.article`
 export const Paragraph = styled.p`
   margin: 20px 0;
   line-height: 1.2em;
+  hyphon: auto;
 `;
 
 export const AboutTitle = styled.h1`
