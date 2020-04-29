@@ -206,6 +206,7 @@ export const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  justify-content: space-between;
 `;
 
 export const FlexRowRightAligned = styled(FlexRow)`

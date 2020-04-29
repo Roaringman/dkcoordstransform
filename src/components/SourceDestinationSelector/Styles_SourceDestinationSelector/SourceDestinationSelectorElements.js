@@ -11,14 +11,12 @@ export const SrsTitleBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
   height: 135px;
   width: 465px;
   background-color: ${blues["600"]};
 
   @media (max-width: ${breakpoints.small}px) {
     width: 100%;
-
     grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 1;
@@ -48,7 +46,6 @@ export const SrsLabel = styled.label`
   grid-row-start: 1;
   grid-row-end: 2;
   color: ${grays["800"]};
-
   margin: 0 20px;
   @media (max-width: ${breakpoints.medium}px) {
     font-size: 3rem;

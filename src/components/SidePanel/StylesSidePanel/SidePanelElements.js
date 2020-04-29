@@ -116,33 +116,42 @@ export const CoordinateForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+  margin: 20px;
 `;
 
 export const CoordinateInput = styled.input`
   background-color: ${blues["100"]};
   color: ${grays["700"]};
-  margin: 10px 10px;
+  margin: 10px 0px;
   height: 1.5rem;
   border-radius: 5px;
   border: none;
-  min-width: 10ch;
-  max-width: 18ch;
+  width: calc(50% - 20px);
+
   @media (max-width: ${breakpoints.small}px) {
     height: 2rem;
-    margin: 10px 10px;
+    margin: 10px 0px;
   }
 `;
 
+export const SpanEnd = styled.span`
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+  width: calc(50% - 20px);
+  color: ${grays["700"]};
+`;
+
 export const CoordinateSubmit = styled.input`
-  align-self: center;
-  justify-self: baseline;
-  margin-top: auto;
-  width: 50%;
+  padding: 0px;
   border-radius: 5px;
   border: solid 2px;
+  width: calc(50% - 20px);
   border-color: #${OrangeAccent};
   height: 2.3rem;
-  color: ${grays["700"]};
+  color: #${OrangeAccent};
   background-color: #${OrangeAccent}10;
   &:focus {
     border-color: #${OrangeAccent};
@@ -173,21 +182,21 @@ export const Checkbox = styled.input`
 export const UlFlex = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   list-style-type: none;
 `;
 
 export const ActiveBtn = styled(motion.button)`
   postion: relative;
-  width: 10ch;
   min-width: 140px;
   height: 2.3rem;
-  width: 50%;
+  width: calc(50% - 20px);
   border: none;
+  border: 2px;
+  margin: 10px 0;
   color: ${grays["100"]};
   background-color: #${OrangeAccent};
   border-radius: 5px;
-  margin: 0 20px;
   padding: 0;
   &:hover {
     background-color: #e46464;
@@ -196,11 +205,9 @@ export const ActiveBtn = styled(motion.button)`
 
 export const InactiveBtn = styled.button`
   postion: relative;
-  width: 10ch;
   min-width: 140px;
-  margin: 0 20px;
   height: 2.3rem;
-  width: 50%;
+  width: calc(50% - 20px);
   border: 2px;
   border-style: solid;
   border-color: ${grays["500"]};

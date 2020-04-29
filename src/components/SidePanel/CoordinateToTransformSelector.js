@@ -18,6 +18,7 @@ import {
   CoordinateSubmit,
   CoordinateForm,
   CoordinateFormSection,
+  SpanEnd,
 } from "./StylesSidePanel/SidePanelElements";
 
 // Import functions
@@ -39,6 +40,8 @@ function CoordinateToTransformSelector(props) {
     setZComponentChecked({ checked: !current.context.height });
     current.context.height = event.target.checked;
   };
+
+  console.log(ZComponentChecked.checked);
 
   return (
     <>
@@ -95,44 +98,43 @@ function CoordinateToTransformSelector(props) {
             </UlFlex>
 
             <UlFlex>
-              {current.context.height && sourceData.Z && (
-                <li>
-                  <CoordinateInput
-                    required
-                    placeholder={
-                      isEmpty(sourceData)
-                        ? "Height/Z"
-                        : `${dictionary[sourceData.Z.toLowerCase()]}`
-                    }
-                    type="text"
-                    inputMode="numeric"
-                    pattern="^[-]?\d*\.?\d+$"
-                    name="third"
-                    onChange={(e) => setZComponent(e.target.value)}
+              <SpanEnd>
+                <label htmlFor="z-check">
+                  Add height
+                  <Checkbox
+                    type="checkbox"
+                    id="z-check"
+                    name="Z"
+                    value="Z"
+                    checked={current.context.height && sourceData.Z != null}
+                    onChange={handleZChange}
+                    ref={ZChecked}
                     disabled={
+                      sourceData.Z === null ||
                       current.matches("ready.transformed") ||
                       current.matches("ready.failedToTransform")
                     }
                   />
-                </li>
-              )}
-              <label htmlFor="z-check">
-                <Checkbox
-                  type="checkbox"
-                  id="z-check"
-                  name="Z"
-                  value="Z"
-                  checked={current.context.height && sourceData.Z != null}
-                  onChange={handleZChange}
-                  ref={ZChecked}
-                  disabled={
-                    sourceData.Z === null ||
-                    current.matches("ready.transformed") ||
-                    current.matches("ready.failedToTransform")
-                  }
-                />
-                Add Z-component
-              </label>
+                </label>
+              </SpanEnd>
+              <CoordinateInput
+                required
+                placeholder={
+                  isEmpty(sourceData)
+                    ? "Height/Z"
+                    : `${dictionary[sourceData.Z.toLowerCase()]}`
+                }
+                type="text"
+                inputMode="numeric"
+                pattern="^[-]?\d*\.?\d+$"
+                name="third"
+                onChange={(e) => setZComponent(e.target.value)}
+                disabled={
+                  current.matches("ready.transformed") ||
+                  current.matches("ready.failedToTransform") ||
+                  !ZComponentChecked.checked
+                }
+              />
             </UlFlex>
           </CoordinateFormSection>
 
