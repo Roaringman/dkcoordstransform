@@ -3,9 +3,9 @@ import React, { useState, createContext } from "react";
 export const SRSContext = createContext();
 
 export const SRSProvider = (props) => {
-  const [source, setSource] = useState(null);
-  const [destination, setDestination] = useState(null);
-  const [sourceData, setSourceData] = useState({});
+  const [source, setSource] = useState("Source Reference");
+  const [destination, setDestination] = useState("Destination Reference");
+  const [sourceData, setSourceData] = useState(false);
   const [destinationData, setDestinationData] = useState({});
 
   return (

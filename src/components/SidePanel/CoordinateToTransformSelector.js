@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 
 //Import context
 import { SRSContext } from "../../context/SRSContext";
+import { CoordinateContext } from "../../context/CoordinateContext";
 
 // Import utils
 import { dictionary, isEmpty } from "../../utils/dictionary";
@@ -27,6 +28,7 @@ import addCoordinatesToTransform from "../../functions/addCoordinatesToTransform
 function CoordinateToTransformSelector(props) {
   const { current, ZChecked, iterateCoordinates } = props;
   const { sourceData } = useContext(SRSContext);
+  const { coordinatesToTransform } = useContext(CoordinateContext);
 
   //Component private state
   const [longitude, setLongitude] = useState();
@@ -41,7 +43,7 @@ function CoordinateToTransformSelector(props) {
     current.context.height = event.target.checked;
   };
 
-  console.log(ZComponentChecked.checked);
+  console.log("source", sourceData);
 
   return (
     <>
@@ -106,11 +108,11 @@ function CoordinateToTransformSelector(props) {
                     id="z-check"
                     name="Z"
                     value="Z"
-                    checked={current.context.height && sourceData.Z != null}
+                    checked={ZComponentChecked.checked}
                     onChange={handleZChange}
                     ref={ZChecked}
                     disabled={
-                      sourceData.Z === null ||
+                      sourceData ||
                       current.matches("ready.transformed") ||
                       current.matches("ready.failedToTransform")
                     }
@@ -120,7 +122,7 @@ function CoordinateToTransformSelector(props) {
               <CoordinateInput
                 required
                 placeholder={
-                  isEmpty(sourceData)
+                  isEmpty(sourceData.Z)
                     ? "Height/Z"
                     : `${dictionary[sourceData.Z.toLowerCase()]}`
                 }

@@ -25,8 +25,8 @@ function ResetButton(props) {
 
   function handleSend() {
     send("RESET");
-    setSource(null);
-    setDestination(null);
+    setSource("Source Reference");
+    setDestination("Destination Reference");
     setCoordinatesToTransform([]);
     setSourceData({});
     setDestinationData({});

@@ -105,6 +105,7 @@ export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`
   hyphens: auto;
   overflow-y: auto;
   min-width: 10em;
+  margin: 30px 10px;
 
   @media (max-width: ${breakpoints.medium}px) {
     grid-column-start: 6;
@@ -119,8 +120,7 @@ export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`
 export const DownloadButtonStyle = styled.button`
   grid-column-start: 2;
   grid-column-end: 3;
-  grid-row-start: 4;
-  grid-row-end: 5;
+  grid-row-start: 2;
   z-index: 3;
   width: 10em;
   height: 4em;
@@ -129,6 +129,7 @@ export const DownloadButtonStyle = styled.button`
   font-size: 1.2rem;
   border: none;
   border-radius: 5px;
+  margin: 30px 10px;
 
   &:focus {
     border: solid 2px white;
@@ -142,5 +143,6 @@ export const DownloadButtonStyle = styled.button`
     position: absolute;
     top: 1050px;
     left: 30vw;
+    margin: 0;
   }
 `;

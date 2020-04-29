@@ -130,6 +130,10 @@ export const CoordinateInput = styled.input`
   border: none;
   width: calc(50% - 20px);
 
+  &:disabled {
+    border: solid 1px ${grays["600"]};
+    background-color: ${grays["200"]};
+  }
   @media (max-width: ${breakpoints.small}px) {
     height: 2rem;
     margin: 10px 0px;
@@ -177,6 +181,12 @@ export const Checkbox = styled.input`
     box-shadow: 0 0 0 1px -moz-mac-focusring;
     outline: none;
   }
+
+  &:disabled {
+    border-color: ${grays["500"]};
+    background-color: ${grays["200"]};
+    color: ${grays["500"]};
+  }
 `;
 
 export const UlFlex = styled.div`
@@ -193,7 +203,6 @@ export const ActiveBtn = styled(motion.button)`
   width: calc(50% - 20px);
   border: none;
   border: 2px;
-  margin: 10px 0;
   color: ${grays["100"]};
   background-color: #${OrangeAccent};
   border-radius: 5px;
@@ -215,6 +224,7 @@ export const InactiveBtn = styled.button`
   color: ${grays["500"]};
   border-radius: 5px;
   padding: 0;
+  pointer-events: none;
 `;
 
 // TABLE STUFF

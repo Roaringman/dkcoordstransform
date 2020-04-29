@@ -56,7 +56,7 @@ function LeafMap(props) {
 
             marker.displayCoords = filterCoordinate;
 
-            return filterCoordinate.length === 2 ? (
+            return filterCoordinate.length >= 2 ? (
               <Marker
                 key={i + "s"}
                 position={[filterCoordinate[0], filterCoordinate[1]]}
