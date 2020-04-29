@@ -49,6 +49,7 @@ export const OverflowUL = styled.section`
     border-radius: 0;
     grid-column-start: 1;
     grid-column-end: 12;
+    grid-row-end: 6;
     box-shadow: inset 0 6px 4px -4px rgba(0, 0, 0, 0.7),
       inset 0 -6px 4px -4px rgba(0, 0, 0, 0.7);
   }
@@ -87,7 +88,7 @@ export const CoordinateAddForm = styled.div`
   @media (max-width: ${breakpoints.small}px) {
     grid-column-start: 1;
     grid-column-end: 12;
-    min-height: 170px;
+    min-height: 100px;
   }
 `;
 
@@ -213,6 +214,7 @@ export const InactiveBtn = styled.button`
 
 export const Table = styled.table`
   min-width: 100%;
+  min-height: 100px;
 `;
 
 export const TableHD = styled.th`

@@ -3,11 +3,17 @@
     grid-template-columns: repeat(11, 1fr);
     grid-template-rows: repeat(6, 1fr);
     grid-column-gap: 20px;
-    grid-row-gap: 20px;
     width: 100vw;
+    height:100vh;
     font-family: 'Overpass', sans-serif;
-    height: 100vh; 
     background: rgba(31,44,109,1) ;
+}
+
+@media (max-width:1024px) {
+  .App{
+    grid-row-gap: 0px;
+    height:800px;
+  }
 }
 
 ul {
@@ -23,7 +29,7 @@ li {
 
 .leaflet-container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 button, input {

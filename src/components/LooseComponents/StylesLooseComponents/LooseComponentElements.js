@@ -39,10 +39,7 @@ export const ProgressIndicator = ({ num, done }) => (
 
 export const ResetBtn = styled.button`
   pointer-events: all;
-  grid-column-start: 4;
-  grid-column-end: 5;
-  grid-row-start: 6;
-  grid-row-end: 7;
+
   width: 100px;
   min-width: 100px;
   height: 50px;
@@ -60,13 +57,7 @@ export const ResetBtn = styled.button`
     color: ${grays["100"]};
   }
 
-  @media (max-width: ${breakpoints.medium}px) {
-    grid-column-start: 5;
-    grid-column-end: 6;
-  }
-
   @media (max-width: ${breakpoints.small}px) {
-    position: absolute;
     right: calc(50% - 50px);
     top: calc(900px - 56px);
   }
@@ -108,7 +99,6 @@ export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`
   align-items: center;
   grid-column-start: 2;
   grid-row-start: 2;
-
   width: 100%;
   height: 3em;
   z-index: 3;
@@ -146,5 +136,11 @@ export const DownloadButtonStyle = styled.button`
 
   &:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: ${breakpoints.small}px) {
+    position: absolute;
+    top: 1050px;
+    left: 30vw;
   }
 `;

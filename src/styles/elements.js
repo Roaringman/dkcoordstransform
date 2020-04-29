@@ -8,7 +8,7 @@ const lightBlue = "#E0EDF6";
 const gray = "#B0BBC2";*/
 
 export const breakpoints = {
-  small: 1100,
+  small: 1024,
   medium: 1445,
 };
 
@@ -165,7 +165,6 @@ export const UIContainer = styled.section`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(6, 1fr);
   grid-column-gap: 20px;
-  grid-row-gap: 20px;
   grid-column-start: 1;
   grid-row-start: 2;
   grid-row-end: 7;
@@ -173,13 +172,16 @@ export const UIContainer = styled.section`
   min-width: 345px;
   background-color: ${grays["200"]};
   z-index: 3;
+  height: calc(100vh-100px);
   overflow-x: hidden;
   overflow-y: auto;
+
   @media (max-width: ${breakpoints.small}px) {
     grid-column-start: 1;
     grid-column-end: 12;
-    min-width: 100%;
-    height: 100vh;
+    height: 800px;
+    width: 100vw;
+
     overflow: auto;
     background-color: ${blues["300"]};
   }
@@ -189,16 +191,14 @@ export const StatusContainer = styled.aside`
   grid-column-start: 10;
   grid-column-end: 11;
   grid-row-start: 3;
-  grid-row-end: 5;
   width: 250px;
-  height: 400px;
-
   pointer-events: none;
   display: transparent;
   z-index: 3;
 
   @media (max-width: ${breakpoints.small}px) {
     visibility: hidden;
+    display: none;
   }
 `;
 

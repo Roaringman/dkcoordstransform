@@ -51,7 +51,7 @@ export const SrsLabel = styled.label`
 
   margin: 0 20px;
   @media (max-width: ${breakpoints.medium}px) {
-    font-size: 2rem;
+    font-size: 3rem;
     margin: 0 10px 5px;
     align-items: flex-end;
   }
@@ -59,6 +59,7 @@ export const SrsLabel = styled.label`
   @media (max-width: ${breakpoints.small}px) {
     color: ${grays["100"]};
     margin: 0 10px;
+    font-size: 2rem;
     width: 5ch;
     margin: 0;
     align-items: center;
@@ -99,7 +100,7 @@ export const SrsSelect = styled.select`
   @media (max-width: ${breakpoints.medium}px) {
     height: 2rem;
     font-size: 0.8rem;
-    width: 27ch;
+    width: 20ch;
   }
 
   @media (max-width: ${breakpoints.small}px) {
@@ -128,6 +129,8 @@ export const SrsFormContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    margin: 20px 0;
   }
 `;
 
