@@ -6,7 +6,12 @@ import { CoordinateContext } from "../../context/CoordinateContext";
 import { SRSContext } from "../../context/SRSContext";
 
 // Import styles
-import { LeafletContainer } from "./MapElements/MapElements";
+import {
+  LeafletContainer,
+  PopUpTable,
+  PopUpTH,
+  PopUpTD,
+} from "./MapElements/MapElements";
 
 function LeafMap(props) {
   const { current } = props;
@@ -74,22 +79,25 @@ function LeafMap(props) {
             ]}
             onClose={() => setActiveMarker(null)}
           >
-            <table>
+            <PopUpTable>
               <tbody>
                 <tr>
-                  <th>From X</th>
-                  <th>To X</th>
-                  <th>From Y</th>
-                  <th>To Y</th>
+                  <PopUpTH></PopUpTH>
+                  <PopUpTH>From </PopUpTH>
+                  <PopUpTH>To </PopUpTH>
                 </tr>
                 <tr>
-                  <td>{activeMarker.sourceCoords[0]}</td>
-                  <td>{activeMarker.destinationCoords[0]}</td>
-                  <td>{activeMarker.sourceCoords[1]}</td>
-                  <td>{activeMarker.destinationCoords[1]}</td>
+                  <PopUpTH>X</PopUpTH>
+                  <PopUpTD>{activeMarker.sourceCoords[0]}</PopUpTD>
+                  <PopUpTD>{activeMarker.destinationCoords[0]}</PopUpTD>
+                </tr>
+                <tr>
+                  <PopUpTH>Y</PopUpTH>
+                  <PopUpTD>{activeMarker.sourceCoords[1]}</PopUpTD>
+                  <PopUpTD>{activeMarker.destinationCoords[1]}</PopUpTD>
                 </tr>
               </tbody>
-            </table>
+            </PopUpTable>
           </Popup>
         )}
       </Map>

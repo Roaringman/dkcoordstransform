@@ -14,14 +14,23 @@ export function AbleToDisplay(props) {
     (coordinate) => coordinate.displayCoords !== null
   );
 
-  if (current.matches("ready.transformed") && filterDisplayed.length === 0)
-    return (
-      <DisplayCoordinatesInfo>
-        <p>Could not display any coordinates</p>
-      </DisplayCoordinatesInfo>
-    );
-  else {
-    return null;
+  switch (true) {
+    case current.matches("ready.transformed") && filterDisplayed.length === 0:
+      return (
+        <DisplayCoordinatesInfo>
+          <p>Could not display any coordinates</p>
+        </DisplayCoordinatesInfo>
+      );
+
+    case current.matches("ready.allinactive"):
+      return (
+        <DisplayCoordinatesInfo>
+          <p>Transform coordinates to display them on the map</p>
+        </DisplayCoordinatesInfo>
+      );
+
+    default:
+      return null;
   }
 }
 

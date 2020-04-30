@@ -15,12 +15,18 @@ export const ProgressItem = styled.div`
   margin: 0 25px 20px 0;
   pointer-events: all;
 `;
+export const ProgressContainer = styled.span`
+  display: flex;
+  align-items: center;
+  background-color: ${TransparentBlack};
+  height: 5ch;
+  padding: 0 10px;
+`;
 
 export const ProgressDescription = styled.h3`
   color: ${blues["100"]};
-  background-color: ${TransparentBlack};
+
   align-text: right;
-  height: 5ch;
 `;
 
 export const ProgressIndicator = ({ num, done }) => (
@@ -31,7 +37,7 @@ export const ProgressIndicator = ({ num, done }) => (
       r="20"
       fill={done ? "#F7B023" : `${blues["600"]}`}
     />
-    <text x="25" y="25" fill={`${grays["100"]}`}>
+    <text x="20" y="28" fill={`${grays["100"]}`}>
       {num}
     </text>
   </svg>
@@ -90,6 +96,19 @@ export const SRSInfoBoxPopUp = styled.aside`
   flex-direction: column;
   top: 10px;
   align-items: center;
+`;
+
+export const SRSInfoButton = styled.button`
+  border-radius: 5px;
+  margin-bottom: 5px;
+  border: solid 1px;
+  border-color: #${OrangeAccent};
+  color: ${grays["600"]};
+
+  &:disabled {
+    border-color: ${grays["600"]};
+    color: ${grays["600"]};
+  }
 `;
 
 export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`

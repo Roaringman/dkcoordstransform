@@ -96,7 +96,7 @@ function Main() {
                 <DownloadButton current={current} />
 
                 <StatusContainer>
-                  <ProgressStatus current={current} send={send} />
+                  <ProgressStatus current={current} send={send} srs={srs} />
                 </StatusContainer>
               </main>
             </RefProvider>

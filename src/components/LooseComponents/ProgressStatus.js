@@ -13,10 +13,11 @@ import {
   ProgressItem,
   ProgressIndicator,
   ProgressDescription,
+  ProgressContainer,
 } from "./StylesLooseComponents/LooseComponentElements";
 
 function ProgressStatus(props) {
-  const { current, send } = props;
+  const { current, send, srs } = props;
   const { coordinatesToTransform } = useContext(CoordinateContext);
   const { source, destination } = useContext(SRSContext);
   const [progressOne, setProgressOne] = useState(false);
@@ -35,9 +36,11 @@ function ProgressStatus(props) {
     <>
       <FlexRowRightAligned>
         {progressOne && (
-          <ProgressDescription>
-            Choose spatial reference system
-          </ProgressDescription>
+          <ProgressContainer>
+            <ProgressDescription>
+              Choose spatial reference system
+            </ProgressDescription>
+          </ProgressContainer>
         )}
         <ProgressItem
           onMouseEnter={() => handleEnter(setProgressOne)}
@@ -45,13 +48,21 @@ function ProgressStatus(props) {
         >
           <ProgressIndicator
             num={1}
-            done={source && destination ? true : false}
+            done={
+              srs.flat().includes(source) && srs.flat().includes(destination)
+                ? true
+                : false
+            }
           ></ProgressIndicator>
         </ProgressItem>
       </FlexRowRightAligned>
       <FlexRowRightAligned>
         {progressTwo && (
-          <ProgressDescription>Add cordinates to transform</ProgressDescription>
+          <ProgressContainer>
+            <ProgressDescription>
+              Add cordinates to transform
+            </ProgressDescription>
+          </ProgressContainer>
         )}
         <ProgressItem
           onMouseEnter={() => handleEnter(setProgressTwo)}
@@ -65,7 +76,9 @@ function ProgressStatus(props) {
       </FlexRowRightAligned>
       <FlexRowRightAligned>
         {progressThree && (
-          <ProgressDescription>Transform coordinates</ProgressDescription>
+          <ProgressContainer>
+            <ProgressDescription>Transform coordinates</ProgressDescription>
+          </ProgressContainer>
         )}
         <ProgressItem
           onMouseEnter={() => handleEnter(setProgressThree)}

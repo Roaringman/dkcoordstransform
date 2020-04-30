@@ -127,7 +127,7 @@ export const CoordinateInput = styled.input`
   margin: 10px 0px;
   height: 1.5rem;
   border-radius: 5px;
-  border: none;
+  border: solid 1px #${OrangeAccent};
   width: calc(50% - 20px);
 
   &:disabled {
@@ -151,7 +151,7 @@ export const SpanEnd = styled.span`
 export const CoordinateSubmit = styled.input`
   padding: 0px;
   border-radius: 5px;
-  border: solid 2px;
+  border: solid 1px;
   width: calc(50% - 20px);
   border-color: #${OrangeAccent};
   height: 2.3rem;
@@ -168,7 +168,7 @@ export const CoordinateSubmit = styled.input`
     color: ${grays["100"]};
   }
   &:disabled {
-    border-color: ${grays["500"]};
+    border-color: ${grays["600"]};
     background-color: ${grays["200"]};
     color: ${grays["500"]};
   }
@@ -183,7 +183,7 @@ export const Checkbox = styled.input`
   }
 
   &:disabled {
-    border-color: ${grays["500"]};
+    border-color: ${grays["600"]};
     background-color: ${grays["200"]};
     color: ${grays["500"]};
   }
@@ -202,7 +202,7 @@ export const ActiveBtn = styled(motion.button)`
   height: 2.3rem;
   width: calc(50% - 20px);
   border: none;
-  border: 2px;
+  border: 1px;
   color: ${grays["100"]};
   background-color: #${OrangeAccent};
   border-radius: 5px;
@@ -217,9 +217,9 @@ export const InactiveBtn = styled.button`
   min-width: 140px;
   height: 2.3rem;
   width: calc(50% - 20px);
-  border: 2px;
+  border: 1px;
   border-style: solid;
-  border-color: ${grays["500"]};
+  border-color: ${grays["600"]};
   background-color: ${grays["200"]};
   color: ${grays["500"]};
   border-radius: 5px;

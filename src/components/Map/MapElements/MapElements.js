@@ -23,3 +23,25 @@ export const LeafletContainer = styled.div`
     display: none;
   }
 `;
+
+export const PopUpTable = styled.table`
+  min-width: 100%;
+  min-height: 100px;
+`;
+
+export const PopUpTH = styled.th`
+  color: ${grays["100"]};
+  background-color: ${blues["600"]};
+  min-width: 20px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+export const PopUpTD = styled.td`
+  color: ${grays["600"]};
+  min-width: 5ch;
+  border: 1px solid ${grays["300"]};
+  padding: 0 5px;
+  text-align: center;
+  vertical-align: middle;
+`;

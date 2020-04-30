@@ -28,7 +28,6 @@ import addCoordinatesToTransform from "../../functions/addCoordinatesToTransform
 function CoordinateToTransformSelector(props) {
   const { current, ZChecked, iterateCoordinates } = props;
   const { sourceData } = useContext(SRSContext);
-  const { coordinatesToTransform } = useContext(CoordinateContext);
 
   //Component private state
   const [longitude, setLongitude] = useState();
@@ -42,8 +41,6 @@ function CoordinateToTransformSelector(props) {
     setZComponentChecked({ checked: !current.context.height });
     current.context.height = event.target.checked;
   };
-
-  console.log("source", sourceData);
 
   return (
     <>

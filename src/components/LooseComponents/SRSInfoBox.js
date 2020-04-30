@@ -8,6 +8,7 @@ import {
   SRSInfoBoxPopUp,
   SRSInfoBoxText,
   SRSInfoBoxArrow,
+  SRSInfoButton,
 } from "./StylesLooseComponents/LooseComponentElements";
 
 function SRSInfoBox(props) {
@@ -41,21 +42,21 @@ function SRSInfoBox(props) {
             </SRSInfoBoxText>
             <SRSInfoBoxArrow />
           </SRSInfoBoxPopUp>
-          <button onClick={handleToggle}>!</button>
+          <SRSInfoButton onClick={handleToggle}>!</SRSInfoButton>
         </>
       );
     case false:
       return (
-        <button onClick={handleToggle} disabled={!isSRSSelected}>
+        <SRSInfoButton onClick={handleToggle} disabled={!isSRSSelected}>
           ?
-        </button>
+        </SRSInfoButton>
       );
 
     default:
       return (
-        <button onClick={handleToggle} disabled={!isSRSSelected}>
+        <SRSInfoButton onClick={handleToggle} disabled={!isSRSSelected}>
           ?
-        </button>
+        </SRSInfoButton>
       );
   }
 }
