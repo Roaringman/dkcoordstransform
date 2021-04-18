@@ -67,7 +67,7 @@ export function createCoordinateString(
     temp.endsWith(",")
       ? (coordinateString = temp.substring(0, temp.length - 1))
       : (coordinateString = temp);
-    return `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${source}/${destination}/${coordinateString}?token=8336526c09097038d0436ba18e95153b`;
+    return `https://services.kortforsyningen.dk/rest/webproj/v1.0/trans/${source}/${destination}/${coordinateString}?token=d2460098015969ae9229d18233f05a60`;
   } else {
     return "sameSourceAndDestination";
   }

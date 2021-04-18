@@ -13,7 +13,7 @@ export default function addCoordinatesToTransform(
     current,
     send,
     coordinatesToTransform,
-    setCoordinatesToTransform
+    setCoordinatesToTransform,
   } = props;
 
   let coordinate = [longitude, latitude, height];
@@ -26,16 +26,17 @@ export default function addCoordinatesToTransform(
     send("READYTOTRANSFORM");
   }
 
-  const newCoordinatesToTransform = [
+  //const newCoordinatesToTransform =
+  setCoordinatesToTransform(() => [
     {
       sourceCoords: coordinate,
       destinationCoords: null,
       displayCoords: null,
       responseState: null,
-      id: generateRandomID(8)
+      id: generateRandomID(8),
     },
-    ...coordinatesToTransform
-  ];
-  setCoordinatesToTransform(newCoordinatesToTransform);
+    ...coordinatesToTransform,
+  ]);
+  console.log(coordinatesToTransform);
   return coordinatesToTransform;
 }
