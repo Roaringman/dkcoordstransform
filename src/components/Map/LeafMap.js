@@ -46,7 +46,7 @@ function LeafMap(props) {
           url="https://api.mapbox.com/styles/v1/rgengell/ck5sntzl51eyy1imfdnwkqnhp/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmdlbmdlbGwiLCJhIjoiY2pjaXdxaW5wMXkwbjJ4bzA2OG5iYXc2diJ9.WusoFmQuICEWtBh0pKioMQ"
           attribution='&copy;  <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
-        <ZoomControl position="bottomright"></ZoomControl>
+        <ZoomControl position="bottomleft"></ZoomControl>
 
         {coordinatesToTransform.map((marker, i) => {
           const coordinate =

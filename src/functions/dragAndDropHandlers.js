@@ -6,7 +6,7 @@ const dragAndDropHandlers = {
   dragOverHandler(ev) {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
-  }
+  },
 };
 
 function dropHandler(ev, props) {
@@ -20,11 +20,11 @@ function dropHandler(ev, props) {
         var file = ev.dataTransfer.items[i].getAsFile();
         file
           .text()
-          .then(text => text.split("\r\n"))
-          .then(arr => arr.map(item => item.split(",")))
-          .then(items => {
+          .then((text) => text.split("\r\n"))
+          .then((arr) => arr.map((item) => item.split(",")))
+          .then((items) => {
             let coordsToAdd = [];
-            items.map(coordPair => {
+            items.map((coordPair) => {
               const coordinate = [];
               if (
                 coordPair.length === 2 &&
@@ -48,11 +48,11 @@ function dropHandler(ev, props) {
             });
             return coordsToAdd;
           })
-          .then(coordsToAdd => {
+          .then((coordsToAdd) => {
             return coordsToAdd.map((coord, i) => {
-              return setTimeout(function() {
+              return setTimeout(function () {
                 addCordinatesToTranfrom(null, props, ...coord);
-              }, 500 * i);
+              }, 1000 * i);
             });
           });
       }

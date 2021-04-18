@@ -2,7 +2,7 @@ export async function initializeSRS(state) {
   const stateAndData = { state: "", allSRS: [] };
   if (state.matches("initial")) {
     await fetch(
-      "https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/?token=8336526c09097038d0436ba18e95153b"
+      "https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/?token=d2460098015969ae9229d18233f05a60"
     )
       .then((response) => {
         if (!response.ok) {
@@ -31,7 +31,7 @@ export async function initializeSRS(state) {
 export function getSRSData(srs, target, setData) {
   if (srs.flat().includes(target)) {
     fetch(
-      `https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/${target}?token=8336526c09097038d0436ba18e95153b`
+      `https://services.kortforsyningen.dk/rest/webproj/v1.0/crs/${target}?token=d2460098015969ae9229d18233f05a60`
     )
       .then((response) => response.json())
       .then((dataJson) => {
