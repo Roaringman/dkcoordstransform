@@ -15,6 +15,7 @@ import ProgressStatus from "./LooseComponents/ProgressStatus";
 import SidePanel from "./SidePanel/SidePanel";
 import AbleToDisplay from "./LooseComponents/AbleToDisplay";
 import DownloadButton from "./LooseComponents/DownloadButton";
+import ResetButton from "./LooseComponents/ResetButton";
 
 //Import functions
 import { initializeSRS } from "../functions/fetching";
@@ -29,7 +30,10 @@ import {
   StatusContainer,
   Nav,
   StyledLink,
+  FlexRowRightAligned,
 } from "../styles/elements";
+
+
 
 function Main() {
   const [srs, setSrs] = useState([]);
@@ -65,6 +69,14 @@ function Main() {
     setCoordinatesToTransform: setCoordinatesToTransform,
   };
 
+
+  /*FOR ABOUT PAGE
+  <Nav>
+            <StyledLink to="/about">about</StyledLink>
+          </Nav>
+  */
+
+
   switch (true) {
     case current.matches("ready"):
       return (
@@ -74,9 +86,7 @@ function Main() {
           onDrop={(e) => dropHandler(e, dropProps)}
           onDragOver={(e) => dragOverHandler(e)}
         >
-          <Nav>
-            <StyledLink to="/about">about</StyledLink>
-          </Nav>
+          
 
           <LeafMap current={current}></LeafMap>
 
@@ -95,10 +105,15 @@ function Main() {
           </UIContainer>
 
           <AbleToDisplay current={current} />
-          <DownloadButton current={current} />
 
           <StatusContainer>
             <ProgressStatus current={current} send={send} srs={srs} />
+            <FlexRowRightAligned>
+            <DownloadButton current={current} />
+            </FlexRowRightAligned>
+            <FlexRowRightAligned>
+            <ResetButton current={current} send={send}></ResetButton>
+            </FlexRowRightAligned>
           </StatusContainer>
         </main>
       );

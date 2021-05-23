@@ -51,10 +51,6 @@ function SourceDestinationSelector(props) {
         <SrsFrom>
           <SrsLabel htmlFor="source-select">From</SrsLabel>
           <FlexColumnCenter>
-            <SRSInfoBox
-              isSRSSelected={srs.flat().includes(source)}
-              data={sourceData}
-            />
             <SrsSelector
               srs={srs}
               send={send}
@@ -65,16 +61,17 @@ function SourceDestinationSelector(props) {
               setTarget={setSource}
               machineContext={current.context.sourceSrs}
             />
+            <SRSInfoBox
+              isSRSSelected={srs.flat().includes(source)}
+              data={sourceData}
+            />
           </FlexColumnCenter>
         </SrsFrom>
 
         <SrsTo>
           <SrsLabel htmlFor="destination-select">To</SrsLabel>
           <FlexColumnCenter>
-            <SRSInfoBox
-              isSRSSelected={srs.flat().includes(destination)}
-              data={destinationData}
-            />
+         
             <SrsSelector
               srs={srs}
               send={send}
@@ -84,6 +81,11 @@ function SourceDestinationSelector(props) {
               setTargetData={setDestinationData}
               setTarget={setDestination}
               machineContext={current.context.destinationSrs}
+            />
+
+            <SRSInfoBox
+              isSRSSelected={srs.flat().includes(destination)}
+              data={destinationData}
             />
           </FlexColumnCenter>
         </SrsTo>

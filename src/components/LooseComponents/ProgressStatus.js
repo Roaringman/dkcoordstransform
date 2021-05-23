@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 
 // Import components
-import ResetButton from "./ResetButton";
 
 //Import context
 import { CoordinateContext } from "../../context/CoordinateContext";
@@ -90,9 +89,7 @@ function ProgressStatus(props) {
           ></ProgressIndicator>
         </ProgressItem>
       </FlexRowRightAligned>
-      <FlexRowRightAligned>
-        <ResetButton current={current} send={send}></ResetButton>
-      </FlexRowRightAligned>
+    
     </>
   );
 }

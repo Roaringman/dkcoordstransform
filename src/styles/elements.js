@@ -114,6 +114,7 @@ export const StyledLink = styled(Link)`
 
 export const FlexColumnCenter = styled.div`
   display: flex;
+  margin-top: 3em;
   flex-direction: column;
   align-items: center;
   height: 4rem;
@@ -127,7 +128,6 @@ export const TransformSelectContainer = styled.section`
   grid-column-end: 11;
   grid-row-start: 1;
   grid-row-end: 2;
-  margin-top: 110px;
   width: 100vw;
   height: 135px;
   background-color: ${grays["200"]};
@@ -188,10 +188,16 @@ export const UIContainer = styled.section`
 `;
 
 export const StatusContainer = styled.aside`
-  grid-column-start: 10;
-  grid-column-end: 11;
-  grid-row-start: 3;
-  width: 250px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-content: flex-end;
+  padding: 0 25px 0px;
+
+  right: 0px;
+  top: 25vh;
+  width: 350px;
   pointer-events: none;
   display: transparent;
   z-index: 3;

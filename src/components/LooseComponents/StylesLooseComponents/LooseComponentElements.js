@@ -91,11 +91,17 @@ export const SRSInfoBoxText = styled.div`
 `;
 
 export const SRSInfoBoxPopUp = styled.aside`
-  position: absolute;
+  position: in-line;
   display: flex;
   flex-direction: column;
-  top: 10px;
+  top: 100px;
   align-items: center;
+
+
+  @media (max-width: ${breakpoints.small}px) {
+    visibility: hidden;
+    display: none;
+  }
 `;
 
 export const SRSInfoButton = styled.button`
@@ -108,6 +114,11 @@ export const SRSInfoButton = styled.button`
   &:disabled {
     border-color: ${grays["600"]};
     color: ${grays["600"]};
+  }
+
+  @media (max-width: ${breakpoints.small}px) {
+    visibility: hidden;
+    display: none;
   }
 `;
 
@@ -137,18 +148,16 @@ export const DisplayCoordinatesInfo = styled(SRSInfoBoxText)`
 `;
 
 export const DownloadButtonStyle = styled.button`
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
   z-index: 3;
-  width: 10em;
-  height: 4em;
+  width: 100px;
+  min-width: 100px;
+  margin: 0 0px 20px;
   color: ${grays["100"]};
   background-color: #${OrangeAccent};
   font-size: 1.2rem;
   border: none;
   border-radius: 5px;
-  margin: 30px 10px;
+  pointer-events: all;
 
   &:focus {
     border: solid 2px white;
@@ -165,3 +174,32 @@ export const DownloadButtonStyle = styled.button`
     margin: 0;
   }
 `;
+
+
+
+export const DownloadButtonStyleInactive = styled.button`
+width: 100px;
+  min-width: 100px;
+  margin: 0 0px 20px;
+  color: ${grays["200"]};
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  pointer-events: all;
+
+  &:focus {
+    border: solid 2px white;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: ${breakpoints.small}px) {
+    position: absolute;
+    top: 1050px;
+    left: 30vw;
+    margin: 0;
+  }
+`;
+

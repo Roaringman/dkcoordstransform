@@ -25,7 +25,7 @@ export function AbleToDisplay(props) {
     case current.matches("ready.allinactive"):
       return (
         <DisplayCoordinatesInfo>
-          <p>Transform coordinates to display them on the map</p>
+          <p>Transformed coordinates will be displayed on the map</p>
         </DisplayCoordinatesInfo>
       );
 

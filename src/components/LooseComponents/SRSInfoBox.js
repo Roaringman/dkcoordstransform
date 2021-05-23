@@ -23,7 +23,9 @@ function SRSInfoBox(props) {
     case true:
       return (
         <>
+            <SRSInfoButton onClick={handleToggle}>!</SRSInfoButton>
           <SRSInfoBoxPopUp>
+          <SRSInfoBoxArrow />
             <SRSInfoBoxText>
               <ul>
                 {Object.entries(data).map((value, key) => {
@@ -40,9 +42,9 @@ function SRSInfoBox(props) {
                 })}
               </ul>
             </SRSInfoBoxText>
-            <SRSInfoBoxArrow />
+           
           </SRSInfoBoxPopUp>
-          <SRSInfoButton onClick={handleToggle}>!</SRSInfoButton>
+       
         </>
       );
     case false:

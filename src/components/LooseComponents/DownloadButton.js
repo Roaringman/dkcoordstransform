@@ -5,7 +5,7 @@ import { CoordinateContext } from "../../context/CoordinateContext";
 import { SRSContext } from "../../context/SRSContext";
 
 //Import style
-import { DownloadButtonStyle } from "./StylesLooseComponents/LooseComponentElements";
+import { DownloadButtonStyle, DownloadButtonStyleInactive } from "./StylesLooseComponents/LooseComponentElements";
 
 function DownloadButton(props) {
   const { current } = props;
@@ -44,7 +44,11 @@ function DownloadButton(props) {
       </DownloadButtonStyle>
     );
   } else {
-    return null;
+    return (
+      <DownloadButtonStyleInactive>
+        Download results
+      </DownloadButtonStyleInactive>
+    );
   }
 }
 
